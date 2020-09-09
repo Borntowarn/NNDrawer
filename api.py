@@ -152,6 +152,7 @@ async def add_block(block: Block) -> JSONResponse:
 # Обработчик для добавления проекта
 @app.post("/api/add_project")
 async def add_project(project: Project) -> JSONResponse:
+    #some
     database = Database('server')
     try:
         projects = database.add_user_project(project)
