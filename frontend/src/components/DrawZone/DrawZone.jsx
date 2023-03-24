@@ -38,7 +38,7 @@ export default function DrawZone() {
   });
 
   const onNodeClick = (event, node) => {
-    console.log('click node', node)
+    console.log('SELECTED_NODE:', node)
     setCurrentNode(node)
   };
 

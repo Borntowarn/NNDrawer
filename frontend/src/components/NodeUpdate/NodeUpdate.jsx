@@ -3,31 +3,39 @@ import { MainContext } from '../context/MainContext';
 
 export default function NodeUpdate() {
   const { currentNode, setCurrentNode, setNodes } = useContext(MainContext);
-  const [nodeName, setNodeName] = useState(currentNode.data ? currentNode.data.label : ''); // currentNode ? currentNode.data.label : ''
+  const [updatedData, setUpdatedData] = useState()
 
   useEffect(() => {
     setNodes((nds) =>
       nds.map((node) => {
-        if (node.id === currentNode.id) {
+        if ((node.id === currentNode.id) && updatedData) {
+          console.log('update', updatedData)
           node.data = {
             ...node.data,
-            label: nodeName,
+            [updatedData[0]]: updatedData[1],
           };
         }
         return node;
       })
     )
-    
+  
     if (currentNode.data) {
-      currentNode.data.label = nodeName
+      currentNode.data[updatedData[0]] = updatedData[1];
+      console.log(currentNode.data[updatedData[0]])
     }
     setCurrentNode(currentNode);
-  }, [nodeName, setNodes, setCurrentNode]);
+  }, [updatedData, setNodes, setCurrentNode]);
 
   return (
     <div className="updatenode__controls">
-        <label>label:</label>
-        <input value={currentNode.data ? currentNode.data.label : ''} onChange={(evt) => setNodeName(evt.target.value)} />
+        {currentNode.data ? 
+          Object.keys(currentNode.data).map((param, i) => (
+            <div key={i} >
+            <label>label: {param}</label>
+            <input value={currentNode.data[param]} onChange={(evt) => setUpdatedData([param, evt.target.value])}/>
+            </div>
+        )) : <></>
+        }
     </div>
   )
 }
