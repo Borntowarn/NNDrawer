@@ -18,7 +18,7 @@ export default function NodeUpdate() {
         return node;
       })
     )
-  
+    
     if (currentNode.data) {
       currentNode.data[updatedData[0]] = updatedData[1];
       console.log(currentNode.data[updatedData[0]])

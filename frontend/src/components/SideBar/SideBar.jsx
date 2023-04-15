@@ -1,5 +1,6 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import './SideBar.css'
+import { MainContext } from '../context/MainContext';
 
 export default () => {
   const onDragStart = (event, nodeType) => {
@@ -7,17 +8,18 @@ export default () => {
     event.dataTransfer.effectAllowed = 'move';
   };
 
+  const {nodeTypes} = useContext(MainContext)
+  console.log(nodeTypes)
+
   return (
     <aside>
       <div className="description">You can drag these nodes to the pane on the right.</div>
-      <div className="dndnode input" onDragStart={(event) => onDragStart(event, 'input')} draggable>
-        Input Node
-      </div>
-      <div className="dndnode" onDragStart={(event) => onDragStart(event, 'default')} draggable>
-        Default Node
-      </div>
-      <div className="dndnode output" onDragStart={(event) => onDragStart(event, 'output')} draggable>
-        Output Node
+      <div>
+        {nodeTypes.map((type, i) => (
+          <div className="dndnode" onDragStart={(event) => onDragStart(event, type)} draggable key={i}>
+            {type}
+          </div>
+        ))}
       </div>
     </aside>
   );

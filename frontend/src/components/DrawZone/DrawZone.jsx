@@ -46,37 +46,6 @@ export default function DrawZone() {
   //   console.log('changed: ', node)
   // }
 
-
-  // UPDATE NODES
-  // useEffect(() => {
-  //   setNodes((nds) =>
-  //     nds.map((node) => {
-  //       if (node.id === currentNode.id) {
-  //         node.data = {
-  //           ...node.data,
-  //           label: currentNode.data,
-  //         };
-  //       }
-  //       return node;
-  //     })
-  //   );
-  // }, [initialNodes]);
-
-  // // update node style
-  // useEffect(() => {
-  //   setNodes((nds) =>
-  //     nds.map((node) => {
-  //       if (node.id === '1') {
-  //         node.style = { 
-  //           ...node.style, 
-  //           backgroundColor: nodeBg 
-  //         };
-  //       }
-  //       return node;
-  //     })
-  //   );
-  // }, [nodeBg, setNodes]);
-
   // // uodate hidden status
   // useEffect(() => {
   //   setNodes((nds) =>
@@ -100,10 +69,11 @@ export default function DrawZone() {
   const nodeTypes = useMemo(() => ({ customNode: CustomNode }), []);
   
   const edgeUpdateSuccessful = useRef(true);
-  const onConnect = useCallback((params) => setEdges((eds) => addEdge(params, eds)), [setEdges]);
-  
   const reactFlowWrapper = useRef(null);
+  
   const [reactFlowInstance, setReactFlowInstance] = useState(null);
+
+  const onConnect = useCallback((params) => setEdges((eds) => addEdge(params, eds)), [setEdges]);
 
   const onEdgeUpdateStart = useCallback(() => {
     edgeUpdateSuccessful.current = false;
@@ -136,6 +106,9 @@ export default function DrawZone() {
       if (typeof type === 'undefined' || !type) {
         return;
       }
+
+      console.log("DROP_TYPE: ", type)
+
       const position = reactFlowInstance.project({
         x: event.clientX - reactFlowBounds.left,
         y: event.clientY - reactFlowBounds.top,
@@ -173,13 +146,10 @@ export default function DrawZone() {
             onDragOver={onDragOver}
             onNodeClick={onNodeClick}
             fitView
-            attributionPosition="top-right"
-          >
+            attributionPosition="top-right">
             <Controls />  
             <Background variant="dots" gap={12} size={1} />
-
             <NodeUpdate />
-
           </ReactFlow>
         </div>
         <Sidebar />
