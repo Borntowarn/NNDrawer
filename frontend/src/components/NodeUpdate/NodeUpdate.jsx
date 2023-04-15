@@ -1,5 +1,6 @@
 import React, { useContext, useState, useEffect } from 'react'
 import { MainContext } from '../context/MainContext';
+import './NodeUpdate.css'
 
 export default function NodeUpdate() {
   const { currentNode, setCurrentNode, setNodes } = useContext(MainContext);
@@ -27,7 +28,7 @@ export default function NodeUpdate() {
   }, [updatedData, setNodes, setCurrentNode]);
 
   return (
-    <div className="updatenode__controls">
+    <div className="params_area">
         {currentNode.data ? 
           Object.keys(currentNode.data).map((param, i) => (
             <div key={i} >

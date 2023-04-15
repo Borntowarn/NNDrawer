@@ -9,7 +9,6 @@ function CustomNode({ data, isConnectable }) {
     console.log(evt.target.value);
   }, []);
 
-
   return (
     <div className="custom-node">
       <Handle type="target" position={Position.Top} isConnectable={isConnectable} />

@@ -41,30 +41,6 @@ export default function DrawZone() {
     console.log('SELECTED_NODE:', node)
     setCurrentNode(node)
   };
-
-  // const onNodesChange = (node) => {
-  //   console.log('changed: ', node)
-  // }
-
-  // // uodate hidden status
-  // useEffect(() => {
-  //   setNodes((nds) =>
-  //     nds.map((node) => {
-  //       if (node.id === '1') {
-  //         node.hidden = nodeHidden;
-  //       }
-  //       return node;
-  //     })
-  //   );
-  //   setEdges((eds) =>
-  //     eds.map((edge) => {
-  //       if (edge.id === 'e1-2') {
-  //         edge.hidden = nodeHidden;
-  //       }
-  //       return edge;
-  //     })
-  //   );
-  // }, [nodeHidden, setNodes, setEdges]);
   
   const nodeTypes = useMemo(() => ({ customNode: CustomNode }), []);
   
@@ -149,10 +125,8 @@ export default function DrawZone() {
             attributionPosition="top-right">
             <Controls />  
             <Background variant="dots" gap={12} size={1} />
-            <NodeUpdate />
           </ReactFlow>
         </div>
-        <Sidebar />
       </ReactFlowProvider>  
     </div>
   );
