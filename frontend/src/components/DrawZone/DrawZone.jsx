@@ -17,6 +17,8 @@ import NodeUpdate from '../NodeUpdate/NodeUpdate';
 import CustomNode from '../CustomNode/CustomNode';
 import Sidebar from '../SideBar/SideBar';
 
+import '../DrawZone/DrawZone.css'
+
 
 let id = 0;
 const getId = () => `dndnode_${id++}`;
@@ -100,34 +102,34 @@ export default function DrawZone() {
     },
     [reactFlowInstance]
   );
-
+  const reactFlowStyle = {
+    
+  }
 
   return (
-    <div className="dndflow">
       <ReactFlowProvider>
-        <div style={{ width: '100vw', height: '100vh' }} ref={reactFlowWrapper}>
-          <ReactFlow
-            nodes={nodes}
-            edges={edges}
-            nodeTypes={nodeTypes}
-            onNodesChange={onNodesChange}
-            onEdgesChange={onEdgesChange}
-            snapToGrid
-            onEdgeUpdate={onEdgeUpdate}
-            onEdgeUpdateStart={onEdgeUpdateStart}
-            onEdgeUpdateEnd={onEdgeUpdateEnd}
-            onConnect={onConnect}
-            onInit={setReactFlowInstance}
-            onDrop={onDrop}
-            onDragOver={onDragOver}
-            onNodeClick={onNodeClick}
-            fitView
-            attributionPosition="top-right">
-            <Controls />  
-            <Background variant="dots" gap={12} size={1} />
-          </ReactFlow>
-        </div>
+        <ReactFlow
+          style = {reactFlowStyle}
+          ref={reactFlowWrapper}
+          nodes={nodes}
+          edges={edges}
+          nodeTypes={nodeTypes}
+          onNodesChange={onNodesChange}
+          onEdgesChange={onEdgesChange}
+          snapToGrid
+          onEdgeUpdate={onEdgeUpdate}
+          onEdgeUpdateStart={onEdgeUpdateStart}
+          onEdgeUpdateEnd={onEdgeUpdateEnd}
+          onConnect={onConnect}
+          onInit={setReactFlowInstance}
+          onDrop={onDrop}
+          onDragOver={onDragOver}
+          onNodeClick={onNodeClick}
+          fitView
+          attributionPosition="top-right">
+          <Controls />  
+          <Background variant="dots" gap={12} size={0.5} />
+        </ReactFlow>
       </ReactFlowProvider>  
-    </div>
   );
 }

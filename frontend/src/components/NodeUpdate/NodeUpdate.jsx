@@ -28,7 +28,7 @@ export default function NodeUpdate() {
   }, [updatedData, setNodes, setCurrentNode]);
 
   return (
-    <div className="params_area">
+    <div className="params-area">
         {currentNode.data ? 
           Object.keys(currentNode.data).map((param, i) => (
             <div key={i} >

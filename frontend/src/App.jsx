@@ -1,6 +1,5 @@
 import React from 'react';
 import { ReactFlowProvider } from 'reactflow';
-
 import 'reactflow/dist/style.css';
 import './App.css'
 import MainContextProvider from './components/context/MainContext';
@@ -9,17 +8,16 @@ import Sidebar from './components/SideBar/SideBar';
 
 export default function App() {
   return (
-    <MainContextProvider>
-      <ReactFlowProvider>
-        <div className='main'>
-          <div className='header'>YOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO</div>
-          <div className='work-area'>
-            <Sidebar />
+      <MainContextProvider>
+      <header> test for header</header>
+      <div className='main-page'>
+        <Sidebar />
+        <div className='content-area'>
+          <ReactFlowProvider>
             <DrawZone/>
-          </div>
-        <footer></footer>
+          </ReactFlowProvider>
         </div>
-      </ReactFlowProvider>
-    </MainContextProvider>
+      </div>
+      </MainContextProvider>
   );
 }

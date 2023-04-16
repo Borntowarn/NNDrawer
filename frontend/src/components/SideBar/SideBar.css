@@ -1,73 +1,61 @@
-.dndflow {
-    color: black;
-    flex-direction: column;
-    display: flex;
-    flex-grow: 1;
-    height: 100%;
-  }
-  
-  .dndflow aside {
-    border-right: 1px solid #eee;
-    padding: 15px 10px;
-    font-size: 12px;
-    background: #fcfcfc;
-  }
-  
-  .dndflow aside .description {
-    margin-bottom: 10px;
-  }
-  
-  .dndflow .dndnode {
-    height: 20px;
-    padding: 4px;
-    border: 1px solid #1a192b;
-    border-radius: 2px;
-    margin-bottom: 10px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    cursor: grab;
-  }
-  
-  .dndflow .dndnode.input {
-    border-color: #0041d0;
-  }
-  
-  .dndflow .dndnode.output {
-    border-color: #ff0072;
-  }
-  
-  .dndflow .reactflow-wrapper {
-    flex-grow: 1;
-    height: 100%;
-  }
-  
-  .dndflow .selectall {
-    margin-top: 10px;
-  }
-  
-  @media screen and (min-width: 768px) {
-    .dndflow {
-      flex-direction: row;
-    }
-  
-    .dndflow aside {
-      width: 20%;
-      max-width: 250px;
-    }
-  }
-
-
- .side_area {
+.side-area {
+  width: 15vw;
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
-  width: auto;
+  background-color: rgba(255, 255, 255, 0.336);
  }
 
- .blocks_area {
-  background-color: rgb(233, 225, 216);
-  border-radius: 1em;
+ /* DRAG AND DROP AREA */
+ .dnd-area {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
   padding: 1em;
+
+ }
+
+ .nodes-search {
+  padding: 0.4em;
+  width: 100%;
+  border-radius: 5px;
+  background-color:#d6cdd1;
+  border-color: #666363;
+  color: #665757;
+ }
+
+ .nodes-list {
+  margin-top: 1.5em;
+  width: 100%;
+  border: #1a192b;
+  border-radius: 5px;
  }
  
+ .dndnode {
+  background-color: #d6cdd1a2;
+  padding: 0.6em;
+  margin-bottom: 5px;
+  border-radius: 5px;
+  color: #3d3a3a;
+ }
+
+ .dndnode:hover {
+  background-color: #ccc1c6;
+  transition-duration: 0.3s;
+ }
+
+/* PARAMETERS AREA */
+.update-area {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  height: 100%;
+  margin: 1em;
+  padding: 0.5em;
+  border-radius: 5px;
+  background-color: #d6cdd1a2;
+}
+
+.params-title {
+  color: #1a192b;
+  text-align: center;
+}
