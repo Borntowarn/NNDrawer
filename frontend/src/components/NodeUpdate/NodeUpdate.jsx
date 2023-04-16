@@ -32,8 +32,10 @@ export default function NodeUpdate() {
         {currentNode.data ? 
           Object.keys(currentNode.data).map((param, i) => (
             <div key={i} >
-            <label>label: {param}</label>
-            <input value={currentNode.data[param]} onChange={(evt) => setUpdatedData([param, evt.target.value])}/>
+            <div className='param'>
+              <label>label: {param}</label>
+              <input className='param-input' value={currentNode.data[param]} onChange={(evt) => setUpdatedData([param, evt.target.value])}/>
+            </div>
             </div>
         )) : <></>
         }
