@@ -1,4 +1,4 @@
-import React, { useCallback, useRef, useMemo, useState, useEffect, useContext } from 'react';
+import React, { useCallback, useRef, useMemo, useContext } from 'react';
 import ReactFlow, {
   ReactFlowProvider,
   Controls,
@@ -72,23 +72,18 @@ export default function DrawZone() {
       event.preventDefault();
 
       const reactFlowBounds = reactFlowWrapper.current.getBoundingClientRect();
-      const type = event.dataTransfer.getData('application/reactflow');
-
-      if (typeof type === 'undefined' || !type) {
-        return;
-      }
+      const nodeData = JSON.parse(event.dataTransfer.getData('node'));
 
       const position = reactFlowInstance.project({
         x: event.clientX - reactFlowBounds.left,
         y: event.clientY - reactFlowBounds.top,
       });
+
       const newNode = {
         id: getId(),
-        type,
         position,
-        data: {
-          label: type
-        },
+        type: nodeData.type,
+        data: nodeData.data
       };
 
       setNodes((nds) => nds.concat(newNode));

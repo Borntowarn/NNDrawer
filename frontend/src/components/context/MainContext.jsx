@@ -5,8 +5,6 @@ import CustomNode from "../CustomNode/CustomNode";
 
 export const MainContext = createContext()
 
-// const nodeTypes = ['input', 'default', 'output', 'type1', 'type2', 'type3', 'type4']
-
 const TestInitialNodes = [
     { id: '1', position: { x: 0, y: 0 }, data: {
       label: 'node 1',
@@ -21,12 +19,14 @@ const TestInitialNodes = [
   ];
 const TestInitialEdges = [{ id: 'e1-2', source: '1', target: '2' }];
 
-
-
 const MainContextProvider = ({ children }) => {
     const [nodes, setNodes, onNodesChange] = useNodesState(TestInitialNodes);
     const [edges, setEdges, onEdgesChange] = useEdgesState(TestInitialEdges);
 
+    const [savedNodes, setSavedNodes] = useState([
+      {id: '1', data: { label: 'saved_node_1', param1: 'value1'}},
+      {id: '2', data: { label: 'saved_node_2', param1: 'value1'}}
+    ])
     const [nodeTypes, setNodeTypes] = useState({
       customNode1: CustomNode
     })
@@ -57,7 +57,9 @@ const MainContextProvider = ({ children }) => {
             nodeTypes,
             setNodeTypes,
             reactFlowInstance,
-            setReactFlowInstance
+            setReactFlowInstance,
+            savedNodes,
+            setSavedNodes
         }}>
           {children}
         </MainContext.Provider>

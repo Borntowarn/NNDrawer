@@ -14,7 +14,7 @@ function CustomNode({ data, isConnectable }) {
       <Handle type="target" position={Position.Top} isConnectable={isConnectable} />
       <div>
         <label htmlFor="text">{data.label}</label>
-        <input id="text" name="text" onChange={onChange} className="nodrag" />
+        <button className='open-button' onChange={onChange}>Open</button>
       </div>
       <Handle
         type="source"
