@@ -34,7 +34,7 @@ export default function NodeUpdate() {
   useScrollbar(todoWrapper, hasScrollBar)
 
   return (
-    <div ref={todoWrapper} className="params-area">
+    <div ref={todoWrapper} className="params-list">
       <div>
         {currentNode.data ? 
           Object.keys(currentNode.data).map((param, i) => (

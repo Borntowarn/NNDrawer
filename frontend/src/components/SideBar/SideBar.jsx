@@ -31,8 +31,8 @@ export default () => {
             
           </div>
       </div>
-      <div className='update-area'>
-        <div className='params-title'>Params</div>
+      <div className='params-area'>
+        <input className='nodes-search'/>
         <NodeUpdate />
       </div>
     </aside>

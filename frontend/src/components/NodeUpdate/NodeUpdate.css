@@ -1,13 +1,13 @@
-.params-area {
-  width: 90%;
+.params-list {
   color: #1a192b;
   height: 20em;
+  margin-top: 1em;
 }
 
 .param {
   display: grid;
-  width: 90%;
-  background-color: #9a9aa1;
+  width: 93%;
+  background-color: #d6cdd1a2;
   border-radius: 5px;
   padding: 0.2em;
   margin-bottom: 0.2em;
