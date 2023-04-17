@@ -9,6 +9,11 @@ export default function NodeUpdate() {
 
   const todoWrapper = useRef(null)
   const hasScrollBar = currentNode.data ? Object.keys(currentNode.data).length > 4: false
+  const [allowedKeys, setKeys] = useState(currentNode.data ? Object.keys(currentNode.data) : [])
+
+  useEffect(() => {
+    setKeys(currentNode.data ? Object.keys(currentNode.data) : [])
+  }, [currentNode])
 
   useEffect(() => {
     setNodes((nds) =>
@@ -31,23 +36,30 @@ export default function NodeUpdate() {
     setCurrentNode(currentNode);
   }, [updatedData, setNodes, setCurrentNode]);
 
+  const handleChange = (value) => {
+    setKeys(Object.keys(currentNode.data).filter(elem => elem.includes(value)))
+  }
+
   useScrollbar(todoWrapper, hasScrollBar)
+  console.log(allowedKeys)
 
   return (
-    <div ref={todoWrapper} className="params-list">
-      <div>
-        {currentNode.data ? 
-          Object.keys(currentNode.data).map((param, i) => (
-            <div key={i} >
-              <div className='param'>
-                <label>{param}</label>
-                <input className='param-input' value={currentNode.data[param]} onChange={(evt) => setUpdatedData([param, evt.target.value])}/>
+    <div>
+      <input placeholder='Parameter title' onChange={(e) => handleChange(e.target.value)}  className='nodes-search'/>
+      <div ref={todoWrapper} className="params-list">
+        <div>
+          {currentNode.data ? 
+            allowedKeys.map((param, i) => (
+              <div key={i} >
+                <div className='param'>
+                  <label>{param}</label>
+                  <input className='param-input' value={currentNode.data[param]} onChange={(evt) => setUpdatedData([param, evt.target.value])}/>
+                </div>
               </div>
-            </div>
-        )) : <></>
-        }
+          )) : <></>
+          }
+        </div>
       </div>
     </div>
-  
   )
 }
