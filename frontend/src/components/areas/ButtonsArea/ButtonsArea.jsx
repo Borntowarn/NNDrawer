@@ -1,5 +1,5 @@
 import React from 'react'
-import SaveButton from '../../buttons/SaveButton'
+import SaveButton from '../../buttons/SaveButton/SaveButton'
 
 export default function ButtonsArea() {
     return (
