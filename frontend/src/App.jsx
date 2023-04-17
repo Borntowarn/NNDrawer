@@ -5,6 +5,7 @@ import './App.css'
 import MainContextProvider from './components/context/MainContext';
 import DrawZone from './components/DrawZone/DrawZone';
 import Sidebar from './components/SideBar/SideBar';
+import ButtonsArea from './components/areas/ButtonsArea/ButtonsArea';
 
 export default function App() {
   return (
@@ -13,6 +14,7 @@ export default function App() {
       <div className='main-page'>
         <Sidebar />
         <div className='content-area'>
+          <ButtonsArea />
           <ReactFlowProvider>
             <DrawZone/>
           </ReactFlowProvider>

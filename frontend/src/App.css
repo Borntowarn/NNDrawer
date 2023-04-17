@@ -41,23 +41,33 @@ header {
 }
 
 
-.content-area {
-  display: flex;
-  justify-content: space-between;
-  /* height: 90vh; */
-  width: 85vw;
-}
-
-.draw-area {
-  display: flex;
-  justify-content: space-between;
-  height: 90vh;
-  width: 100vw;
-}
-
 .main-page {
   display: flex;
   height: 90vh;
   width: 100vw;
   flex-direction: row;
+}
+
+.content-area {
+  display: flex;
+  justify-content: space-between;
+  flex-direction: column;
+  width: 85vw;
+}
+
+/* BUTTONS AREA */
+.buttons-area {
+  padding: 0.5em;
+  background-color: rgba(255, 255, 255, 0.336);
+}
+
+button {
+  margin-right: 1em;
+  border: none;
+}
+
+button:hover {
+  background-color: #505050;
+  transition-duration: 0.3s;
+  border-color: #1f1f1f;
 }
