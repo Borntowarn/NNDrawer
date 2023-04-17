@@ -9,7 +9,26 @@ body {
 header {
   width: auto;
   height: 5em;
+  text-align: left;
+  background-color: #1e211f;
+  color: white;
+  padding: 0.3em;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
 }
+
+button {
+  margin-right: 1em;
+  border: none;
+}
+
+button:hover {
+  background-color: #505050;
+  transition-duration: 0.3s;
+  border-color: #1f1f1f;
+}
+
 
 .work-area {
   display: flex;
@@ -30,17 +49,6 @@ header {
   height: 100%;
 }
 
-header {
-  text-align: left;
-  background-color: #1e211f;
-  color: white;
-  padding: 0.3em;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-}
-
-
 .main-page {
   display: flex;
   height: 90vh;
@@ -59,15 +67,4 @@ header {
 .buttons-area {
   padding: 0.5em;
   background-color: rgba(255, 255, 255, 0.336);
-}
-
-button {
-  margin-right: 1em;
-  border: none;
-}
-
-button:hover {
-  background-color: #505050;
-  transition-duration: 0.3s;
-  border-color: #1f1f1f;
 }

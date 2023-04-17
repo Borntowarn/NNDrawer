@@ -14,8 +14,8 @@ export default function App() {
       <div className='main-page'>
         <Sidebar />
         <div className='content-area'>
-          <ButtonsArea />
           <ReactFlowProvider>
+            <ButtonsArea />
             <DrawZone/>
           </ReactFlowProvider>
         </div>

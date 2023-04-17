@@ -1,4 +1,4 @@
-import { createContext, useState } from "react";
+import { createContext, useEffect, useState } from "react";
 import { useNodesState, useEdgesState } from 'reactflow';
 
 export const MainContext = createContext()
@@ -27,6 +27,17 @@ const MainContextProvider = ({ children }) => {
     const [edges, setEdges, onEdgesChange] = useEdgesState(TestInitialEdges);
 
     const [currentNode, setCurrentNode] = useState('0')
+    const [reactFlowInstance, setReactFlowInstance] = useState(null);
+
+    const rendered = false  //TODO: fix rerender
+    useEffect(() => {
+      const flow = JSON.parse(localStorage.getItem('load-flow'));
+
+      if (flow) {
+        setNodes(flow.nodes || []);
+        setEdges(flow.edges || []);
+      }
+    }, [rendered])
 
     return (
         <MainContext.Provider value={{
@@ -38,7 +49,9 @@ const MainContextProvider = ({ children }) => {
             setEdges,
             currentNode,
             setCurrentNode,
-            nodeTypes
+            nodeTypes,
+            reactFlowInstance,
+            setReactFlowInstance
         }}>
           {children}
         </MainContext.Provider>
