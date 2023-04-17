@@ -1,0 +1,12 @@
+.params-area {
+  margin: 0.5em;
+  padding: 0.5em;
+  border-radius: 5px;
+  background-color:#505050;
+}
+
+.params-title {
+  color: #1a192b;
+  text-align: center;
+}
+  

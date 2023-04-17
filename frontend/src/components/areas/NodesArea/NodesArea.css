@@ -1,0 +1,39 @@
+.dnd-area {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    margin: 0.5em;
+    padding: 0.5em;
+    border-radius: 5px;
+    background-color:#505050;
+   }
+  
+   .nodes-search {
+    width: 98%;
+    padding: 0.5em 0.2em 0.5em 0.2em;
+    border-radius: 5px;
+    background-color:#d6cdd1;
+    border: none;
+    color: #665757;
+   }
+  
+   .nodes-list {
+    margin-top: 1em;
+    width: 100%;
+    height: 300px;
+    border-radius: 5px;
+   }
+   
+   .dndnode {
+    background-color: #d6cdd1a2;
+    padding: 0.6em;
+    width: 88%;
+    margin-bottom: 5px;
+    border-radius: 5px;
+    color: #3d3a3a;
+   }
+  
+   .dndnode:hover {
+    background-color: #ccc1c6;
+    transition-duration: 0.3s;
+   }
