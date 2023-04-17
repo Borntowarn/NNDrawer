@@ -5,12 +5,20 @@
   background-color: rgba(255, 255, 255, 0.336);
  }
 
+ /* SIDEBAR CONTENT AREAS */
+ .params-area, .dnd-area {
+  margin: 0.5em;
+  padding: 0.5em;
+  border-radius: 5px;
+  background-color:#505050;
+}
+
+
  /* DRAG AND DROP AREA */
  .dnd-area {
   display: flex;
   align-items: center;
   flex-direction: column;
-  margin: 1em;
  }
 
  .nodes-search {
@@ -57,8 +65,4 @@
 .params-title {
   color: #1a192b;
   text-align: center;
-}
-
-.params-area {
-  margin: 1em;
 }

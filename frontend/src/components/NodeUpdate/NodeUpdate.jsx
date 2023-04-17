@@ -8,7 +8,7 @@ export default function NodeUpdate() {
   const [updatedData, setUpdatedData] = useState()
 
   const todoWrapper = useRef(null)
-  const hasScrollBar = currentNode.data ? Object.keys(currentNode.data).length > 2: false
+  const hasScrollBar = currentNode.data ? Object.keys(currentNode.data).length > 4: false
 
   useEffect(() => {
     setNodes((nds) =>
