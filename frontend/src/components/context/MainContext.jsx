@@ -6,7 +6,15 @@ export const MainContext = createContext()
 const nodeTypes = ['input', 'default', 'output', 'type1', 'type2', 'type3', 'type4']
 
 const TestInitialNodes = [
-    { id: '1', position: { x: 0, y: 0 }, data: { label: 'node 1', param1: 'value1', param2: 'value1' }},
+    { id: '1', position: { x: 0, y: 0 }, data: {
+      label: 'node 1',
+      param1: 'value1',
+      param2: 'value1',
+      param3: 'value1',
+      param4: 'value1',
+      param5: 'value1',
+      param6: 'value1',
+    }},
     { id: '2', position: { x: 0, y: 100 }, data: { label: 'node 2', param1: 'value1'}},
     { id: '3', type: 'customNode', position: { x: 0, y: 200 }, data: 'Test'},
   ];

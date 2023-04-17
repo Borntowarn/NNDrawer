@@ -3,7 +3,6 @@ import './SideBar.css'
 import { MainContext } from '../context/MainContext';
 import NodeUpdate from '../NodeUpdate/NodeUpdate';
 
-// import { OverlayScrollbarsComponent } from "overlayscrollbars-react";
 import { useScrollbar } from '../../hooks/use-scrollbar';
 
 export default () => {
@@ -23,7 +22,6 @@ export default () => {
     <aside className='side-area'>
       <div className='dnd-area'>
         <input className='nodes-search'/>
-        {/* <OverlayScrollbarsComponent defer> */}
           <div className='nodes-list' ref={todoWrapper}>
             {nodeTypes.map((type, i) => (
                 <div className="dndnode" onDragStart={(event) => onDragStart(event, type)} draggable key={i}>
@@ -32,7 +30,6 @@ export default () => {
               ))}
             
           </div>
-        {/* </OverlayScrollbarsComponent> */}
       </div>
       <div className='update-area'>
         <div className='params-title'>Params</div>

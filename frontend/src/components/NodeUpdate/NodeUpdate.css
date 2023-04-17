@@ -1,11 +1,12 @@
 .params-area {
   width: 90%;
   color: #1a192b;
+  height: 20em;
 }
 
 .param {
   display: grid;
-  width: 100%;
+  width: 90%;
   background-color: #9a9aa1;
   border-radius: 5px;
   padding: 0.2em;
