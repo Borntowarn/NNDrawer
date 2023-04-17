@@ -3,20 +3,14 @@ import ReactFlow, {
   ReactFlowProvider,
   Controls,
   Background,
-  useNodesState,
-  useEdgesState,
   addEdge,
-  useStore
 } from 'reactflow';
 import { useOnSelectionChange } from 'reactflow';
-
-import 'reactflow/dist/style.css';
 import { MainContext } from '../context/MainContext';
 
-import NodeUpdate from '../NodeUpdate/NodeUpdate';
 import CustomNode from '../CustomNode/CustomNode';
-import Sidebar from '../SideBar/SideBar';
 
+import 'reactflow/dist/style.css';
 import '../DrawZone/DrawZone.css'
 
 
@@ -24,7 +18,6 @@ let id = 0;
 const getId = () => `dndnode_${id++}`;
 
 export default function DrawZone() {
-  // Get data from context
   const {
     setCurrentNode,
     nodes, 
@@ -52,7 +45,7 @@ export default function DrawZone() {
   const [reactFlowInstance, setReactFlowInstance] = useState(null);
 
   const onConnect = useCallback((params) => setEdges((eds) => addEdge(params, eds)), [setEdges]);
-
+  
   const onEdgeUpdateStart = useCallback(() => {
     edgeUpdateSuccessful.current = false;
   }, []);

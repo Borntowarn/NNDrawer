@@ -24,7 +24,6 @@ export default function NodesArea() {
                 {type}
               </div>
             ))}
-          
         </div>
     </div>
   )
