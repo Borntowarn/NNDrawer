@@ -7,6 +7,7 @@ import ReactFlow, {
 } from 'reactflow';
 import { useOnSelectionChange } from 'reactflow';
 import { MainContext } from '../context/MainContext';
+import { v4 as uuid } from 'uuid';
 
 import 'reactflow/dist/style.css';
 import '../DrawZone/DrawZone.css'
@@ -80,7 +81,7 @@ export default function DrawZone() {
       });
 
       const newNode = {
-        id: getId(),
+        id: nodeData.id + uuid(),
         position,
         type: nodeData.type,
         data: nodeData.data
