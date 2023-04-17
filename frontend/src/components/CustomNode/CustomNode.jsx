@@ -1,5 +1,5 @@
-import { useCallback, useEffect, useState } from 'react';
-import { Handle, Position, useNodesState, useEdgesState } from 'reactflow';
+import { useCallback, } from 'react';
+import { Handle, Position, } from 'reactflow';
 import './customNode.css'
 
 const handleStyle = { left: 10 };
@@ -13,7 +13,7 @@ function CustomNode({ data, isConnectable }) {
     <div className="custom-node">
       <Handle type="target" position={Position.Top} isConnectable={isConnectable} />
       <div>
-        <label htmlFor="text">{data}</label>
+        <label htmlFor="text">{data.label}</label>
         <input id="text" name="text" onChange={onChange} className="nodrag" />
       </div>
       <Handle

@@ -1,9 +1,11 @@
 import { createContext, useEffect, useState } from "react";
 import { useNodesState, useEdgesState } from 'reactflow';
+import CustomNode from "../CustomNode/CustomNode";
+
 
 export const MainContext = createContext()
 
-const nodeTypes = ['input', 'default', 'output', 'type1', 'type2', 'type3', 'type4']
+// const nodeTypes = ['input', 'default', 'output', 'type1', 'type2', 'type3', 'type4']
 
 const TestInitialNodes = [
     { id: '1', position: { x: 0, y: 0 }, data: {
@@ -16,7 +18,6 @@ const TestInitialNodes = [
       param6: 'value1',
     }},
     { id: '2', position: { x: 0, y: 100 }, data: { label: 'node 2', param1: 'value1'}},
-    { id: '3', type: 'customNode', position: { x: 0, y: 200 }, data: 'Test'},
   ];
 const TestInitialEdges = [{ id: 'e1-2', source: '1', target: '2' }];
 
@@ -25,6 +26,10 @@ const TestInitialEdges = [{ id: 'e1-2', source: '1', target: '2' }];
 const MainContextProvider = ({ children }) => {
     const [nodes, setNodes, onNodesChange] = useNodesState(TestInitialNodes);
     const [edges, setEdges, onEdgesChange] = useEdgesState(TestInitialEdges);
+
+    const [nodeTypes, setNodeTypes] = useState({
+      customNode1: CustomNode
+    })
 
     const [currentNode, setCurrentNode] = useState('0')
     const [reactFlowInstance, setReactFlowInstance] = useState(null);
@@ -50,6 +55,7 @@ const MainContextProvider = ({ children }) => {
             currentNode,
             setCurrentNode,
             nodeTypes,
+            setNodeTypes,
             reactFlowInstance,
             setReactFlowInstance
         }}>

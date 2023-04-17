@@ -10,12 +10,14 @@ export default function NodesArea() {
   };
 
   const {nodeTypes} = useContext(MainContext)
+  const types = Object.keys(nodeTypes)
+
   const todoWrapper = useRef(null)
-  const hasScroll = nodeTypes.length > 5
-  const [allowedBlocks, setBlocks] = useState(nodeTypes)
+  const hasScroll = types.length > 5
+  const [allowedBlocks, setBlocks] = useState(types)
 
   const handleChange = (value) => {
-    setBlocks(nodeTypes.filter(elem => elem.includes(value)))
+    setBlocks(types.filter(elem => elem.includes(value)))
   }
 
   useScrollbar(todoWrapper, hasScroll);

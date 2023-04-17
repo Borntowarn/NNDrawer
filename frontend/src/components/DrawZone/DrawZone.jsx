@@ -8,8 +8,6 @@ import ReactFlow, {
 import { useOnSelectionChange } from 'reactflow';
 import { MainContext } from '../context/MainContext';
 
-import CustomNode from '../CustomNode/CustomNode';
-
 import 'reactflow/dist/style.css';
 import '../DrawZone/DrawZone.css'
 
@@ -26,8 +24,7 @@ export default function DrawZone() {
     onNodesChange, 
     setEdges, 
     onEdgesChange,
-    rfInstance,
-    setRfInstance
+    nodeTypes
   } = useContext(MainContext)
 
   useOnSelectionChange({
@@ -39,8 +36,8 @@ export default function DrawZone() {
     setCurrentNode(node)
   };
   
-  const nodeTypes = useMemo(() => ({ customNode: CustomNode }), []);
-  
+  const allowedTypes = useMemo(() => (nodeTypes), [nodeTypes]);
+
   const edgeUpdateSuccessful = useRef(true);
   const reactFlowWrapper = useRef(null);
   
@@ -81,8 +78,6 @@ export default function DrawZone() {
         return;
       }
 
-      console.log("DROP_TYPE: ", type)
-
       const position = reactFlowInstance.project({
         x: event.clientX - reactFlowBounds.left,
         y: event.clientY - reactFlowBounds.top,
@@ -91,7 +86,9 @@ export default function DrawZone() {
         id: getId(),
         type,
         position,
-        data: { label: `${type} node` },
+        data: {
+          label: type
+        },
       };
 
       setNodes((nds) => nds.concat(newNode));
@@ -109,7 +106,7 @@ export default function DrawZone() {
           ref={reactFlowWrapper}
           nodes={nodes}
           edges={edges}
-          nodeTypes={nodeTypes}
+          nodeTypes={allowedTypes}
           onNodesChange={onNodesChange}
           onEdgesChange={onEdgesChange}
           snapToGrid
