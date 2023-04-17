@@ -55,7 +55,7 @@ export default function ParamsArea() {
                   <input className='param-input' value={currentNode.data[param]} onChange={(evt) => setUpdatedData([param, evt.target.value])}/>
                 </div>
               </div>
-          )) : <></>
+          )) : <span style={{color: 'white'}}>Choose node</span>
           }
         </div>
       </div>
