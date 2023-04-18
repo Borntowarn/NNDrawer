@@ -31,7 +31,7 @@ function CustomNode({ id, data, isConnectable }) {
   
         data.include.nodes[i].parentNode = id + '_open'
         data.include.nodes[i].extent = 'parent'
-        data.include.nodes[i].id += '_open'
+        data.include.nodes[i].id += id + '_open'
       }
   
       let xMax = xMas.indexOf(Math.max(...xMas));
@@ -67,7 +67,7 @@ function CustomNode({ id, data, isConnectable }) {
 
   
       for (let i=0; i < data.include.edges.length; i++) {
-        data.include.edges[i].id += '_open'
+        data.include.edges[i].id += id +'_open'
         data.include.edges[i].source += '_open'
         data.include.edges[i].target += '_open'
       }
@@ -81,8 +81,8 @@ function CustomNode({ id, data, isConnectable }) {
 
     } else {
       setButtonActive(false)
-      setNodes(nodes.filter(nds => nds.id.slice(-4) != 'open'))
-      setEdges(edges.filter(edg => edg.id.slice(-4) != 'open'))
+      setEdges(edges.filter(edg => edg.id.slice(-50) != id +'_open'))
+      setNodes(nodes.filter(nds => nds.id.slice(-50) != id +'_open'))
     }
   };
 
