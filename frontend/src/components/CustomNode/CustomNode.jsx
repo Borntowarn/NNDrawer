@@ -1,7 +1,7 @@
 import { Handle, Position, } from 'reactflow';
-import './customNode.css'
 import { useContext, useState } from 'react';
 import { MainContext } from '../context/MainContext';
+import './customNode.css'
 
 const handleStyle = { left: 10 };
 
@@ -19,7 +19,6 @@ function CustomNode({ id, data, isConnectable }) {
       let egdesGgroup =  JSON.parse(JSON.stringify(data.include.edges))
 
       const position = nodes.filter(el => el.id === id)[0].position  // TODO: get position from props
-
       const groupEdge = {
         id: "edge_" + id + "_open",
         source: id,
@@ -75,8 +74,6 @@ function CustomNode({ id, data, isConnectable }) {
         egdesGgroup[i].source += id + '_open'
         egdesGgroup[i].target += id + '_open'
       }
-      
-      console.log("GROUP_EDGES", egdesGgroup)
 
       setNodes((nds) => nds.concat(groupNode))
       setEdges((edg) => edg.concat(groupEdge))
@@ -85,8 +82,8 @@ function CustomNode({ id, data, isConnectable }) {
 
     } else {
       setButtonActive(false)
-      setEdges(edges.filter(edg => edg.id.slice(-(id.length + 5)) != id + '_open'))
-      setNodes(nodes.filter(nds => nds.id.slice(-(id.length + 5)) != id + '_open'))
+      setEdges(edges.filter(edg => !edg.id.includes(id + '_open')))
+      setNodes(nodes.filter(nds => !nds.id.includes(id + '_open')))
     }
   };
 
