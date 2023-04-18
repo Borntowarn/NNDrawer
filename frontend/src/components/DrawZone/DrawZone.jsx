@@ -81,7 +81,7 @@ export default function DrawZone() {
       });
 
       const newNode = {
-        id: nodeData.id + uuid(),
+        id:  nodeData.id ? nodeData.id + Date.now().toString() : Date.now().toString(),  // TODO: better to use slice of uuid
         position,
         type: nodeData.type,
         data: nodeData.data

@@ -7,6 +7,11 @@ export default function ExportButton() {
   const onExport = () => {
     if (reactFlowInstance) {
         const flow = reactFlowInstance.toObject();
+
+        console.log("FLOW", flow)
+
+        flow.nodes = flow.nodes.filter(nds => nds.id.slice(-5) != '_open')
+
         const newNode = {
             type: 'customNode1',
             data: { 
