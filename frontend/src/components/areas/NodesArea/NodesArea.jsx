@@ -21,7 +21,7 @@ export default function NodesArea() {
   const [allowedNodes, setNodes] = useState(savedNodes)
 
   const handleChange = (value) => {
-    setNodes(savedNodes.filter(elem => elem.data.label.includes(value)))
+    setNodes(savedNodes.filter(elem => elem.data.label.toLowerCase().includes(value.toLowerCase())))
   }
 
   useScrollbar(todoWrapper, hasScroll);

@@ -37,7 +37,7 @@ export default function ParamsArea() {
   }, [updatedData, setNodes, setCurrentNode]);
 
   const handleChange = (value) => {
-    setKeys(Object.keys(currentNode.data).filter(elem => elem.includes(value)))
+    setKeys(Object.keys(currentNode.data).filter(elem => elem.toLowerCase().includes(value.toLowerCase())))
   }
 
   useScrollbar(todoWrapper, hasScrollBar)
