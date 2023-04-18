@@ -60,8 +60,6 @@ function CustomNode({ id, data, isConnectable }) {
         }
       }
   
-      data.include.nodes[0].parentNode = id + '_open'
-      data.include.nodes[0].id += '_open'
       data.include.nodes[0].position = {
         x: temp + 50,
         y: 50,
@@ -73,11 +71,14 @@ function CustomNode({ id, data, isConnectable }) {
         data.include.edges[i].source += '_open'
         data.include.edges[i].target += '_open'
       }
-  
+      
+      console.log("GROUP_EDGES", data.include.edges)
+
       setNodes((nds) => nds.concat(groupNode))
       setEdges((edg) => edg.concat(groupEdge))
       setNodes((nds) => nds.concat(...data.include.nodes))
       setEdges((edg) => edg.concat(...data.include.edges))
+
     } else {
       setButtonActive(false)
       setNodes(nodes.filter(nds => nds.id.slice(-4) != 'open'))
