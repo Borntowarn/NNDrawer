@@ -1,4 +1,4 @@
-"""This module contains an object that represents a Telegram Bot."""
+"""This module contains a functions for torch parsing."""
 import inspect
 import torch
 import re
