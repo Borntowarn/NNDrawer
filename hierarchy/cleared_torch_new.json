@@ -8074,7 +8074,7 @@
         },
         "pickle_module": {
           "Type": "typing.Any",
-          "Default": "<module 'pickle' from 'c:\\\\Users\\\\kozlo\\\\anaconda3\\\\lib\\\\pickle.py'>"
+          "Default": "<module 'pickle' from 'C:\\\\Users\\\\kozlo\\\\anaconda3\\\\lib\\\\pickle.py'>"
         },
         "pickle_protocol": {
           "Type": "<class 'int'>",
@@ -21259,7 +21259,7 @@
                         },
                         "activation": {
                           "Type": "typing.Union[str, typing.Callable[[torch.Tensor], torch.Tensor]]",
-                          "Default": "<function relu at 0x0000024A58A265E0>"
+                          "Default": "<function relu at 0x0000025958C71DC0>"
                         },
                         "custom_encoder": {
                           "Type": "typing.Optional[typing.Any]",
@@ -21434,7 +21434,7 @@
                         },
                         "activation": {
                           "Type": "typing.Union[str, typing.Callable[[torch.Tensor], torch.Tensor]]",
-                          "Default": "<function relu at 0x0000024A58A265E0>"
+                          "Default": "<function relu at 0x0000025958C71DC0>"
                         },
                         "layer_norm_eps": {
                           "Type": "<class 'float'>",
@@ -21576,7 +21576,7 @@
                         },
                         "activation": {
                           "Type": "typing.Union[str, typing.Callable[[torch.Tensor], torch.Tensor]]",
-                          "Default": "<function relu at 0x0000024A58A265E0>"
+                          "Default": "<function relu at 0x0000025958C71DC0>"
                         },
                         "layer_norm_eps": {
                           "Type": "<class 'float'>",
