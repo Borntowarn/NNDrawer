@@ -1,8 +1,11 @@
+"""This module contains an object that represents a Telegram Bot."""
 import inspect
 import torch
 import re
 import json
 
+from types import *
+from typing import *
 from collections import defaultdict
 
 classes = set([])
@@ -18,7 +21,25 @@ ignored_modules = ['onnx', 'jit', 'ao', 'amp', 'autograd',
 added_builtins_classes = 'Tensor'
 ignored_functions = []
 
-def is_correct_module(module, name, prev_module, prevs):
+def is_correct_module(
+    module: ModuleType,
+    name: str,
+    prev_module: ModuleType,
+    prevs: Iterable
+    ) -> bool:
+    """
+    This function checks if new module needed and 
+    there weren't the same module at previous steps
+
+    Args:
+        module (ModuleType): Input module
+        name (str): Name of the module
+        prev_module (ModuleType): Module on prev step
+        prevs (Iterable): Previous modules in iterable
+
+    Returns:
+        bool: _description_
+    """
     return not prev_module \
            or not name.startswith('_') \
            and not name.endswith('_') \
@@ -29,7 +50,19 @@ def is_correct_module(module, name, prev_module, prevs):
            and module.__name__[module.__name__.find('.') + 1:] not in ignored_modules
 
 
-def is_correct_func(obj, prev):
+def is_correct_func(
+    obj: object,
+    prev: object
+    ) -> bool:
+    """
+    Check for function correct
+
+    Args:
+        obj (object): Current function object
+        prev (object): Previous function object
+    Returns:
+        bool: Correctness of function
+    """
     return (
         obj.__name__ == '__init__' \
         or (not obj.__name__.startswith('_') \
@@ -52,16 +85,39 @@ def is_correct_func(obj, prev):
            
 
 
-def is_correct_class(obj, prev):
+def is_correct_class(
+    obj: object,
+    prev: object
+    ) -> bool:
+    """
+    Check for class correct
+
+    Args:
+        obj (object): Current class object
+        prev (object): Previous class object
+    Returns:
+        bool: Correctness of class
+    """
     return not obj.__name__.startswith('_') \
            and not obj.__name__.endswith('_') \
            and not obj.__module__ + '.' + obj.__name__ in classes \
            and (not prev or obj.__module__ == prev.__name__)
            
 
-def get_builtins_args(obj):
-   r = re.compile('\(.+\)')
-   if obj.__doc__:
+def get_builtins_args(
+    obj: object
+    ) -> dict:
+    """
+    Parse built-in functions arguments from docs
+
+    Args:
+        obj (object): Current function object
+
+    Returns:
+        dict: Arguments
+    """
+    r = re.compile('\(.+\)')
+    if obj.__doc__:
         func = re.search(r, obj.__doc__)
         if func:
             named_args = {}
@@ -81,7 +137,18 @@ def get_builtins_args(obj):
             return named_args
 
 
-def get_args(func):
+def get_args(
+    func: object
+    ) -> defaultdict[str, Any]:
+    """
+    This func put arguments of functions to dict
+
+    Args:
+        func (object): Current function object
+
+    Returns:
+        defaultdict[str, Any]: Arguments
+    """
     args, varargs, keywords, defaults, kwonlyargs, kwonlydefaults, annotations = inspect.getfullargspec(func)
     
     if args and defaults:
@@ -106,7 +173,25 @@ def get_args(func):
     return named_args
 
 
-def add_param(name, obj, hierarchy, prev, prevs, num):
+def add_param(
+    name: str,
+    obj: object,
+    hierarchy: defaultdict,
+    prev: object,
+    prevs: Iterable,
+    num: int
+    ) -> None:
+    """
+    Parse the whole module and get all classes, methods, built-ins from it
+
+    Args:
+        name (str): Name of object
+        obj (object): Current object to inspect
+        hierarchy (defaultdict): Dict with all members
+        prev (object): Prev object
+        prevs (Iterable): Iterable with whole prev object to prevent recursion
+        num (int): Step of hierarchy
+    """
     if inspect.ismodule(obj):
         if is_correct_module(obj, name, prev, prevs):
             new_prevs = prevs.copy()
@@ -135,7 +220,16 @@ def add_param(name, obj, hierarchy, prev, prevs, num):
             hierarchy['Functions'][name] = arg_dict
 
 
-def clear(torch_hierarchy):
+def clear(torch_hierarchy: defaultdict) -> defaultdict[str, Any]:
+    """
+    Clear unnecessary members from hierarchy
+
+    Args:
+        torch_hierarchy (defaultdict): Current hierarchy
+
+    Returns:
+        defaultdict[str, Any]: Cleared hierarchy
+    """
     cleared_torch_hierarchy = defaultdict(dict)
     for i, j in torch_hierarchy['Modules']['torch'].items():
         cleared_torch_hierarchy[i] = j
@@ -151,7 +245,7 @@ def clear(torch_hierarchy):
 
 
 
-def save(torch_hierarchy, cleared_torch_hierarchy):
+def save(torch_hierarchy, cleared_torch_hierarchy) -> None:
     with open('hierarchy/torch_new.json', 'w') as f:
         json.dump(torch_hierarchy, f, indent='  ')
         
