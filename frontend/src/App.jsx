@@ -10,7 +10,7 @@ import ButtonsArea from './components/areas/ButtonsArea/ButtonsArea';
 export default function App() {
   return (
       <MainContextProvider>
-      <header> test for header</header>
+      <header>test for header</header>
       <div className='main-page'>
         <Sidebar />
         <div className='content-area'>

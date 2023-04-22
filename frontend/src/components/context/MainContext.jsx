@@ -5,6 +5,62 @@ import CustomNode from "../CustomNode/CustomNode";
 
 export const MainContext = createContext()
 
+const [projects, setProjects] = [
+  {
+    name: 'test_project_1',
+    edges: [
+      {id: 'e1-2', source: '1', target: '2'}
+    ],
+    nodes: [
+      {width: 150,
+       height: 40,
+       id: '1',
+       position: {x: -90, y: 0},
+       data: {
+        label: 'node 1', param1: 'value1', param2: 'value1',
+      }},
+      {width: 150,
+        height: 40,
+        id: '2',
+        position: {x: -90, y: 90},
+        data: {
+         label: 'node 2', param1: 'value1', param2: 'value1',
+       }}
+    ],
+    viewport: {x: 412, y: 247, zoom: 2},
+  },
+  {
+    name: 'test_project_1',
+    edges: [
+      {id: 'e1-2', source: '1', target: '2'}
+    ],
+    nodes: [
+      {width: 150,
+       height: 40,
+       id: '1',
+       position: {x: -90, y: 0},
+       data: {
+        label: 'node 1', param1: 'value1', param2: 'value1',
+      }},
+      {width: 150,
+        height: 40,
+        id: '2',
+        position: {x: -90, y: 90},
+        data: {
+         label: 'node 2', param1: 'value1', param2: 'value1',
+       }},
+       {width: 150,
+        height: 40,
+        id: '3',
+        position: {x: -180, y: 90},
+        data: {
+         label: 'node 3', param1: 'value1', param2: 'value1',
+       }}
+    ],
+    viewport: {x: 412, y: 247, zoom: 2},
+  }
+]
+
 const TestInitialNodes = [
     { id: '1', position: { x: 0, y: 0 }, data: {
       label: 'node 1',
@@ -45,24 +101,24 @@ const MainContextProvider = ({ children }) => {
     }, [rendered])
 
     return (
-        <MainContext.Provider value={{
-            onNodesChange,
-            onEdgesChange,
-            nodes,
-            setNodes,
-            edges,
-            setEdges,
-            currentNode,
-            setCurrentNode,
-            nodeTypes,
-            setNodeTypes,
-            reactFlowInstance,
-            setReactFlowInstance,
-            savedNodes,
-            setSavedNodes
-        }}>
-          {children}
-        </MainContext.Provider>
+      <MainContext.Provider value={{
+        onNodesChange,
+        onEdgesChange,
+        nodes,
+        setNodes,
+        edges,
+        setEdges,
+        currentNode,
+        setCurrentNode,
+        nodeTypes,
+        setNodeTypes,
+        reactFlowInstance,
+        setReactFlowInstance,
+        savedNodes,
+        setSavedNodes
+      }}>
+        {children}
+      </MainContext.Provider>
     )
 }
 
