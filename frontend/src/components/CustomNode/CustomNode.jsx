@@ -7,13 +7,12 @@ const handleStyle = { left: 10 };
 
 function CustomNode({ id, data, isConnectable }) {
   const { setNodes, setEdges, nodes, edges } = useContext(MainContext)
-  const [ buttonActive, setButtonActive ] = useState(false) 
 
   const handleClick = () => {
     console.log("CLICK")
 
-    if (!buttonActive) {
-      setButtonActive(true)
+    if (!data.buttonState) {
+      data.buttonState = true
 
       let nodesGroup = JSON.parse(JSON.stringify(data.include.nodes))
       let egdesGgroup =  JSON.parse(JSON.stringify(data.include.edges))
@@ -81,7 +80,7 @@ function CustomNode({ id, data, isConnectable }) {
       setEdges((edg) => edg.concat(...egdesGgroup))
 
     } else {
-      setButtonActive(false)
+      data.buttonState = false
       setEdges(edges.filter(edg => !edg.id.includes(id + '_open')))
       setNodes(nodes.filter(nds => !nds.id.includes(id + '_open')))
     }

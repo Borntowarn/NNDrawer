@@ -15,7 +15,8 @@ export default function ExportButton() {
         const newNode = {
             type: 'customNode1',
             data: { 
-                label: 'export_node', 
+                label: 'export_node',
+                buttonState: false,
                 include: flow
             }
         }
