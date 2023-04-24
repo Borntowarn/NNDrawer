@@ -1,0 +1,70 @@
+body {
+  background-size: cover;
+  height: 100vh;
+  width: 100vw;
+  display: flex;
+  flex-direction: column;
+}
+
+header {
+  width: auto;
+  height: 5em;
+  text-align: left;
+  background-color: #1e211f;
+  color: white;
+  padding: 0.3em;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+button {
+  margin-right: 1em;
+  border: none;
+}
+
+button:hover {
+  background-color: #505050;
+  transition-duration: 0.3s;
+  border-color: #1f1f1f;
+}
+
+
+.work-area {
+  display: flex;
+  justify-content: space-between;
+  flex-direction: row;
+}
+
+/* HEADER SECTION */
+.header-logo {
+  width: 60px;
+  height: 60px;
+  margin-right: 1.9em;
+}
+
+.header-logo img{
+  object-fit: fill;
+  width: 100%;
+  height: 100%;
+}
+
+.main-page {
+  display: flex;
+  height: 90vh;
+  width: 100vw;
+  flex-direction: row;
+}
+
+.content-area {
+  display: flex;
+  justify-content: space-between;
+  flex-direction: column;
+  width: 85vw;
+}
+
+/* BUTTONS AREA */
+.buttons-area {
+  padding: 0.5em;
+  background-color: rgba(255, 255, 255, 0.336);
+}

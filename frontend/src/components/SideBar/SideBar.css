@@ -1,0 +1,6 @@
+.side-area {
+  width: 15vw;
+  display: flex;
+  flex-direction: column;
+  background-color: rgba(255, 255, 255, 0.336);
+ }
