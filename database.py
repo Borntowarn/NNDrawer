@@ -19,6 +19,7 @@ class UserIn(BaseModel):
     password: str
 
 class UserOut(BaseModel):
+    id: int
     api: Optional[str] = None
     username: str
     mail: str
@@ -27,22 +28,33 @@ class UserOut(BaseModel):
     graduation: Optional[str] = None
     company: Optional[str] = None
 
+
+class Block(BaseModel):
+    idUser: int
+    data: str
+    descr: Optional[str] = None
+
+class BlockOut(BaseModel):
+    data: str
+    descr: Optional[str] = None
+
+class Project(BaseModel):
+    idUser: int
+    data: str
+    descr: Optional[str] = None
+
+class ProjectOut(BaseModel):
+    data: str
+    descr: Optional[str] = None
+
 class Database:
     
     
     def __init__(self, database_name) -> None:
         self.db = sl.connect(f'{database_name}.db')
         self.cursor = self.db.cursor()
-        self.acc_columns = [
-            i[1] 
-            for i in self.cursor.execute("PRAGMA table_info(acc)").fetchall()
-        ]
-        self.block_columns = [
-            i[1] 
-            for i in self.cursor.execute("PRAGMA table_info(blocks)").fetchall()
-        ]
     
-    def get_all_users(self):
+    def get_all_users(self) -> list[UserOut]:
         query = 'SELECT {} FROM acc'
         users = self.cursor.execute(
             query.format(
@@ -80,14 +92,53 @@ class Database:
             return UserOut(**res)
 
     
-    def add_user(self, user: User):
-        query = """INSERT INTO acc({}) VALUES({})"""
+    def add_user(self, user: User) -> UserOut:
+        query = "INSERT INTO acc({}) VALUES({})"
         cols = ', '.join(user.dict(exclude_defaults=True).keys())
         vals = tuple(user.dict(exclude_defaults=True).values())
         try:
             self.cursor.execute(query.format(cols, ', '.join(['?']*len(vals))), vals)
             self.db.commit()
             return self.get_user(UserIn(login=user.login, password=user.password))
+        except sl.OperationalError as e:
+            raise e
+    
+    
+    def get_user_blocks(self, user_id: int) -> list[BlockOut]:
+        query = f"SELECT data, descr FROM blocks WHERE idUser = {user_id}"
+        blocks = self.cursor.execute(query).fetchall()
+        result = []
+        for block in blocks:
+            block = dict(zip(BlockOut.__fields__, block))
+            result.append(BlockOut(**block))
+        return result
+    
+    def add_user_block(self, block: Block) -> list[BlockOut]:
+        query = "INSERT INTO blocks(idUser, data, descr) VALUES = (?, ?, ?)"
+        try:
+            blocks = self.cursor.execute(query, tuple(block.dict().values())).fetchall()
+            self.db.commit()
+            return self.get_user_blocks(block.idUser)
+        except sl.OperationalError as e:
+            raise e
+    
+    
+    def get_user_projects(self, user_id: int) -> list[ProjectOut]:
+        query = f"SELECT data, descr FROM projects WHERE idUser = {user_id}"
+        blocks = self.cursor.execute(query).fetchall()
+        result = []
+        for block in blocks:
+            block = dict(zip(ProjectOut.__fields__, block))
+            result.append(ProjectOut(**block))
+        return result
+
+    
+    def add_user_project(self, project: Project) -> list[BlockOut]:
+        query = "INSERT INTO projects(idUser, data, descr) VALUES = (?, ?, ?)"
+        try:
+            project = self.cursor.execute(query, tuple(project.dict().values())).fetchall()
+            self.db.commit()
+            return self.get_user_projects(project.idUser)
         except sl.OperationalError as e:
             raise e
 
