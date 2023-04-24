@@ -1,27 +1,53 @@
-from fastapi import FastAPI, Body
-from fastapi.responses import HTMLResponse, FileResponse
-import sqlite3 as sl
+from fastapi import FastAPI
+from fastapi.responses import JSONResponse, FileResponse
+from fastapi.encoders import jsonable_encoder
+from database import Database, User, UserIn
 import uvicorn
-import json
+
+from fastapi import FastAPI, HTTPException
+
 
 app = FastAPI(debug=True)
-cursor = None
-
-def get_user(username):
-    cursor.execute(f'SELECT * FROM acc WHERE username = "{username}"')
-    return cursor.fetchall()
 
 @app.get("/")
 def root():
-    global cursor
-    db = sl.connect('server.db')
-    cursor = db.cursor()
     return FileResponse("index.html")
 
-@app.post("/user/get")
-def user(data = Body()):
-    result = get_user(data['username'])
-    return {"message": result}
+
+# Обработчик для создания пользователя
+@app.get("/registration")
+async def create_user():
+    return FileResponse("registration.html")
+
+
+# Обработчик для создания пользователя
+@app.post("/registration")
+async def create_user(user: User):
+    database = Database('server')
+    try:
+        user = database.add_user(user)
+        return JSONResponse(jsonable_encoder(user))
+    except Exception as e:
+        raise HTTPException(status_code=401, detail=e)
+
+
+# Обработчик для получения всех пользователей
+@app.get("/users")
+async def get_all_users():
+    database = Database('server')
+    users = database.get_all_users()
+    return JSONResponse(jsonable_encoder(users))
+
+# Обработчик для проверки существования аккаунта
+@app.post("/login")
+async def login(user: UserIn):
+    database = Database('server')
+    existing_user = database.get_user(user)
+    if existing_user:
+        return JSONResponse(jsonable_encoder(existing_user))
+    else:
+        raise HTTPException(status_code=401, detail="Incorrect username or password.")
+
 
 if __name__ == "__main__":
     uvicorn.run(app, host="localhost", port=8000)
