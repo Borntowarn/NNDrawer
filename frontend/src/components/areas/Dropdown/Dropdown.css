@@ -1,0 +1,14 @@
+.dropdown {
+    display: flex;
+    flex-direction: col;
+    align-items: center;
+    justify-content: center;
+    position: absolute;
+    background-color: green;
+    padding: 1em;
+    transform: scale(0);
+}
+
+.dropdown.active {
+    transform: scale(1);
+}
