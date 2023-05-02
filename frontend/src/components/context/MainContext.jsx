@@ -23,59 +23,64 @@ const MainContextProvider = ({ children }) => {
   const [projects, setProjects] = useState([
     {
       name: 'test_project_1',
-      edges: [
-        {id: 'e1-2', source: '1', target: '2'}
-      ],
-      nodes: [
-        {width: 150,
-         height: 40,
-         id: '1',
-         position: {x: -90, y: 0},
-         data: {
-          label: 'node 1', param1: 'value1', param2: 'value1',
-        }},
-        {width: 150,
-          height: 40,
-          id: '2',
-          position: {x: -90, y: 90},
-          data: {
-           label: 'node 2', param1: 'value1', param2: 'value1',
-         }}
-      ],
-      viewport: {x: 412, y: 247, zoom: 2},
+      instance: {
+        edges: [
+          {id: 'e1-2', source: '1', target: '2'}
+        ],
+        nodes: [
+          {width: 150,
+           height: 40,
+           id: '1',
+           position: {x: -90, y: 0},
+           data: {
+            label: 'node 1', param1: 'value1', param2: 'value1',
+          }},
+          {width: 150,
+            height: 40,
+            id: '2',
+            position: {x: -90, y: 90},
+            data: {
+             label: 'node 2', param1: 'value1', param2: 'value1',
+           }}
+        ],
+        viewport: {x: 412, y: 247, zoom: 2},
+      }
     },
     {
       name: 'test_project_2',
-      edges: [
-        {id: 'e1-2', source: '1', target: '3'}
-      ],
-      nodes: [
-        {width: 150,
-         height: 40,
-         id: '1',
-         position: {x: -90, y: 0},
-         data: {
-          label: 'node 1', param1: 'value1', param2: 'value1',
-        }},
-        {width: 150,
-          height: 40,
-          id: '2',
-          position: {x: -90, y: 90},
-          data: {
-           label: 'node 2', param1: 'value1', param2: 'value1',
-         }},
-         {width: 150,
-          height: 40,
-          id: '3',
-          position: {x: -280, y: 90},
-          data: {
-           label: 'node 3', param1: 'value1', param2: 'value1',
-         }}
-      ],
-      viewport: {x: 412, y: 247, zoom: 2},
+      instance: {
+        edges: [
+          {id: 'e1-2', source: '1', target: '3'}
+        ],
+        nodes: [
+          {width: 150,
+           height: 40,
+           id: '1',
+           position: {x: -90, y: 0},
+           data: {
+            label: 'node 1', param1: 'value1', param2: 'value1',
+          }},
+          {width: 150,
+            height: 40,
+            id: '2',
+            position: {x: -90, y: 90},
+            data: {
+             label: 'node 2', param1: 'value1', param2: 'value1',
+           }},
+           {width: 150,
+            height: 40,
+            id: '3',
+            position: {x: -280, y: 90},
+            data: {
+             label: 'node 3', param1: 'value1', param2: 'value1',
+           }}
+        ],
+        viewport: {x: 412, y: 247, zoom: 2},
+      }
     }
   ])
 
+  const [currentProject, setCurrentProject] = useState(null)
   const [nodes, setNodes, onNodesChange] = useNodesState(TestInitialNodes);
   const [edges, setEdges, onEdgesChange] = useEdgesState(TestInitialEdges);
 
@@ -100,11 +105,12 @@ const MainContextProvider = ({ children }) => {
     }
   }, [rendered])
 
-  const updateInstance = (instance) => {
+  const updateInstance = (project) => {
     if (reactFlowInstance) {
       console.log('CHANGE INSTANCE')
-      setNodes(instance.nodes)
-      setEdges(instance.edges)
+      setCurrentProject(project.name)
+      setNodes(project.instance.nodes)
+      setEdges(project.instance.edges)
     }
   }
 
@@ -126,6 +132,8 @@ const MainContextProvider = ({ children }) => {
       setSavedNodes,
       projects,
       setProjects,
+      currentProject,
+      setCurrentProject,
       updateInstance
     }}>
       {children}
