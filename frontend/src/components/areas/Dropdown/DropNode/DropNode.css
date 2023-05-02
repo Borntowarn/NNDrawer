@@ -1,0 +1,12 @@
+.dropnode {
+    margin-bottom: 1em;
+    padding: 0.5em;
+    color: #3d3a3a;
+    border-radius: 5px;
+    background-color: #d6cdd1a2;
+}
+
+.dropnode:hover {
+    background-color: #ccc1c6;
+    transition: 0.5s;
+}

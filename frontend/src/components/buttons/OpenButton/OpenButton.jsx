@@ -3,7 +3,7 @@ import { useState } from 'react'
 
 export default function OpenButton() {
   const [active, setActive] = useState(false)
-  const testProjects = ['1', '2', '3']
+  const testProjects = ['project_1', 'project_2', 'project_3']
 
   return (
     <div>

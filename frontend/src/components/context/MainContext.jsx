@@ -5,62 +5,6 @@ import CustomNode from "../CustomNode/CustomNode";
 
 export const MainContext = createContext()
 
-const [projects, setProjects] = [
-  {
-    name: 'test_project_1',
-    edges: [
-      {id: 'e1-2', source: '1', target: '2'}
-    ],
-    nodes: [
-      {width: 150,
-       height: 40,
-       id: '1',
-       position: {x: -90, y: 0},
-       data: {
-        label: 'node 1', param1: 'value1', param2: 'value1',
-      }},
-      {width: 150,
-        height: 40,
-        id: '2',
-        position: {x: -90, y: 90},
-        data: {
-         label: 'node 2', param1: 'value1', param2: 'value1',
-       }}
-    ],
-    viewport: {x: 412, y: 247, zoom: 2},
-  },
-  {
-    name: 'test_project_1',
-    edges: [
-      {id: 'e1-2', source: '1', target: '2'}
-    ],
-    nodes: [
-      {width: 150,
-       height: 40,
-       id: '1',
-       position: {x: -90, y: 0},
-       data: {
-        label: 'node 1', param1: 'value1', param2: 'value1',
-      }},
-      {width: 150,
-        height: 40,
-        id: '2',
-        position: {x: -90, y: 90},
-        data: {
-         label: 'node 2', param1: 'value1', param2: 'value1',
-       }},
-       {width: 150,
-        height: 40,
-        id: '3',
-        position: {x: -180, y: 90},
-        data: {
-         label: 'node 3', param1: 'value1', param2: 'value1',
-       }}
-    ],
-    viewport: {x: 412, y: 247, zoom: 2},
-  }
-]
-
 const TestInitialNodes = [
     { id: '1', position: { x: 0, y: 0 }, data: {
       label: 'node 1',
@@ -76,50 +20,108 @@ const TestInitialNodes = [
 const TestInitialEdges = [{ id: 'e1-2', source: '1', target: '2' }];
 
 const MainContextProvider = ({ children }) => {
-    const [nodes, setNodes, onNodesChange] = useNodesState(TestInitialNodes);
-    const [edges, setEdges, onEdgesChange] = useEdgesState(TestInitialEdges);
+  const [projects, setProjects] = useState([
+    {
+      name: 'test_project_1',
+      edges: [
+        {id: 'e1-2', source: '1', target: '2'}
+      ],
+      nodes: [
+        {width: 150,
+         height: 40,
+         id: '1',
+         position: {x: -90, y: 0},
+         data: {
+          label: 'node 1', param1: 'value1', param2: 'value1',
+        }},
+        {width: 150,
+          height: 40,
+          id: '2',
+          position: {x: -90, y: 90},
+          data: {
+           label: 'node 2', param1: 'value1', param2: 'value1',
+         }}
+      ],
+      viewport: {x: 412, y: 247, zoom: 2},
+    },
+    {
+      name: 'test_project_2',
+      edges: [
+        {id: 'e1-2', source: '1', target: '2'}
+      ],
+      nodes: [
+        {width: 150,
+         height: 40,
+         id: '1',
+         position: {x: -90, y: 0},
+         data: {
+          label: 'node 1', param1: 'value1', param2: 'value1',
+        }},
+        {width: 150,
+          height: 40,
+          id: '2',
+          position: {x: -90, y: 90},
+          data: {
+           label: 'node 2', param1: 'value1', param2: 'value1',
+         }},
+         {width: 150,
+          height: 40,
+          id: '3',
+          position: {x: -180, y: 90},
+          data: {
+           label: 'node 3', param1: 'value1', param2: 'value1',
+         }}
+      ],
+      viewport: {x: 412, y: 247, zoom: 2},
+    }
+  ])
 
-    const [savedNodes, setSavedNodes] = useState([
-      {id: '1', data: { label: 'saved_node_1', param1: 'value1'}},
-      {id: '2', data: { label: 'saved_node_2', param1: 'value1'}}
-    ])
-    const [nodeTypes, setNodeTypes] = useState({
-      customNode1: CustomNode
-    })
+  const [nodes, setNodes, onNodesChange] = useNodesState(TestInitialNodes);
+  const [edges, setEdges, onEdgesChange] = useEdgesState(TestInitialEdges);
 
-    const [currentNode, setCurrentNode] = useState('0')
-    const [reactFlowInstance, setReactFlowInstance] = useState(null);
+  const [savedNodes, setSavedNodes] = useState([
+    {id: '1', data: { label: 'saved_node_1', param1: 'value1'}},
+    {id: '2', data: { label: 'saved_node_2', param1: 'value1'}}
+  ])
+  const [nodeTypes, setNodeTypes] = useState({
+    customNode1: CustomNode
+  })
 
-    const rendered = false  //TODO: fix rerender
-    useEffect(() => {
-      const flow = JSON.parse(localStorage.getItem('load-flow'));
+  const [currentNode, setCurrentNode] = useState('0')
+  const [reactFlowInstance, setReactFlowInstance] = useState(null);
 
-      if (flow) {
-        setNodes(flow.nodes || []);
-        setEdges(flow.edges || []);
-      }
-    }, [rendered])
+  const rendered = false  //TODO: fix rerender
+  useEffect(() => {
+    const flow = JSON.parse(localStorage.getItem('load-flow'));
 
-    return (
-      <MainContext.Provider value={{
-        onNodesChange,
-        onEdgesChange,
-        nodes,
-        setNodes,
-        edges,
-        setEdges,
-        currentNode,
-        setCurrentNode,
-        nodeTypes,
-        setNodeTypes,
-        reactFlowInstance,
-        setReactFlowInstance,
-        savedNodes,
-        setSavedNodes
-      }}>
-        {children}
-      </MainContext.Provider>
-    )
+    if (flow) {
+      setNodes(flow.nodes || []);
+      setEdges(flow.edges || []);
+    }
+  }, [rendered])
+
+  return (
+    <MainContext.Provider value={{
+      onNodesChange,
+      onEdgesChange,
+      nodes,
+      setNodes,
+      edges,
+      setEdges,
+      currentNode,
+      setCurrentNode,
+      nodeTypes,
+      setNodeTypes,
+      reactFlowInstance,
+      setReactFlowInstance,
+      savedNodes,
+      setSavedNodes,
+      projects,
+      setProjects,
+    }}>
+      {children}
+    </MainContext.Provider>
+  )
 }
 
 export default MainContextProvider
