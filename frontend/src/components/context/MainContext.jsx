@@ -47,7 +47,7 @@ const MainContextProvider = ({ children }) => {
     {
       name: 'test_project_2',
       edges: [
-        {id: 'e1-2', source: '1', target: '2'}
+        {id: 'e1-2', source: '1', target: '3'}
       ],
       nodes: [
         {width: 150,
@@ -67,7 +67,7 @@ const MainContextProvider = ({ children }) => {
          {width: 150,
           height: 40,
           id: '3',
-          position: {x: -180, y: 90},
+          position: {x: -280, y: 90},
           data: {
            label: 'node 3', param1: 'value1', param2: 'value1',
          }}
@@ -100,6 +100,14 @@ const MainContextProvider = ({ children }) => {
     }
   }, [rendered])
 
+  const updateInstance = (instance) => {
+    if (reactFlowInstance) {
+      console.log('CHANGE INSTANCE')
+      setNodes(instance.nodes)
+      setEdges(instance.edges)
+    }
+  }
+
   return (
     <MainContext.Provider value={{
       onNodesChange,
@@ -118,6 +126,7 @@ const MainContextProvider = ({ children }) => {
       setSavedNodes,
       projects,
       setProjects,
+      updateInstance
     }}>
       {children}
     </MainContext.Provider>

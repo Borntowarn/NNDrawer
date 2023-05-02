@@ -25,7 +25,7 @@ export default function DrawZone() {
     onNodesChange, 
     setEdges, 
     onEdgesChange,
-    nodeTypes
+    nodeTypes,
   } = useContext(MainContext)
 
   useOnSelectionChange({
@@ -44,6 +44,7 @@ export default function DrawZone() {
   
   // const [reactFlowInstance, setReactFlowInstance] = useState(null);
   const { reactFlowInstance, setReactFlowInstance } = useContext(MainContext);
+  console.log("INSTANCE: ", reactFlowInstance)
 
   const onConnect = useCallback((params) => setEdges((eds) => addEdge(params, eds)), [setEdges]);
   
@@ -91,15 +92,13 @@ export default function DrawZone() {
     },
     [reactFlowInstance]
   );
-  const reactFlowStyle = {
-    
-  }
+  
+  console.log('NODES: ', nodes, '\nEDGES: ', edges)
 
   return (
       <ReactFlowProvider>
         <ReactFlow
-          style = {reactFlowStyle}
-          ref={reactFlowWrapper}
+          ref={ reactFlowWrapper }
           nodes={nodes}
           edges={edges}
           nodeTypes={allowedTypes}

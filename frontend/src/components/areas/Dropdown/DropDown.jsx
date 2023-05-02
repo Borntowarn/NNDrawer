@@ -25,7 +25,7 @@ export default function DropDown({mode}) {
       <input className='project-seacrch' onChange={(e) => handleChange(e.target.value)} type="text" />
       <div className='project-list' ref={todoWrapper}>
         {allowedProjects.map((project, i) => (
-          <DropNode title={project.name} key={i}/>
+          <DropNode title={project.name} data={project} key={i}/>
         ))}
       </div>
     </div>
