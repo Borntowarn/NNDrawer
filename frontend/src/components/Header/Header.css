@@ -1,0 +1,21 @@
+.header-area {
+    width: auto;
+    height: 5em;
+    text-align: left;
+    background-color: #1e211f;
+    color: white;
+    padding: 0.3em;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.header-title {
+    margin-left: 1em;
+    font-size: 3em;
+    font-family:Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+}
+
+.user-logo {
+    margin-right: 1em;
+}
