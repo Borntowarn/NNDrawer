@@ -18,8 +18,6 @@ export default function ProjectTitle() {
     setCurrentProject(value)
   }
 
-console.log("projects: ", projects)
-
   return (
     <input className='title-input' onChange={(e) => handleChange(e.target.value)} placeholder='project title' 
     value={currentProject ? currentProject : ''}/>
