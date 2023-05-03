@@ -5,20 +5,6 @@ import CustomNode from "../CustomNode/CustomNode";
 
 export const MainContext = createContext()
 
-const TestInitialNodes = [
-    { id: '1', position: { x: 0, y: 0 }, data: {
-      label: 'node 1',
-      param1: 'value1',
-      param2: 'value1',
-      param3: 'value1',
-      param4: 'value1',
-      param5: 'value1',
-      param6: 'value1',
-    }},
-    { id: '2', position: { x: 0, y: 100 }, data: { label: 'node 2', param1: 'value1'}},
-  ];
-const TestInitialEdges = [{ id: 'e1-2', source: '1', target: '2' }];
-
 const MainContextProvider = ({ children }) => {
   const [projects, setProjects] = useState([
     {
@@ -83,8 +69,8 @@ const MainContextProvider = ({ children }) => {
   const [authData, setAuth] = useState()
   const [modalActive, setModalActive] = useState(false) // change
   const [currentProject, setCurrentProject] = useState(null)
-  const [nodes, setNodes, onNodesChange] = useNodesState(TestInitialNodes);
-  const [edges, setEdges, onEdgesChange] = useEdgesState(TestInitialEdges);
+  const [nodes, setNodes, onNodesChange] = useNodesState([]);
+  const [edges, setEdges, onEdgesChange] = useEdgesState([]);
 
   const [savedNodes, setSavedNodes] = useState([
     {id: '1', data: { label: 'saved_node_1', param1: 'value1'}},
@@ -105,8 +91,6 @@ const MainContextProvider = ({ children }) => {
       const data = projects.find(elem => elem.name === flow)
       setNodes(data.instance.nodes || []);
       setEdges(data.instance.edges || []);
-    } else {
-      createNewProject()
     }
   }, [])
 

@@ -60,3 +60,10 @@
     justify-content: start;
 }
 
+.reg-ref, .test-ref {
+    color: white;
+}
+
+.reg-ref:hover, .test-ref:hover {
+    color: black;
+}

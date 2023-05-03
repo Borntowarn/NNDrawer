@@ -58,9 +58,8 @@ export default function SaveButton() {
     } else {
       console.log("TITLE_ERROR: enter title of your project")
     }
+    console.log('SAVE_PROJECT')
   }
-
-
   return (
     <button onClick={() => handleClick()}>Save</button>
   )

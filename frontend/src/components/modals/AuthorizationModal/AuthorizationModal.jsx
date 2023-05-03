@@ -61,8 +61,8 @@ export default function AuthorizationModal() {
                 <button className='auth-button' type="submit">send</button>
             </form>
             <div className='sub-buttons'>
-                <a>registration</a>
-                <a onClick={() => handleTestProject()}>create test project</a>
+                <a className='reg-ref'>registration</a>
+                <a className='test-ref' onClick={() => handleTestProject()}>create test project</a>
             </div>
         </div>
     </div>

@@ -6,7 +6,6 @@ export default function DropNode({title, data}) {
   const { updateInstance } = useContext(MainContext)
 
   const handleClick = () => {
-    console.log('clicked')
     updateInstance(data)
   }
 
