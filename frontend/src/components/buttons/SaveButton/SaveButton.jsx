@@ -14,16 +14,24 @@ export default function SaveButton() {
 
   const handleClick = () => {
     const flow = reactFlowInstance.toObject();
+    console.log(flow)
     onSave(flow)
     if (currentProject) {
-      setProjects(projects.map((prj) =>
-      prj.name === currentProject ? 
-      {...prj, instance: {
-        viewport: prj.instance.viewport,
-        nodes: flow.nodes,
-        edges: flow.edges,
-      }} : prj ))
-    }else {
+      if (projects.find(prj => prj.name == currentProject)) {
+        setProjects(projects.map((prj) =>
+        prj.name === currentProject ? 
+        {...prj, instance: flow } : prj ))
+      } else {
+        setProjects([...projects, {
+          name: currentProject,
+          instance: flow
+        }])
+      }
+      console.log('PROJECTS: ', projects)
+      
+      // place for axios request
+
+    } else {
       console.log("TITLE_ERROR: enter title of your project")
     }
   }

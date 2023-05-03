@@ -24,6 +24,6 @@ export default function ExportButton() {
   }
 
   return (
-    <button onClick={onExport}>ExportButton</button>
+    <button onClick={onExport}>toBlock</button>
   )
 }

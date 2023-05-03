@@ -101,7 +101,7 @@ const MainContextProvider = ({ children }) => {
   useEffect(() => {
     const flow = localStorage.getItem('load-project');
 
-    if (!!flow) {
+    if (!!flow && projects.find(prj => prj.name === flow)) {
       const data = projects.find(elem => elem.name === flow)
       setNodes(data.instance.nodes || []);
       setEdges(data.instance.edges || []);
