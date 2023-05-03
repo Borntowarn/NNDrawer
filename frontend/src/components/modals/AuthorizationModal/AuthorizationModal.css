@@ -8,8 +8,7 @@
     align-items: center;
     justify-content: center;
     transform: scale(0);
-    background-color: rgba(0,0,0,0.4);
-    transition: 0.5s;
+    background-color: rgba(0,0,0,0.8);
 }
 
 .modal.active {
@@ -19,9 +18,45 @@
 .modal-content {
     padding: 20px;
     border-radius: 5px;
-    background-color: white;
-    height: 350px;
-    width: 300px;
+    background-color: #505050;
     color: black;
+}
+
+.auth-form {
+    display: flex;
+    flex-direction: column;
+}
+
+.auth-title {
+    width: 100%;
+    color: rgb(220, 220, 220);
+    text-align: center;
+    font-size: 1.5em;
+    font-weight: bold;
+    margin-bottom: 0.5em;
+}
+
+.auth-input {
+    padding: 1em;
+    border-radius: 5px;
+    margin-bottom: 0.5em;
+}
+
+.auth-button {
+    width: 100%;
+    margin: 0;
+}
+
+.auth-button:hover {
+    transition: 0.3s;
+}
+
+
+.sub-buttons {
+    margin-top: 0.5em;
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+    justify-content: start;
 }
 

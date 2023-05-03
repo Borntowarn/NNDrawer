@@ -80,7 +80,7 @@ const MainContextProvider = ({ children }) => {
     }
   ])
 
-
+  const [authData, setAuth] = useState()
   const [modalActive, setModalActive] = useState(false) // change
   const [currentProject, setCurrentProject] = useState(null)
   const [nodes, setNodes, onNodesChange] = useNodesState(TestInitialNodes);
@@ -97,15 +97,18 @@ const MainContextProvider = ({ children }) => {
   const [currentNode, setCurrentNode] = useState('0')
   const [reactFlowInstance, setReactFlowInstance] = useState(null);
 
-  const rendered = false  //TODO: fix rerender
+  // const rendered = false  //TODO: fix rerender
   useEffect(() => {
-    const flow = JSON.parse(localStorage.getItem('load-flow'));
+    const flow = localStorage.getItem('load-project');
 
-    if (flow) {
-      setNodes(flow.nodes || []);
-      setEdges(flow.edges || []);
+    if (!!flow) {
+      const data = projects.find(elem => elem.name === flow)
+      setNodes(data.instance.nodes || []);
+      setEdges(data.instance.edges || []);
+    } else {
+      createNewProject()
     }
-  }, [rendered])
+  }, [])
 
   const updateInstance = (project) => {
     if (reactFlowInstance) {
@@ -114,6 +117,12 @@ const MainContextProvider = ({ children }) => {
       setNodes(project.instance.nodes)
       setEdges(project.instance.edges)
     }
+  }
+
+  const createNewProject = () => {
+    setCurrentProject(null)
+    setNodes([])
+    setEdges([])
   }
 
   return (
@@ -139,6 +148,9 @@ const MainContextProvider = ({ children }) => {
       updateInstance,
       modalActive,
       setModalActive,
+      authData,
+      setAuth,
+      createNewProject,
     }}>
       {children}
     </MainContext.Provider>

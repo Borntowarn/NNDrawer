@@ -3,17 +3,33 @@ import { MainContext } from '../../context/MainContext';
 
 
 export default function SaveButton() {
-  const { reactFlowInstance } = useContext(MainContext);
-  const flowKey = 'load-flow';
+  const { reactFlowInstance, currentProject, setProjects, projects } = useContext(MainContext);
+  const flowKey = 'load-project';
 
   const onSave = useCallback(() => {
     if (reactFlowInstance) {
-        const flow = reactFlowInstance.toObject();
-        localStorage.setItem(flowKey, JSON.stringify(flow));
+      localStorage.setItem(flowKey, currentProject);
+      }
+  }, [reactFlowInstance, currentProject])
+
+  const handleClick = () => {
+    const flow = reactFlowInstance.toObject();
+    onSave(flow)
+    if (currentProject) {
+      setProjects(projects.map((prj) =>
+      prj.name === currentProject ? 
+      {...prj, instance: {
+        viewport: prj.instance.viewport,
+        nodes: flow.nodes,
+        edges: flow.edges,
+      }} : prj ))
+    }else {
+      console.log("TITLE_ERROR: enter title of your project")
     }
-  }, [reactFlowInstance])
+  }
+
 
   return (
-    <button onClick={() => onSave()}>Save</button>
+    <button onClick={() => handleClick()}>Save</button>
   )
 }
