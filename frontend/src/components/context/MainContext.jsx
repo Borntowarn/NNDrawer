@@ -80,6 +80,8 @@ const MainContextProvider = ({ children }) => {
     }
   ])
 
+
+  const [modalActive, setModalActive] = useState(false) // change
   const [currentProject, setCurrentProject] = useState(null)
   const [nodes, setNodes, onNodesChange] = useNodesState(TestInitialNodes);
   const [edges, setEdges, onEdgesChange] = useEdgesState(TestInitialEdges);
@@ -134,7 +136,9 @@ const MainContextProvider = ({ children }) => {
       setProjects,
       currentProject,
       setCurrentProject,
-      updateInstance
+      updateInstance,
+      modalActive,
+      setModalActive,
     }}>
       {children}
     </MainContext.Provider>

@@ -1,11 +1,11 @@
-import React from 'react';
 import { ReactFlowProvider } from 'reactflow';
-import 'reactflow/dist/style.css';
-import './App.css'
 import MainContextProvider from './components/context/MainContext';
 import DrawZone from './components/DrawZone/DrawZone';
 import Sidebar from './components/SideBar/SideBar';
 import ButtonsArea from './components/areas/ButtonsArea/ButtonsArea';
+import AuthorizationModal from './components/modals/AuthorizationModal/AuthorizationModal';
+import 'reactflow/dist/style.css';
+import './App.css'
 
 export default function App() {
   return (
@@ -20,6 +20,7 @@ export default function App() {
           </ReactFlowProvider>
         </div>
       </div>
+      <AuthorizationModal />
       </MainContextProvider>
   );
 }
