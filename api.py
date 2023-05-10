@@ -1,13 +1,36 @@
-from fastapi import FastAPI
+from fastapi import FastAPI, Form, Body, Request
 from fastapi.responses import JSONResponse, FileResponse
 from fastapi.encoders import jsonable_encoder
 from database import Database, User, UserIn, Block, Project
+import json
 import uvicorn
 
+from pydantic import Json
 from fastapi import FastAPI, HTTPException
+from collections import defaultdict
 
 
 app = FastAPI(debug=True)
+
+model = """
+import torch
+import torch.nn as nn
+import torch.nn.functional as F
+
+
+class Model(nn.Module):
+    
+    def __init__(self) -> None:
+        super(Model, self).__init__()
+        
+        self.layers = nn.Sequential(
+{}
+        )
+    
+    
+    def forward(self, data):
+        return self.layers(data)
+"""
 
 @app.get("/")
 def root() -> FileResponse:
@@ -59,9 +82,53 @@ async def login(user: UserIn) -> JSONResponse:
 #     return JSONResponse(jsonable_encoder({'blocks': user_blocks, 'projects': user_projects}))
 
 
+
+def modify_objects(nodes, edges):
+    new_nodes = defaultdict(dict)
+    for node in nodes:
+        new_nodes.update({
+                int(node['id']): {
+                    'name': node['data'].pop('label'), 
+                    'params': node['data']
+                }
+            }
+        )
+    
+    new_edges = defaultdict(dict)
+    for edge in edges:
+        new_edges.update({
+                int(edge['source']): {
+                    'id': edge['id'], 
+                    'target': int(edge['target'])
+                }
+            }
+        )
+    return new_nodes, new_edges
+
+
+# Обработчик для создания кода из блоков
+@app.post("/create_code")
+async def create_code(data: dict = Body(...)):
+    nodes = data['instance']['nodes']
+    edges = data['instance']['edges']
+    nodes, edges = modify_objects(nodes, edges)
+    curr_node = 0
+    s = ''
+    while len(edges) > 0:
+        curr_node = edges.pop(curr_node)['target']
+        s += f"\t\t\t{nodes[curr_node]['name']}({', '.join(f'{key}={value}' for key, value in nodes[curr_node]['params'].items())})"
+        if len(edges) > 0:
+            s += '\n'
+        # curr_node = edges.pop(curr_node)['target']
+    
+    with open('model.py', 'w') as f:
+        f.write(model.format(s))
+    return FileResponse('model.py')
+
+
 # Обработчик для добавления блока
 @app.post("/add_block")
-async def login(block: Block) -> JSONResponse:
+async def add_block(block: Block) -> JSONResponse:
     database = Database('server')
     try:
         blocks = database.add_user_block(block)
@@ -71,13 +138,14 @@ async def login(block: Block) -> JSONResponse:
 
 # Обработчик для добавления проекта
 @app.post("/add_project")
-async def login(project: Project) -> JSONResponse:
+async def add_project(project: Project) -> JSONResponse:
     database = Database('server')
     try:
         projects = database.add_user_block(project)
         return JSONResponse(jsonable_encoder(projects))
     except Exception as e:
         raise HTTPException(status_code=401, detail=e)
+
 
 
 if __name__ == "__main__":
