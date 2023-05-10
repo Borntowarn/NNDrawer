@@ -42,18 +42,21 @@ async def login(user: UserIn) -> JSONResponse:
     database = Database('server')
     existing_user = database.get_user(user)
     if existing_user:
-        return JSONResponse(jsonable_encoder(existing_user))
+        user_id = existing_user.id
+        user_blocks = database.get_user_blocks(user_id)
+        user_projects = database.get_user_projects(user_id)
+        return JSONResponse(jsonable_encoder({'user': existing_user, 'blocks': user_blocks, 'projects': user_projects}))
     else:
         raise HTTPException(status_code=401, detail="Incorrect username or password.")
 
 
 # Обработчик для загрузки профиля
-@app.post("/profile")
-async def login(user_id: int) -> JSONResponse:
-    database = Database('server')
-    user_blocks = database.get_user_blocks(user_id)
-    user_projects = database.get_user_projects(user_id)
-    return JSONResponse(jsonable_encoder({'blocks': user_blocks, 'projects': user_projects}))
+# @app.post("/profile")
+# async def login(user_id: int) -> JSONResponse:
+#     database = Database('server')
+#     user_blocks = database.get_user_blocks(user_id)
+#     user_projects = database.get_user_projects(user_id)
+#     return JSONResponse(jsonable_encoder({'blocks': user_blocks, 'projects': user_projects}))
 
 
 # Обработчик для добавления блока
