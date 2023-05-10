@@ -1,0 +1,69 @@
+.modal {
+    width: 100vw;
+    height: 100vh;
+    position: fixed;
+    top: 0;
+    left: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transform: scale(0);
+    background-color: rgba(0,0,0,0.8);
+}
+
+.modal.active {
+    transform: scale(1);
+}
+
+.modal-content {
+    padding: 20px;
+    border-radius: 5px;
+    background-color: #505050;
+    color: black;
+}
+
+.auth-form {
+    display: flex;
+    flex-direction: column;
+}
+
+.auth-title {
+    width: 100%;
+    color: rgb(220, 220, 220);
+    text-align: center;
+    font-size: 1.5em;
+    font-weight: bold;
+    margin-bottom: 0.5em;
+}
+
+.auth-input {
+    padding: 1em;
+    border-radius: 5px;
+    margin-bottom: 0.5em;
+}
+
+.auth-button {
+    width: 100%;
+    margin: 0;
+}
+
+.auth-button:hover {
+    transition: 0.3s;
+}
+
+
+.sub-buttons {
+    margin-top: 0.5em;
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+    justify-content: start;
+}
+
+.reg-ref, .test-ref {
+    color: white;
+}
+
+.reg-ref:hover, .test-ref:hover {
+    color: black;
+}

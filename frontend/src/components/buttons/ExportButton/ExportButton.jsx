@@ -1,29 +1,18 @@
-import { useContext } from "react"
+import { useContext, useState } from "react"
 import { MainContext } from "../../context/MainContext"
+import ExportDrop from "../../areas/ExportDrop/ExportDrop";
 
 export default function ExportButton() {
-  const { reactFlowInstance, setSavedNodes } = useContext(MainContext)
-  
+  const [modalActive, setModalActive] = useState(false)
+
   const onExport = () => {
-    if (reactFlowInstance) {
-        const flow = reactFlowInstance.toObject();
-
-        console.log("FLOW", flow)
-        flow.nodes = flow.nodes.filter(nds => nds.id.slice(-5) != '_open')
-
-        const newNode = {
-            type: 'customNode1',
-            data: { 
-                label: 'export_node',
-                buttonState: false,
-                include: flow
-            }
-        }
-        setSavedNodes((nds) => nds.concat(newNode))
-    }
+    setModalActive(!modalActive)
   }
 
   return (
-    <button onClick={onExport}>ExportButton</button>
+    <div>
+      <button onClick={onExport}>toBlock</button>
+      <ExportDrop mode = {modalActive}/>
+    </div>
   )
 }

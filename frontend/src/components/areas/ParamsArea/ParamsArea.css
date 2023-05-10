@@ -18,7 +18,6 @@
 
 .param {
   display: grid;
-  width: 93%;
   background-color: #d6cdd1a2;
   border-radius: 5px;
   padding: 0.2em;
@@ -26,7 +25,11 @@
 }
 
 .param-input {
-  padding: 0.5em;
+  padding: 0.5em 0 0.5em 0.5em;
   border-radius: 5px;
 }
-  
+
+.params-empty-title {
+  color: white;
+  text-align: center;
+}
