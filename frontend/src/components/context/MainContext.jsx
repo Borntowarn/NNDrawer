@@ -19,17 +19,17 @@ const MainContextProvider = ({ children }) => {
            id: '1',
            position: {x: -90, y: 0},
            data: {
-            label: 'node 1', param1: 'value1', param2: 'value1',
+            label: 'node 1', param1: 'value1', param2: 'value1'
           }},
           {width: 150,
             height: 40,
             id: '2',
             position: {x: -90, y: 90},
             data: {
-             label: 'node 2', param1: 'value1', param2: 'value1',
+             label: 'node 2', param1: 'value1', param2: 'value1'
            }}
         ],
-        viewport: {x: 412, y: 247, zoom: 2},
+        viewport: {x: 412, y: 247, zoom: 2}
       }
     },
     {
