@@ -1,5 +1,5 @@
 import React, { useContext, useState } from 'react'
-import { MainContext } from '../context/MainContext'
+import { MainContext } from '../../context/MainContext'
 import './ProjectTitle.css'
 
 export default function ProjectTitle() {

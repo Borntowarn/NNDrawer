@@ -1,4 +1,4 @@
-/* .modal {
+.reg-modal {
     width: 100vw;
     height: 100vh;
     position: fixed;
@@ -8,23 +8,73 @@
     align-items: center;
     justify-content: center;
     transform: scale(0);
-    background-color: rgba(0,0,0,0.4);
+    background-color: rgba(0,0,0,0.8);
 }
 
-.modal.active {
+.reg-modal.active {
     transform: scale(1);
 }
 
-.modal-content {
+.reg-modal-content {
     padding: 20px;
     border-radius: 5px;
-    background-color: white;
+    background-color: #505050;
     color: black;
 }
 
-.auth-form {
+.reg-title {
+    width: 100%;
+    color: rgb(220, 220, 220);
+    text-align: center;
+    font-size: 1.5em;
+    font-weight: bold;
+    margin-bottom: 0.5em;
+}
+
+.reg-input {
+    padding: 1em;
+    border-radius: 5px;
+    margin-bottom: 0.5em;
+}
+
+.reg-button {
+    width: 100%;
+    margin: 0;
+}
+
+.reg-button:hover {
+    transition: 0.3s;
+}
+
+.reg-form {
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
-} */
+}
+
+.input-label {
+    text-align: left;
+    color: #aeaeae;
+}
+
+.input-block {
+    display: flex;
+    flex-direction: column;
+}
+
+.reg-sub-buttons {
+    margin-top: 0.5em;
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+    justify-content: start;
+}
+
+.back-ref {
+    color: white;
+}
+
+.back-ref:hover {
+    color: black;
+}

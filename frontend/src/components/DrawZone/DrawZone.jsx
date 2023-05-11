@@ -6,7 +6,7 @@ import ReactFlow, {
   addEdge,
 } from 'reactflow';
 import { useOnSelectionChange } from 'reactflow';
-import { MainContext } from '../context/MainContext';
+import { MainContext } from '../../context/MainContext';
 import { v4 as uuid } from 'uuid';
 
 import 'reactflow/dist/style.css';

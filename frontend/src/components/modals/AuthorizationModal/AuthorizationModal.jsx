@@ -1,31 +1,21 @@
 import { useContext, useState } from 'react'
-import { MainContext } from '../../context/MainContext'
+import { MainContext } from '../../../context/MainContext'
 import axios from 'axios'
+import constants from '../../../constants/constants'
 import './AuthorizationModal.css'
 
 export default function AuthorizationModal() {
-  const { modalActive, setModalActive, setAuth, createNewProject } = useContext(MainContext)
-  const [email, setEmail] = useState('')
+  const { authModalActive, setAuthModalActive, setRegModalActive, setAuth, createNewProject } = useContext(MainContext)
+  const [login, setLogin] = useState('')
   const [password, setPassword] = useState('')
-
-  // test authorization 
-  const AUTHORIZATION_URL = 'api/login'
-
-  const handleEmail = (value) => {
-    setEmail(value)
-  }
-
-  const handlePassword = (value) => {
-    setPassword(value)
-  }
 
   const handleSubmit = async (e) => {
     e.preventDefault()
-    console.log('SUBMIT: ', email, password)
+    console.log('SUBMIT: ', login, password)
     try {
-        const response = await axios.post(AUTHORIZATION_URL, 
+        const response = await axios.post(constants.urls.auth, 
           JSON.stringify({
-              login: email,
+              login: login,
               password: password 
           }),
           {
@@ -40,7 +30,7 @@ export default function AuthorizationModal() {
         const mail = response.data.user.mail
 
         setAuth({id, mail})
-        setModalActive(true)
+        setAuthModalActive(false)
 
         console.log('USER: ', mail, ' WAS AUTHORIZED')
     } catch(err) {
@@ -50,20 +40,27 @@ export default function AuthorizationModal() {
 
   const handleTestProject = () => {
     createNewProject()
-    setModalActive(true)
+    setAuthModalActive(false)
+  }
+
+  const handleRegForm = () => {
+    setAuthModalActive(false)
+    setRegModalActive(true)
   }
 
   return (
-    <div className={modalActive ? 'modal' : 'modal active'}>
+    <div className={authModalActive ? 'modal active' : 'modal'}>
         <div className='modal-content'>
             <div className='auth-title'>Welcom to NNdrawer!</div>
             <form className='auth-form' onSubmit={handleSubmit}>
-                <input className='auth-input' onChange={(e) => handleEmail(e.target.value)} value={email} type="text" placeholder='Enter your mail'/>
-                <input className='auth-input' onChange={(e) => handlePassword(e.target.value)} value={password} type="password" placeholder='password'/>
+                <label htmlFor="auth-log" className='input-label'>Login</label>
+                <input id='auth-log' className='auth-input' onChange={(e) => setLogin(e.target.value)} value={login} type="text" placeholder='Login'/>
+                <label htmlFor="auth-pass" className='input-label'>Password</label>
+                <input id='auth-pass' className='auth-input' onChange={(e) => setPassword(e.target.value)} value={password} type="password" placeholder='Password'/>
                 <button className='auth-button' type="submit">send</button>
             </form>
             <div className='sub-buttons'>
-                <a className='reg-ref'>registration</a>
+                <a className='reg-ref' onClick={() => handleRegForm()}>registration</a>
                 <a className='test-ref' onClick={() => handleTestProject()}>create test project</a>
             </div>
         </div>

@@ -1,5 +1,5 @@
 import { useContext, useState, useEffect, useRef } from 'react'
-import { MainContext } from '../../context/MainContext';
+import { MainContext } from '../../../context/MainContext';
 import { useScrollbar } from '../../../hooks/use-scrollbar';
 import './ParamsArea.css'
 

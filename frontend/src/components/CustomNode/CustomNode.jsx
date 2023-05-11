@@ -1,6 +1,6 @@
 import { Handle, Position, } from 'reactflow';
 import { useContext, useState } from 'react';
-import { MainContext } from '../context/MainContext';
+import { MainContext } from '../../context/MainContext';
 import './customNode.css'
 
 const handleStyle = { left: 10 };

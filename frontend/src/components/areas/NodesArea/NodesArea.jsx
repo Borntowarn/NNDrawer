@@ -1,5 +1,5 @@
 import { useContext, useEffect, useRef, useState } from 'react';
-import { MainContext } from '../../context/MainContext';
+import { MainContext } from '../../../context/MainContext';
 import { useScrollbar } from '../../../hooks/use-scrollbar';
 import './NodesArea.css'
 

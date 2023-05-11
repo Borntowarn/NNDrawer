@@ -1,6 +1,6 @@
 import { createContext, useEffect, useState } from "react";
 import { useNodesState, useEdgesState } from 'reactflow';
-import CustomNode from "../CustomNode/CustomNode";
+import CustomNode from "../components/CustomNode/CustomNode";
 
 
 export const MainContext = createContext()
@@ -67,7 +67,8 @@ const MainContextProvider = ({ children }) => {
   ])
 
   const [authData, setAuth] = useState()
-  const [modalActive, setModalActive] = useState(false) // change
+  const [authModalActive, setAuthModalActive] = useState(true)
+  const [regModalActive, setRegModalActive] = useState(false)
   const [currentProject, setCurrentProject] = useState(null)
   const [nodes, setNodes, onNodesChange] = useNodesState([]);
   const [edges, setEdges, onEdgesChange] = useEdgesState([]);
@@ -130,8 +131,10 @@ const MainContextProvider = ({ children }) => {
       currentProject,
       setCurrentProject,
       updateInstance,
-      modalActive,
-      setModalActive,
+      authModalActive,
+      setAuthModalActive,
+      regModalActive,
+      setRegModalActive,
       authData,
       setAuth,
       createNewProject,

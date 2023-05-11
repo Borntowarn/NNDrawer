@@ -1,5 +1,5 @@
 import { useContext } from 'react'
-import { MainContext } from '../../../context/MainContext'
+import { MainContext } from '../../../../context/MainContext'
 import './DropNode.css'
 
 export default function DropNode({title, data}) {
