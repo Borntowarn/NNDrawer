@@ -1,6 +1,6 @@
 import { useContext, useState } from 'react'
 import { MainContext } from '../../context/MainContext'
-import axios from '../../../api/axios'
+import axios from 'axios'
 import './AuthorizationModal.css'
 
 export default function AuthorizationModal() {
@@ -9,7 +9,7 @@ export default function AuthorizationModal() {
   const [password, setPassword] = useState('')
 
   // test authorization 
-  const AUTHORIZATION_URL = '/authorization'
+  const AUTHORIZATION_URL = 'api/login'
 
   const handleEmail = (value) => {
     setEmail(value)
@@ -21,29 +21,31 @@ export default function AuthorizationModal() {
 
   const handleSubmit = async (e) => {
     e.preventDefault()
-    console.log('SUBMIT')
+    console.log('SUBMIT: ', email, password)
     try {
         const response = await axios.post(AUTHORIZATION_URL, 
-            JSON.stringify({
-                mail: email,
-                pass: password 
-            }),
-            {
-                headers: {'Content-Type': 'application/json'},
-                withCredentials: true,
-            })
-            console.log(response.data)
-            console.log(response.accessToken)
-            console.log(JSON.stringify(response))
+          JSON.stringify({
+              login: email,
+              password: password 
+          }),
+          {
+            headers: {
+              "Accept": "application/json",
+              "Content-Type": "application/json",
+            },
+          }
+        )
+        
+        const id = response.data.user.id
+        const mail = response.data.user.mail
+
+        setAuth({id, mail})
+        setModalActive(true)
+
+        console.log('USER: ', mail, ' WAS AUTHORIZED')
     } catch(err) {
         console.log("ERROR: ", err)
     }
-
-    // Just for test
-    const mail = 'test@mail'
-    const pass = '1234'
-    setAuth({mail, pass})
-    setModalActive(true)
   }
 
   const handleTestProject = () => {

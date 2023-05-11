@@ -1,6 +1,6 @@
 import { useCallback, useContext } from 'react';
 import { MainContext } from '../../context/MainContext';
-import axios from '../../../api/axios'
+import axios from 'axios'
 
 export default function SaveButton() {
   const { reactFlowInstance,

@@ -1,16 +1,28 @@
 from fastapi import FastAPI, Form, Body, Request
 from fastapi.responses import JSONResponse, FileResponse
 from fastapi.encoders import jsonable_encoder
+from fastapi.middleware.cors import CORSMiddleware
 from database import Database, User, UserIn, Block, Project
 import json
 import uvicorn
-
 from pydantic import Json
 from fastapi import FastAPI, HTTPException
 from collections import defaultdict
 
 
 app = FastAPI(debug=True)
+
+origins = [
+    "http://127.0.0.1:5173/"
+]
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=origins,
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 model = """
 import torch
@@ -32,17 +44,17 @@ class Model(nn.Module):
         return self.layers(data)
 """
 
-@app.get("/")
+@app.get("/api/")
 def root() -> FileResponse:
     return FileResponse("index.html")
 
-@app.get("/registration")
+@app.get("/api/registration")
 def regisration() -> FileResponse:
     return FileResponse("registration.html")
 
 
 # Обработчик для создания пользователя
-@app.post("/registration")
+@app.post("/api/registration")
 async def create_user(user: User) -> JSONResponse:
     database = Database('server')
     try:
@@ -53,14 +65,14 @@ async def create_user(user: User) -> JSONResponse:
 
 
 # Обработчик для получения всех пользователей
-@app.get("/users")
+@app.get("/api/users")
 async def get_all_users() -> JSONResponse:
     database = Database('server')
     users = database.get_all_users()
     return JSONResponse(jsonable_encoder(users))
 
 # Обработчик для проверки существования аккаунта
-@app.post("/login")
+@app.post("/api/login")
 async def login(user: UserIn) -> JSONResponse:
     database = Database('server')
     existing_user = database.get_user(user)
@@ -107,7 +119,7 @@ def modify_objects(nodes, edges):
 
 
 # Обработчик для создания кода из блоков
-@app.post("/create_code")
+@app.post("/api/create_code")
 async def create_code(data: dict = Body(...)):
     nodes = data['instance']['nodes']
     edges = data['instance']['edges']
@@ -127,7 +139,7 @@ async def create_code(data: dict = Body(...)):
 
 
 # Обработчик для добавления блока
-@app.post("/add_block")
+@app.post("/api/add_block")
 async def add_block(block: Block) -> JSONResponse:
     database = Database('server')
     try:
@@ -137,7 +149,7 @@ async def add_block(block: Block) -> JSONResponse:
         raise HTTPException(status_code=401, detail=e)
 
 # Обработчик для добавления проекта
-@app.post("/add_project")
+@app.post("/api/add_project")
 async def add_project(project: Project) -> JSONResponse:
     database = Database('server')
     try:
