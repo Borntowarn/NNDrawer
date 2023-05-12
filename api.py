@@ -1,16 +1,22 @@
-from fastapi import FastAPI, Form, Body, Request
-from fastapi.responses import JSONResponse, FileResponse
-from fastapi.encoders import jsonable_encoder
-from database import Database, User, UserIn, Block, Project
-import json
 import uvicorn
 
-from pydantic import Json
-from fastapi import FastAPI, HTTPException
+from typing import *
+from jose import JWTError, jwt
+from fastapi import FastAPI, Body
 from collections import defaultdict
+from datetime import datetime, timedelta
+from fastapi import FastAPI, HTTPException
+from fastapi.encoders import jsonable_encoder
+from fastapi import FastAPI, Depends, HTTPException
+from fastapi.responses import JSONResponse, FileResponse
+from database import Database, User, UserIn, Block, Project, UserOut
 
 
 app = FastAPI(debug=True)
+
+SECRET_KEY = "mysecretkey"
+ALGORITHM = "HS256"
+ACCESS_TOKEN_EXPIRE_MINUTES = 30
 
 model = """
 import torch
@@ -32,13 +38,30 @@ class Model(nn.Module):
         return self.layers(data)
 """
 
-@app.get("/")
-def root() -> FileResponse:
-    return FileResponse("index.html")
+def create_access_token(data: dict, expires_delta):
+    print("create token")
+    to_encode = data.copy()
+    expire = datetime.utcnow() + expires_delta
+    to_encode.update({"exp": expire})
+    encoded_jwt = jwt.encode(to_encode, SECRET_KEY, algorithm=ALGORITHM)
+    return encoded_jwt
 
-@app.get("/registration")
-def regisration() -> FileResponse:
-    return FileResponse("registration.html")
+
+async def get_current_user(token: str) -> UserOut:
+    print('get_current_user')
+    try:
+        payload = jwt.decode(token, SECRET_KEY, algorithms=[ALGORITHM])
+        username: str = payload.get("username")
+        if username is None:
+            raise HTTPException(status_code=401, detail="Invalid authentication credentials")
+    except JWTError:
+        raise HTTPException(status_code=401, detail="Invalid authentication credentials")
+
+    database = Database('server')
+    user = database.get_user(username)
+    if user is None:
+        raise HTTPException(status_code=401, detail="Invalid authentication credentials")
+    return user
 
 
 # Обработчик для создания пользователя
@@ -47,39 +70,40 @@ async def create_user(user: User) -> JSONResponse:
     database = Database('server')
     try:
         user = database.add_user(user)
-        return JSONResponse(jsonable_encoder(user))
+        access_token = create_access_token(
+            data={"username": user.username}, expires_delta=timedelta(minutes=ACCESS_TOKEN_EXPIRE_MINUTES)
+        )
+        return JSONResponse(jsonable_encoder({'token': access_token, 'user': user}))
     except Exception as e:
         raise HTTPException(status_code=401, detail=e)
 
 
-# Обработчик для получения всех пользователей
-@app.get("/users")
-async def get_all_users() -> JSONResponse:
-    database = Database('server')
-    users = database.get_all_users()
-    return JSONResponse(jsonable_encoder(users))
-
 # Обработчик для проверки существования аккаунта
 @app.post("/login")
 async def login(user: UserIn) -> JSONResponse:
+    print('login')
     database = Database('server')
-    existing_user = database.get_user(user)
+    existing_user = database.auth_user(user)
     if existing_user:
+        access_token = create_access_token(
+            data={"username": existing_user.username}, expires_delta=timedelta(minutes=ACCESS_TOKEN_EXPIRE_MINUTES)
+        )
         user_id = existing_user.id
         user_blocks = database.get_user_blocks(user_id)
         user_projects = database.get_user_projects(user_id)
-        return JSONResponse(jsonable_encoder({'user': existing_user, 'blocks': user_blocks, 'projects': user_projects}))
+        return JSONResponse(jsonable_encoder({'token': access_token,'user': existing_user, 'blocks': user_blocks, 'projects': user_projects}))
     else:
         raise HTTPException(status_code=401, detail="Incorrect username or password.")
 
 
 # Обработчик для загрузки профиля
-# @app.post("/profile")
-# async def login(user_id: int) -> JSONResponse:
-#     database = Database('server')
-#     user_blocks = database.get_user_blocks(user_id)
-#     user_projects = database.get_user_projects(user_id)
-#     return JSONResponse(jsonable_encoder({'blocks': user_blocks, 'projects': user_projects}))
+@app.post("/token")
+async def profile(current_user: Annotated[UserOut, Depends(get_current_user)]) -> JSONResponse:
+    print('profile')
+    database = Database('server')
+    user_blocks = database.get_user_blocks(current_user.id)
+    user_projects = database.get_user_projects(current_user.id)
+    return JSONResponse(jsonable_encoder({'user': current_user, 'blocks': user_blocks, 'projects': user_projects}))
 
 
 
@@ -136,12 +160,13 @@ async def add_block(block: Block) -> JSONResponse:
     except Exception as e:
         raise HTTPException(status_code=401, detail=e)
 
+
 # Обработчик для добавления проекта
 @app.post("/add_project")
 async def add_project(project: Project) -> JSONResponse:
     database = Database('server')
     try:
-        projects = database.add_user_block(project)
+        projects = database.add_user_project(project)
         return JSONResponse(jsonable_encoder(projects))
     except Exception as e:
         raise HTTPException(status_code=401, detail=e)
