@@ -2726,6 +2726,1830 @@ const nodes = {
           }
         }
     },
+    "Modules": {
+      "activation": {
+        "Doc": null,
+        "Classes": {
+          "ReLU": {
+            "Doc": "Applies the rectified linear unit function element-wise:\n\n    :math:`\\text{ReLU}(x) = (x)^+ = \\max(0, x)`\n\n    Args:\n        inplace: can optionally do the operation in-place. Default: ``False``\n\n    Shape:\n        - Input: :math:`(*)`, where :math:`*` means any number of dimensions.\n        - Output: :math:`(*)`, same shape as the input.\n\n    .. image:: ../scripts/activation_images/ReLU.png\n\n    Examples::\n\n        >>> m = nn.ReLU()\n        >>> input = torch.randn(2)\n        >>> output = m(input)\n\n\n      An implementation of CReLU - https://arxiv.org/abs/1603.05201\n\n        >>> m = nn.ReLU()\n        >>> input = torch.randn(2).unsqueeze(0)\n        >>> output = torch.cat((m(input),m(-input)))\n    ",
+            "Functions": {
+              "__init__": {
+                "Doc": null,
+                "Args": {
+                  "self": {
+                    "Type": null,
+                    "Default": null
+                  },
+                  "inplace": {
+                    "Type": "<class 'bool'>",
+                    "Default": "False"
+                  }
+                }
+              },
+              "extra_repr": {
+                "Doc": null,
+                "Args": {
+                  "self": {
+                    "Type": null,
+                    "Default": null
+                  }
+                }
+              },
+              "forward": {
+                "Doc": null,
+                "Args": {
+                  "self": {
+                    "Type": null,
+                    "Default": null
+                  },
+                  "input": {
+                    "Type": "<class 'torch.Tensor'>",
+                    "Default": null
+                  }
+                }
+              }
+            }
+          },
+          "Sigmoid": {
+            "Doc": "Applies the element-wise function:\n\n    .. math::\n        \\text{Sigmoid}(x) = \\sigma(x) = \\frac{1}{1 + \\exp(-x)}\n\n\n    Shape:\n        - Input: :math:`(*)`, where :math:`*` means any number of dimensions.\n        - Output: :math:`(*)`, same shape as the input.\n\n    .. image:: ../scripts/activation_images/Sigmoid.png\n\n    Examples::\n\n        >>> m = nn.Sigmoid()\n        >>> input = torch.randn(2)\n        >>> output = m(input)\n    ",
+            "Functions": {
+              "forward": {
+                "Doc": null,
+                "Args": {
+                  "self": {
+                    "Type": null,
+                    "Default": null
+                  },
+                  "input": {
+                    "Type": "<class 'torch.Tensor'>",
+                    "Default": null
+                  }
+                }
+              }
+            }
+          },
+          "Softmax": {
+            "Doc": "Applies the Softmax function to an n-dimensional input Tensor\n    rescaling them so that the elements of the n-dimensional output Tensor\n    lie in the range [0,1] and sum to 1.\n\n    Softmax is defined as:\n\n    .. math::\n        \\text{Softmax}(x_{i}) = \\frac{\\exp(x_i)}{\\sum_j \\exp(x_j)}\n\n    When the input Tensor is a sparse tensor then the unspecifed\n    values are treated as ``-inf``.\n\n    Shape:\n        - Input: :math:`(*)` where `*` means, any number of additional\n          dimensions\n        - Output: :math:`(*)`, same shape as the input\n\n    Returns:\n        a Tensor of the same dimension and shape as the input with\n        values in the range [0, 1]\n\n    Args:\n        dim (int): A dimension along which Softmax will be computed (so every slice\n            along dim will sum to 1).\n\n    .. note::\n        This module doesn't work directly with NLLLoss,\n        which expects the Log to be computed between the Softmax and itself.\n        Use `LogSoftmax` instead (it's faster and has better numerical properties).\n\n    Examples::\n\n        >>> m = nn.Softmax(dim=1)\n        >>> input = torch.randn(2, 3)\n        >>> output = m(input)\n\n    ",
+            "Functions": {
+              "__init__": {
+                "Doc": null,
+                "Args": {
+                  "self": {
+                    "Type": null,
+                    "Default": null
+                  },
+                  "dim": {
+                    "Type": "typing.Optional[int]",
+                    "Default": "None"
+                  }
+                }
+              },
+              "extra_repr": {
+                "Doc": null,
+                "Args": {
+                  "self": {
+                    "Type": null,
+                    "Default": null
+                  }
+                }
+              },
+              "forward": {
+                "Doc": null,
+                "Args": {
+                  "self": {
+                    "Type": null,
+                    "Default": null
+                  },
+                  "input": {
+                    "Type": "<class 'torch.Tensor'>",
+                    "Default": null
+                  }
+                }
+              }
+            }
+          },
+          "Tanh": {
+            "Doc": "Applies the Hyperbolic Tangent (Tanh) function element-wise.\n\n    Tanh is defined as:\n\n    .. math::\n        \\text{Tanh}(x) = \\tanh(x) = \\frac{\\exp(x) - \\exp(-x)} {\\exp(x) + \\exp(-x)}\n\n    Shape:\n        - Input: :math:`(*)`, where :math:`*` means any number of dimensions.\n        - Output: :math:`(*)`, same shape as the input.\n\n    .. image:: ../scripts/activation_images/Tanh.png\n\n    Examples::\n\n        >>> m = nn.Tanh()\n        >>> input = torch.randn(2)\n        >>> output = m(input)\n    ",
+            "Functions": {
+              "forward": {
+                "Doc": null,
+                "Args": {
+                  "self": {
+                    "Type": null,
+                    "Default": null
+                  },
+                  "input": {
+                    "Type": "<class 'torch.Tensor'>",
+                    "Default": null
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "batchnorm": {
+        "Doc": null,
+        "Classes": {
+          "BatchNorm1d": {
+            "Doc": "Applies Batch Normalization over a 2D or 3D input as described in the paper\n    `Batch Normalization: Accelerating Deep Network Training by Reducing\n    Internal Covariate Shift <https://arxiv.org/abs/1502.03167>`__ .\n\n    .. math::\n\n        y = \\frac{x - \\mathrm{E}[x]}{\\sqrt{\\mathrm{Var}[x] + \\epsilon}} * \\gamma + \\beta\n\n    The mean and standard-deviation are calculated per-dimension over\n    the mini-batches and :math:`\\gamma` and :math:`\\beta` are learnable parameter vectors\n    of size `C` (where `C` is the number of features or channels of the input). By default, the\n    elements of :math:`\\gamma` are set to 1 and the elements of :math:`\\beta` are set to 0. The\n    standard-deviation is calculated via the biased estimator, equivalent to `torch.var(input, unbiased=False)`.\n\n    Also by default, during training this layer keeps running estimates of its\n    computed mean and variance, which are then used for normalization during\n    evaluation. The running estimates are kept with a default :attr:`momentum`\n    of 0.1.\n\n    If :attr:`track_running_stats` is set to ``False``, this layer then does not\n    keep running estimates, and batch statistics are instead used during\n    evaluation time as well.\n\n    .. note::\n        This :attr:`momentum` argument is different from one used in optimizer\n        classes and the conventional notion of momentum. Mathematically, the\n        update rule for running statistics here is\n        :math:`\\hat{x}_\\text{new} = (1 - \\text{momentum}) \\times \\hat{x} + \\text{momentum} \\times x_t`,\n        where :math:`\\hat{x}` is the estimated statistic and :math:`x_t` is the\n        new observed value.\n\n    Because the Batch Normalization is done over the `C` dimension, computing statistics\n    on `(N, L)` slices, it's common terminology to call this Temporal Batch Normalization.\n\n    Args:\n        num_features: number of features or channels :math:`C` of the input\n        eps: a value added to the denominator for numerical stability.\n            Default: 1e-5\n        momentum: the value used for the running_mean and running_var\n            computation. Can be set to ``None`` for cumulative moving average\n            (i.e. simple average). Default: 0.1\n        affine: a boolean value that when set to ``True``, this module has\n            learnable affine parameters. Default: ``True``\n        track_running_stats: a boolean value that when set to ``True``, this\n            module tracks the running mean and variance, and when set to ``False``,\n            this module does not track such statistics, and initializes statistics\n            buffers :attr:`running_mean` and :attr:`running_var` as ``None``.\n            When these buffers are ``None``, this module always uses batch statistics.\n            in both training and eval modes. Default: ``True``\n\n    Shape:\n        - Input: :math:`(N, C)` or :math:`(N, C, L)`, where :math:`N` is the batch size,\n          :math:`C` is the number of features or channels, and :math:`L` is the sequence length\n        - Output: :math:`(N, C)` or :math:`(N, C, L)` (same shape as input)\n\n    Examples::\n\n        >>> # With Learnable Parameters\n        >>> m = nn.BatchNorm1d(100)\n        >>> # Without Learnable Parameters\n        >>> m = nn.BatchNorm1d(100, affine=False)\n        >>> input = torch.randn(20, 100)\n        >>> output = m(input)\n    "
+          },
+          "BatchNorm2d": {
+            "Doc": "Applies Batch Normalization over a 4D input (a mini-batch of 2D inputs\n    with additional channel dimension) as described in the paper\n    `Batch Normalization: Accelerating Deep Network Training by Reducing\n    Internal Covariate Shift <https://arxiv.org/abs/1502.03167>`__ .\n\n    .. math::\n\n        y = \\frac{x - \\mathrm{E}[x]}{ \\sqrt{\\mathrm{Var}[x] + \\epsilon}} * \\gamma + \\beta\n\n    The mean and standard-deviation are calculated per-dimension over\n    the mini-batches and :math:`\\gamma` and :math:`\\beta` are learnable parameter vectors\n    of size `C` (where `C` is the input size). By default, the elements of :math:`\\gamma` are set\n    to 1 and the elements of :math:`\\beta` are set to 0. The standard-deviation is calculated\n    via the biased estimator, equivalent to `torch.var(input, unbiased=False)`.\n\n    Also by default, during training this layer keeps running estimates of its\n    computed mean and variance, which are then used for normalization during\n    evaluation. The running estimates are kept with a default :attr:`momentum`\n    of 0.1.\n\n    If :attr:`track_running_stats` is set to ``False``, this layer then does not\n    keep running estimates, and batch statistics are instead used during\n    evaluation time as well.\n\n    .. note::\n        This :attr:`momentum` argument is different from one used in optimizer\n        classes and the conventional notion of momentum. Mathematically, the\n        update rule for running statistics here is\n        :math:`\\hat{x}_\\text{new} = (1 - \\text{momentum}) \\times \\hat{x} + \\text{momentum} \\times x_t`,\n        where :math:`\\hat{x}` is the estimated statistic and :math:`x_t` is the\n        new observed value.\n\n    Because the Batch Normalization is done over the `C` dimension, computing statistics\n    on `(N, H, W)` slices, it's common terminology to call this Spatial Batch Normalization.\n\n    Args:\n        num_features: :math:`C` from an expected input of size\n            :math:`(N, C, H, W)`\n        eps: a value added to the denominator for numerical stability.\n            Default: 1e-5\n        momentum: the value used for the running_mean and running_var\n            computation. Can be set to ``None`` for cumulative moving average\n            (i.e. simple average). Default: 0.1\n        affine: a boolean value that when set to ``True``, this module has\n            learnable affine parameters. Default: ``True``\n        track_running_stats: a boolean value that when set to ``True``, this\n            module tracks the running mean and variance, and when set to ``False``,\n            this module does not track such statistics, and initializes statistics\n            buffers :attr:`running_mean` and :attr:`running_var` as ``None``.\n            When these buffers are ``None``, this module always uses batch statistics.\n            in both training and eval modes. Default: ``True``\n\n    Shape:\n        - Input: :math:`(N, C, H, W)`\n        - Output: :math:`(N, C, H, W)` (same shape as input)\n\n    Examples::\n\n        >>> # With Learnable Parameters\n        >>> m = nn.BatchNorm2d(100)\n        >>> # Without Learnable Parameters\n        >>> m = nn.BatchNorm2d(100, affine=False)\n        >>> input = torch.randn(20, 100, 35, 45)\n        >>> output = m(input)\n    "
+          },
+          "BatchNorm3d": {
+            "Doc": "Applies Batch Normalization over a 5D input (a mini-batch of 3D inputs\n    with additional channel dimension) as described in the paper\n    `Batch Normalization: Accelerating Deep Network Training by Reducing\n    Internal Covariate Shift <https://arxiv.org/abs/1502.03167>`__ .\n\n    .. math::\n\n        y = \\frac{x - \\mathrm{E}[x]}{ \\sqrt{\\mathrm{Var}[x] + \\epsilon}} * \\gamma + \\beta\n\n    The mean and standard-deviation are calculated per-dimension over\n    the mini-batches and :math:`\\gamma` and :math:`\\beta` are learnable parameter vectors\n    of size `C` (where `C` is the input size). By default, the elements of :math:`\\gamma` are set\n    to 1 and the elements of :math:`\\beta` are set to 0. The standard-deviation is calculated\n    via the biased estimator, equivalent to `torch.var(input, unbiased=False)`.\n\n    Also by default, during training this layer keeps running estimates of its\n    computed mean and variance, which are then used for normalization during\n    evaluation. The running estimates are kept with a default :attr:`momentum`\n    of 0.1.\n\n    If :attr:`track_running_stats` is set to ``False``, this layer then does not\n    keep running estimates, and batch statistics are instead used during\n    evaluation time as well.\n\n    .. note::\n        This :attr:`momentum` argument is different from one used in optimizer\n        classes and the conventional notion of momentum. Mathematically, the\n        update rule for running statistics here is\n        :math:`\\hat{x}_\\text{new} = (1 - \\text{momentum}) \\times \\hat{x} + \\text{momentum} \\times x_t`,\n        where :math:`\\hat{x}` is the estimated statistic and :math:`x_t` is the\n        new observed value.\n\n    Because the Batch Normalization is done over the `C` dimension, computing statistics\n    on `(N, D, H, W)` slices, it's common terminology to call this Volumetric Batch Normalization\n    or Spatio-temporal Batch Normalization.\n\n    Args:\n        num_features: :math:`C` from an expected input of size\n            :math:`(N, C, D, H, W)`\n        eps: a value added to the denominator for numerical stability.\n            Default: 1e-5\n        momentum: the value used for the running_mean and running_var\n            computation. Can be set to ``None`` for cumulative moving average\n            (i.e. simple average). Default: 0.1\n        affine: a boolean value that when set to ``True``, this module has\n            learnable affine parameters. Default: ``True``\n        track_running_stats: a boolean value that when set to ``True``, this\n            module tracks the running mean and variance, and when set to ``False``,\n            this module does not track such statistics, and initializes statistics\n            buffers :attr:`running_mean` and :attr:`running_var` as ``None``.\n            When these buffers are ``None``, this module always uses batch statistics.\n            in both training and eval modes. Default: ``True``\n\n    Shape:\n        - Input: :math:`(N, C, D, H, W)`\n        - Output: :math:`(N, C, D, H, W)` (same shape as input)\n\n    Examples::\n\n        >>> # With Learnable Parameters\n        >>> m = nn.BatchNorm3d(100)\n        >>> # Without Learnable Parameters\n        >>> m = nn.BatchNorm3d(100, affine=False)\n        >>> input = torch.randn(20, 100, 35, 45, 10)\n        >>> output = m(input)\n    "
+          }
+        }
+      },
+      "conv": {
+        "Doc": null,
+        "Classes": {
+          "Conv1d": {
+            "Doc": "Applies a 1D convolution over an input signal composed of several input\n    planes.\n\n    In the simplest case, the output value of the layer with input size\n    :math:`(N, C_{\\text{in}}, L)` and output :math:`(N, C_{\\text{out}}, L_{\\text{out}})` can be\n    precisely described as:\n\n    .. math::\n        \\text{out}(N_i, C_{\\text{out}_j}) = \\text{bias}(C_{\\text{out}_j}) +\n        \\sum_{k = 0}^{C_{in} - 1} \\text{weight}(C_{\\text{out}_j}, k)\n        \\star \\text{input}(N_i, k)\n\n    where :math:`\\star` is the valid `cross-correlation`_ operator,\n    :math:`N` is a batch size, :math:`C` denotes a number of channels,\n    :math:`L` is a length of signal sequence.\n    \n\n    This module supports :ref:`TensorFloat32<tf32_on_ampere>`.\n\n    On certain ROCm devices, when using float16 inputs this module will use :ref:`different precision<fp16_on_mi200>` for backward.\n\n    * :attr:`stride` controls the stride for the cross-correlation, a single\n      number or a one-element tuple.\n\n    * :attr:`padding` controls the amount of padding applied to the input. It\n      can be either a string {'valid', 'same'} or a tuple of ints giving the\n      amount of implicit padding applied on both sides.\n\n    * :attr:`dilation` controls the spacing between the kernel points; also\n      known as the \u00e0 trous algorithm. It is harder to describe, but this `link`_\n      has a nice visualization of what :attr:`dilation` does.\n\n    * :attr:`groups` controls the connections between inputs and outputs.\n      :attr:`in_channels` and :attr:`out_channels` must both be divisible by\n      :attr:`groups`. For example,\n\n        * At groups=1, all inputs are convolved to all outputs.\n        * At groups=2, the operation becomes equivalent to having two conv\n          layers side by side, each seeing half the input channels\n          and producing half the output channels, and both subsequently\n          concatenated.\n        * At groups= :attr:`in_channels`, each input channel is convolved with\n          its own set of filters (of size\n          :math:`\\frac{\\text{out\\_channels}}{\\text{in\\_channels}}`).\n\n    Note:\n        When `groups == in_channels` and `out_channels == K * in_channels`,\n        where `K` is a positive integer, this operation is also known as a \"depthwise convolution\".\n\n        In other words, for an input of size :math:`(N, C_{in}, L_{in})`,\n        a depthwise convolution with a depthwise multiplier `K` can be performed with the arguments\n        :math:`(C_\\text{in}=C_\\text{in}, C_\\text{out}=C_\\text{in} \\times \\text{K}, ..., \\text{groups}=C_\\text{in})`.\n    Note:\n        In some circumstances when given tensors on a CUDA device and using CuDNN, this operator may select a nondeterministic algorithm to increase performance. If this is undesirable, you can try to make the operation deterministic (potentially at a performance cost) by setting ``torch.backends.cudnn.deterministic = True``. See :doc:`/notes/randomness` for more information.\n\n    Note:\n        ``padding='valid'`` is the same as no padding. ``padding='same'`` pads\n        the input so the output has the shape as the input. However, this mode\n        doesn't support any stride values other than 1.\n\n    Note:\n        This module supports complex data types i.e. ``complex32, complex64, complex128``.\n\n    Args:\n        in_channels (int): Number of channels in the input image\n        out_channels (int): Number of channels produced by the convolution\n        kernel_size (int or tuple): Size of the convolving kernel\n        stride (int or tuple, optional): Stride of the convolution. Default: 1\n        padding (int, tuple or str, optional): Padding added to both sides of\n            the input. Default: 0\n        padding_mode (str, optional): ``'zeros'``, ``'reflect'``,\n            ``'replicate'`` or ``'circular'``. Default: ``'zeros'``\n        dilation (int or tuple, optional): Spacing between kernel\n            elements. Default: 1\n        groups (int, optional): Number of blocked connections from input\n            channels to output channels. Default: 1\n        bias (bool, optional): If ``True``, adds a learnable bias to the\n            output. Default: ``True``\n\n    \n\n    Shape:\n        - Input: :math:`(N, C_{in}, L_{in})` or :math:`(C_{in}, L_{in})`\n        - Output: :math:`(N, C_{out}, L_{out})` or :math:`(C_{out}, L_{out})`, where\n\n          .. math::\n              L_{out} = \\left\\lfloor\\frac{L_{in} + 2 \\times \\text{padding} - \\text{dilation}\n                        \\times (\\text{kernel\\_size} - 1) - 1}{\\text{stride}} + 1\\right\\rfloor\n\n    Attributes:\n        weight (Tensor): the learnable weights of the module of shape\n            :math:`(\\text{out\\_channels},\n            \\frac{\\text{in\\_channels}}{\\text{groups}}, \\text{kernel\\_size})`.\n            The values of these weights are sampled from\n            :math:`\\mathcal{U}(-\\sqrt{k}, \\sqrt{k})` where\n            :math:`k = \\frac{groups}{C_\\text{in} * \\text{kernel\\_size}}`\n        bias (Tensor):   the learnable bias of the module of shape\n            (out_channels). If :attr:`bias` is ``True``, then the values of these weights are\n            sampled from :math:`\\mathcal{U}(-\\sqrt{k}, \\sqrt{k})` where\n            :math:`k = \\frac{groups}{C_\\text{in} * \\text{kernel\\_size}}`\n\n    Examples::\n\n        >>> m = nn.Conv1d(16, 33, 3, stride=2)\n        >>> input = torch.randn(20, 16, 50)\n        >>> output = m(input)\n\n    .. _cross-correlation:\n        https://en.wikipedia.org/wiki/Cross-correlation\n\n    .. _link:\n        https://github.com/vdumoulin/conv_arithmetic/blob/master/README.md\n    ",
+            "Functions": {
+              "__init__": {
+                "Doc": null,
+                "Args": {
+                  "self": {
+                    "Type": null,
+                    "Default": null
+                  },
+                  "in_channels": {
+                    "Type": "<class 'int'>",
+                    "Default": null
+                  },
+                  "out_channels": {
+                    "Type": "<class 'int'>",
+                    "Default": null
+                  },
+                  "kernel_size": {
+                    "Type": "typing.Union[int, typing.Tuple[int]]",
+                    "Default": null
+                  },
+                  "stride": {
+                    "Type": "typing.Union[int, typing.Tuple[int]]",
+                    "Default": "1"
+                  },
+                  "padding": {
+                    "Type": "typing.Union[str, int, typing.Tuple[int]]",
+                    "Default": "0"
+                  },
+                  "dilation": {
+                    "Type": "typing.Union[int, typing.Tuple[int]]",
+                    "Default": "1"
+                  },
+                  "groups": {
+                    "Type": "<class 'int'>",
+                    "Default": "1"
+                  },
+                  "bias": {
+                    "Type": "<class 'bool'>",
+                    "Default": "True"
+                  },
+                  "padding_mode": {
+                    "Type": "<class 'str'>",
+                    "Default": "zeros"
+                  },
+                  "device": {
+                    "Type": null,
+                    "Default": "None"
+                  },
+                  "dtype": {
+                    "Type": null,
+                    "Default": "None"
+                  }
+                }
+              },
+              "forward": {
+                "Doc": null,
+                "Args": {
+                  "self": {
+                    "Type": null,
+                    "Default": null
+                  },
+                  "input": {
+                    "Type": "<class 'torch.Tensor'>",
+                    "Default": null
+                  }
+                }
+              }
+            }
+          },
+          "Conv2d": {
+            "Doc": "Applies a 2D convolution over an input signal composed of several input\n    planes.\n\n    In the simplest case, the output value of the layer with input size\n    :math:`(N, C_{\\text{in}}, H, W)` and output :math:`(N, C_{\\text{out}}, H_{\\text{out}}, W_{\\text{out}})`\n    can be precisely described as:\n\n    .. math::\n        \\text{out}(N_i, C_{\\text{out}_j}) = \\text{bias}(C_{\\text{out}_j}) +\n        \\sum_{k = 0}^{C_{\\text{in}} - 1} \\text{weight}(C_{\\text{out}_j}, k) \\star \\text{input}(N_i, k)\n\n\n    where :math:`\\star` is the valid 2D `cross-correlation`_ operator,\n    :math:`N` is a batch size, :math:`C` denotes a number of channels,\n    :math:`H` is a height of input planes in pixels, and :math:`W` is\n    width in pixels.\n    \n\n    This module supports :ref:`TensorFloat32<tf32_on_ampere>`.\n\n    On certain ROCm devices, when using float16 inputs this module will use :ref:`different precision<fp16_on_mi200>` for backward.\n\n    * :attr:`stride` controls the stride for the cross-correlation, a single\n      number or a tuple.\n\n    * :attr:`padding` controls the amount of padding applied to the input. It\n      can be either a string {'valid', 'same'} or a tuple of ints giving the\n      amount of implicit padding applied on both sides.\n\n    * :attr:`dilation` controls the spacing between the kernel points; also\n      known as the \u00e0 trous algorithm. It is harder to describe, but this `link`_\n      has a nice visualization of what :attr:`dilation` does.\n\n    * :attr:`groups` controls the connections between inputs and outputs.\n      :attr:`in_channels` and :attr:`out_channels` must both be divisible by\n      :attr:`groups`. For example,\n\n        * At groups=1, all inputs are convolved to all outputs.\n        * At groups=2, the operation becomes equivalent to having two conv\n          layers side by side, each seeing half the input channels\n          and producing half the output channels, and both subsequently\n          concatenated.\n        * At groups= :attr:`in_channels`, each input channel is convolved with\n          its own set of filters (of size\n          :math:`\\frac{\\text{out\\_channels}}{\\text{in\\_channels}}`).\n\n    The parameters :attr:`kernel_size`, :attr:`stride`, :attr:`padding`, :attr:`dilation` can either be:\n\n        - a single ``int`` -- in which case the same value is used for the height and width dimension\n        - a ``tuple`` of two ints -- in which case, the first `int` is used for the height dimension,\n          and the second `int` for the width dimension\n\n    Note:\n        When `groups == in_channels` and `out_channels == K * in_channels`,\n        where `K` is a positive integer, this operation is also known as a \"depthwise convolution\".\n\n        In other words, for an input of size :math:`(N, C_{in}, L_{in})`,\n        a depthwise convolution with a depthwise multiplier `K` can be performed with the arguments\n        :math:`(C_\\text{in}=C_\\text{in}, C_\\text{out}=C_\\text{in} \\times \\text{K}, ..., \\text{groups}=C_\\text{in})`.\n\n    Note:\n        In some circumstances when given tensors on a CUDA device and using CuDNN, this operator may select a nondeterministic algorithm to increase performance. If this is undesirable, you can try to make the operation deterministic (potentially at a performance cost) by setting ``torch.backends.cudnn.deterministic = True``. See :doc:`/notes/randomness` for more information.\n\n    Note:\n        ``padding='valid'`` is the same as no padding. ``padding='same'`` pads\n        the input so the output has the shape as the input. However, this mode\n        doesn't support any stride values other than 1.\n\n    Note:\n        This module supports complex data types i.e. ``complex32, complex64, complex128``.\n\n    Args:\n        in_channels (int): Number of channels in the input image\n        out_channels (int): Number of channels produced by the convolution\n        kernel_size (int or tuple): Size of the convolving kernel\n        stride (int or tuple, optional): Stride of the convolution. Default: 1\n        padding (int, tuple or str, optional): Padding added to all four sides of\n            the input. Default: 0\n        padding_mode (str, optional): ``'zeros'``, ``'reflect'``,\n            ``'replicate'`` or ``'circular'``. Default: ``'zeros'``\n        dilation (int or tuple, optional): Spacing between kernel elements. Default: 1\n        groups (int, optional): Number of blocked connections from input\n            channels to output channels. Default: 1\n        bias (bool, optional): If ``True``, adds a learnable bias to the\n            output. Default: ``True``\n    \n\n    Shape:\n        - Input: :math:`(N, C_{in}, H_{in}, W_{in})` or :math:`(C_{in}, H_{in}, W_{in})`\n        - Output: :math:`(N, C_{out}, H_{out}, W_{out})` or :math:`(C_{out}, H_{out}, W_{out})`, where\n\n          .. math::\n              H_{out} = \\left\\lfloor\\frac{H_{in}  + 2 \\times \\text{padding}[0] - \\text{dilation}[0]\n                        \\times (\\text{kernel\\_size}[0] - 1) - 1}{\\text{stride}[0]} + 1\\right\\rfloor\n\n          .. math::\n              W_{out} = \\left\\lfloor\\frac{W_{in}  + 2 \\times \\text{padding}[1] - \\text{dilation}[1]\n                        \\times (\\text{kernel\\_size}[1] - 1) - 1}{\\text{stride}[1]} + 1\\right\\rfloor\n\n    Attributes:\n        weight (Tensor): the learnable weights of the module of shape\n            :math:`(\\text{out\\_channels}, \\frac{\\text{in\\_channels}}{\\text{groups}},`\n            :math:`\\text{kernel\\_size[0]}, \\text{kernel\\_size[1]})`.\n            The values of these weights are sampled from\n            :math:`\\mathcal{U}(-\\sqrt{k}, \\sqrt{k})` where\n            :math:`k = \\frac{groups}{C_\\text{in} * \\prod_{i=0}^{1}\\text{kernel\\_size}[i]}`\n        bias (Tensor):   the learnable bias of the module of shape\n            (out_channels). If :attr:`bias` is ``True``,\n            then the values of these weights are\n            sampled from :math:`\\mathcal{U}(-\\sqrt{k}, \\sqrt{k})` where\n            :math:`k = \\frac{groups}{C_\\text{in} * \\prod_{i=0}^{1}\\text{kernel\\_size}[i]}`\n\n    Examples:\n\n        >>> # With square kernels and equal stride\n        >>> m = nn.Conv2d(16, 33, 3, stride=2)\n        >>> # non-square kernels and unequal stride and with padding\n        >>> m = nn.Conv2d(16, 33, (3, 5), stride=(2, 1), padding=(4, 2))\n        >>> # non-square kernels and unequal stride and with padding and dilation\n        >>> m = nn.Conv2d(16, 33, (3, 5), stride=(2, 1), padding=(4, 2), dilation=(3, 1))\n        >>> input = torch.randn(20, 16, 50, 100)\n        >>> output = m(input)\n\n    .. _cross-correlation:\n        https://en.wikipedia.org/wiki/Cross-correlation\n\n    .. _link:\n        https://github.com/vdumoulin/conv_arithmetic/blob/master/README.md\n    ",
+            "Functions": {
+              "__init__": {
+                "Doc": null,
+                "Args": {
+                  "self": {
+                    "Type": null,
+                    "Default": null
+                  },
+                  "in_channels": {
+                    "Type": "<class 'int'>",
+                    "Default": null
+                  },
+                  "out_channels": {
+                    "Type": "<class 'int'>",
+                    "Default": null
+                  },
+                  "kernel_size": {
+                    "Type": "typing.Union[int, typing.Tuple[int, int]]",
+                    "Default": null
+                  },
+                  "stride": {
+                    "Type": "typing.Union[int, typing.Tuple[int, int]]",
+                    "Default": "1"
+                  },
+                  "padding": {
+                    "Type": "typing.Union[str, int, typing.Tuple[int, int]]",
+                    "Default": "0"
+                  },
+                  "dilation": {
+                    "Type": "typing.Union[int, typing.Tuple[int, int]]",
+                    "Default": "1"
+                  },
+                  "groups": {
+                    "Type": "<class 'int'>",
+                    "Default": "1"
+                  },
+                  "bias": {
+                    "Type": "<class 'bool'>",
+                    "Default": "True"
+                  },
+                  "padding_mode": {
+                    "Type": "<class 'str'>",
+                    "Default": "zeros"
+                  },
+                  "device": {
+                    "Type": null,
+                    "Default": "None"
+                  },
+                  "dtype": {
+                    "Type": null,
+                    "Default": "None"
+                  }
+                }
+              },
+              "forward": {
+                "Doc": null,
+                "Args": {
+                  "self": {
+                    "Type": null,
+                    "Default": null
+                  },
+                  "input": {
+                    "Type": "<class 'torch.Tensor'>",
+                    "Default": null
+                  }
+                }
+              }
+            }
+          },
+          "Conv3d": {
+            "Doc": "Applies a 3D convolution over an input signal composed of several input\n    planes.\n\n    In the simplest case, the output value of the layer with input size :math:`(N, C_{in}, D, H, W)`\n    and output :math:`(N, C_{out}, D_{out}, H_{out}, W_{out})` can be precisely described as:\n\n    .. math::\n        out(N_i, C_{out_j}) = bias(C_{out_j}) +\n                                \\sum_{k = 0}^{C_{in} - 1} weight(C_{out_j}, k) \\star input(N_i, k)\n\n    where :math:`\\star` is the valid 3D `cross-correlation`_ operator\n    \n\n    This module supports :ref:`TensorFloat32<tf32_on_ampere>`.\n\n    On certain ROCm devices, when using float16 inputs this module will use :ref:`different precision<fp16_on_mi200>` for backward.\n\n    * :attr:`stride` controls the stride for the cross-correlation.\n\n    * :attr:`padding` controls the amount of padding applied to the input. It\n      can be either a string {'valid', 'same'} or a tuple of ints giving the\n      amount of implicit padding applied on both sides.\n\n    * :attr:`dilation` controls the spacing between the kernel points; also known as the \u00e0 trous algorithm.\n      It is harder to describe, but this `link`_ has a nice visualization of what :attr:`dilation` does.\n\n    * :attr:`groups` controls the connections between inputs and outputs.\n      :attr:`in_channels` and :attr:`out_channels` must both be divisible by\n      :attr:`groups`. For example,\n\n        * At groups=1, all inputs are convolved to all outputs.\n        * At groups=2, the operation becomes equivalent to having two conv\n          layers side by side, each seeing half the input channels\n          and producing half the output channels, and both subsequently\n          concatenated.\n        * At groups= :attr:`in_channels`, each input channel is convolved with\n          its own set of filters (of size\n          :math:`\\frac{\\text{out\\_channels}}{\\text{in\\_channels}}`).\n\n    The parameters :attr:`kernel_size`, :attr:`stride`, :attr:`padding`, :attr:`dilation` can either be:\n\n        - a single ``int`` -- in which case the same value is used for the depth, height and width dimension\n        - a ``tuple`` of three ints -- in which case, the first `int` is used for the depth dimension,\n          the second `int` for the height dimension and the third `int` for the width dimension\n\n    Note:\n        When `groups == in_channels` and `out_channels == K * in_channels`,\n        where `K` is a positive integer, this operation is also known as a \"depthwise convolution\".\n\n        In other words, for an input of size :math:`(N, C_{in}, L_{in})`,\n        a depthwise convolution with a depthwise multiplier `K` can be performed with the arguments\n        :math:`(C_\\text{in}=C_\\text{in}, C_\\text{out}=C_\\text{in} \\times \\text{K}, ..., \\text{groups}=C_\\text{in})`.\n\n    Note:\n        In some circumstances when given tensors on a CUDA device and using CuDNN, this operator may select a nondeterministic algorithm to increase performance. If this is undesirable, you can try to make the operation deterministic (potentially at a performance cost) by setting ``torch.backends.cudnn.deterministic = True``. See :doc:`/notes/randomness` for more information.\n\n    Note:\n        ``padding='valid'`` is the same as no padding. ``padding='same'`` pads\n        the input so the output has the shape as the input. However, this mode\n        doesn't support any stride values other than 1.\n\n    Note:\n        This module supports complex data types i.e. ``complex32, complex64, complex128``.\n\n    Args:\n        in_channels (int): Number of channels in the input image\n        out_channels (int): Number of channels produced by the convolution\n        kernel_size (int or tuple): Size of the convolving kernel\n        stride (int or tuple, optional): Stride of the convolution. Default: 1\n        padding (int, tuple or str, optional): Padding added to all six sides of\n            the input. Default: 0\n        padding_mode (str, optional): ``'zeros'``, ``'reflect'``, ``'replicate'`` or ``'circular'``. Default: ``'zeros'``\n        dilation (int or tuple, optional): Spacing between kernel elements. Default: 1\n        groups (int, optional): Number of blocked connections from input channels to output channels. Default: 1\n        bias (bool, optional): If ``True``, adds a learnable bias to the output. Default: ``True``\n    \n\n    Shape:\n        - Input: :math:`(N, C_{in}, D_{in}, H_{in}, W_{in})` or :math:`(C_{in}, D_{in}, H_{in}, W_{in})`\n        - Output: :math:`(N, C_{out}, D_{out}, H_{out}, W_{out})` or :math:`(C_{out}, D_{out}, H_{out}, W_{out})`,\n          where\n\n          .. math::\n              D_{out} = \\left\\lfloor\\frac{D_{in} + 2 \\times \\text{padding}[0] - \\text{dilation}[0]\n                    \\times (\\text{kernel\\_size}[0] - 1) - 1}{\\text{stride}[0]} + 1\\right\\rfloor\n\n          .. math::\n              H_{out} = \\left\\lfloor\\frac{H_{in} + 2 \\times \\text{padding}[1] - \\text{dilation}[1]\n                    \\times (\\text{kernel\\_size}[1] - 1) - 1}{\\text{stride}[1]} + 1\\right\\rfloor\n\n          .. math::\n              W_{out} = \\left\\lfloor\\frac{W_{in} + 2 \\times \\text{padding}[2] - \\text{dilation}[2]\n                    \\times (\\text{kernel\\_size}[2] - 1) - 1}{\\text{stride}[2]} + 1\\right\\rfloor\n\n    Attributes:\n        weight (Tensor): the learnable weights of the module of shape\n                         :math:`(\\text{out\\_channels}, \\frac{\\text{in\\_channels}}{\\text{groups}},`\n                         :math:`\\text{kernel\\_size[0]}, \\text{kernel\\_size[1]}, \\text{kernel\\_size[2]})`.\n                         The values of these weights are sampled from\n                         :math:`\\mathcal{U}(-\\sqrt{k}, \\sqrt{k})` where\n                         :math:`k = \\frac{groups}{C_\\text{in} * \\prod_{i=0}^{2}\\text{kernel\\_size}[i]}`\n        bias (Tensor):   the learnable bias of the module of shape (out_channels). If :attr:`bias` is ``True``,\n                         then the values of these weights are\n                         sampled from :math:`\\mathcal{U}(-\\sqrt{k}, \\sqrt{k})` where\n                         :math:`k = \\frac{groups}{C_\\text{in} * \\prod_{i=0}^{2}\\text{kernel\\_size}[i]}`\n\n    Examples::\n\n        >>> # With square kernels and equal stride\n        >>> m = nn.Conv3d(16, 33, 3, stride=2)\n        >>> # non-square kernels and unequal stride and with padding\n        >>> m = nn.Conv3d(16, 33, (3, 5, 2), stride=(2, 1, 1), padding=(4, 2, 0))\n        >>> input = torch.randn(20, 16, 10, 50, 100)\n        >>> output = m(input)\n\n    .. _cross-correlation:\n        https://en.wikipedia.org/wiki/Cross-correlation\n\n    .. _link:\n        https://github.com/vdumoulin/conv_arithmetic/blob/master/README.md\n    ",
+            "Functions": {
+              "__init__": {
+                "Doc": null,
+                "Args": {
+                  "self": {
+                    "Type": null,
+                    "Default": null
+                  },
+                  "in_channels": {
+                    "Type": "<class 'int'>",
+                    "Default": null
+                  },
+                  "out_channels": {
+                    "Type": "<class 'int'>",
+                    "Default": null
+                  },
+                  "kernel_size": {
+                    "Type": "typing.Union[int, typing.Tuple[int, int, int]]",
+                    "Default": null
+                  },
+                  "stride": {
+                    "Type": "typing.Union[int, typing.Tuple[int, int, int]]",
+                    "Default": "1"
+                  },
+                  "padding": {
+                    "Type": "typing.Union[str, int, typing.Tuple[int, int, int]]",
+                    "Default": "0"
+                  },
+                  "dilation": {
+                    "Type": "typing.Union[int, typing.Tuple[int, int, int]]",
+                    "Default": "1"
+                  },
+                  "groups": {
+                    "Type": "<class 'int'>",
+                    "Default": "1"
+                  },
+                  "bias": {
+                    "Type": "<class 'bool'>",
+                    "Default": "True"
+                  },
+                  "padding_mode": {
+                    "Type": "<class 'str'>",
+                    "Default": "zeros"
+                  },
+                  "device": {
+                    "Type": null,
+                    "Default": "None"
+                  },
+                  "dtype": {
+                    "Type": null,
+                    "Default": "None"
+                  }
+                }
+              },
+              "forward": {
+                "Doc": null,
+                "Args": {
+                  "self": {
+                    "Type": null,
+                    "Default": null
+                  },
+                  "input": {
+                    "Type": "<class 'torch.Tensor'>",
+                    "Default": null
+                  }
+                }
+              }
+            }
+          },
+          "ConvTranspose1d": {
+            "Doc": "Applies a 1D transposed convolution operator over an input image\n    composed of several input planes.\n\n    This module can be seen as the gradient of Conv1d with respect to its input.\n    It is also known as a fractionally-strided convolution or\n    a deconvolution (although it is not an actual deconvolution operation as it does\n    not compute a true inverse of convolution). For more information, see the visualizations\n    `here`_ and the `Deconvolutional Networks`_ paper.\n\n    This module supports :ref:`TensorFloat32<tf32_on_ampere>`.\n\n    On certain ROCm devices, when using float16 inputs this module will use :ref:`different precision<fp16_on_mi200>` for backward.\n\n    * :attr:`stride` controls the stride for the cross-correlation.\n\n    * :attr:`padding` controls the amount of implicit zero padding on both\n      sides for ``dilation * (kernel_size - 1) - padding`` number of points. See note\n      below for details.\n\n    * :attr:`output_padding` controls the additional size added to one side\n      of the output shape. See note below for details.\n\n    * :attr:`dilation` controls the spacing between the kernel points; also known as the \u00e0 trous algorithm.\n      It is harder to describe, but the link `here`_ has a nice visualization of what :attr:`dilation` does.\n\n    * :attr:`groups` controls the connections between inputs and outputs.\n      :attr:`in_channels` and :attr:`out_channels` must both be divisible by\n      :attr:`groups`. For example,\n\n        * At groups=1, all inputs are convolved to all outputs.\n        * At groups=2, the operation becomes equivalent to having two conv\n          layers side by side, each seeing half the input channels\n          and producing half the output channels, and both subsequently\n          concatenated.\n        * At groups= :attr:`in_channels`, each input channel is convolved with\n          its own set of filters (of size\n          :math:`\\frac{\\text{out\\_channels}}{\\text{in\\_channels}}`).\n\n    Note:\n        The :attr:`padding` argument effectively adds ``dilation * (kernel_size - 1) - padding``\n        amount of zero padding to both sizes of the input. This is set so that\n        when a :class:`~torch.nn.Conv1d` and a :class:`~torch.nn.ConvTranspose1d`\n        are initialized with same parameters, they are inverses of each other in\n        regard to the input and output shapes. However, when ``stride > 1``,\n        :class:`~torch.nn.Conv1d` maps multiple input shapes to the same output\n        shape. :attr:`output_padding` is provided to resolve this ambiguity by\n        effectively increasing the calculated output shape on one side. Note\n        that :attr:`output_padding` is only used to find output shape, but does\n        not actually add zero-padding to output.\n\n    Note:\n        In some circumstances when using the CUDA backend with CuDNN, this operator\n        may select a nondeterministic algorithm to increase performance. If this is\n        undesirable, you can try to make the operation deterministic (potentially at\n        a performance cost) by setting ``torch.backends.cudnn.deterministic =\n        True``.\n        Please see the notes on :doc:`/notes/randomness` for background.\n\n\n    Args:\n        in_channels (int): Number of channels in the input image\n        out_channels (int): Number of channels produced by the convolution\n        kernel_size (int or tuple): Size of the convolving kernel\n        stride (int or tuple, optional): Stride of the convolution. Default: 1\n        padding (int or tuple, optional): ``dilation * (kernel_size - 1) - padding`` zero-padding\n            will be added to both sides of the input. Default: 0\n        output_padding (int or tuple, optional): Additional size added to one side\n            of the output shape. Default: 0\n        groups (int, optional): Number of blocked connections from input channels to output channels. Default: 1\n        bias (bool, optional): If ``True``, adds a learnable bias to the output. Default: ``True``\n        dilation (int or tuple, optional): Spacing between kernel elements. Default: 1\n    \n\n    Shape:\n        - Input: :math:`(N, C_{in}, L_{in})` or :math:`(C_{in}, L_{in})`\n        - Output: :math:`(N, C_{out}, L_{out})` or :math:`(C_{out}, L_{out})`, where\n\n          .. math::\n              L_{out} = (L_{in} - 1) \\times \\text{stride} - 2 \\times \\text{padding} + \\text{dilation}\n                        \\times (\\text{kernel\\_size} - 1) + \\text{output\\_padding} + 1\n\n    Attributes:\n        weight (Tensor): the learnable weights of the module of shape\n                         :math:`(\\text{in\\_channels}, \\frac{\\text{out\\_channels}}{\\text{groups}},`\n                         :math:`\\text{kernel\\_size})`.\n                         The values of these weights are sampled from\n                         :math:`\\mathcal{U}(-\\sqrt{k}, \\sqrt{k})` where\n                         :math:`k = \\frac{groups}{C_\\text{out} * \\text{kernel\\_size}}`\n        bias (Tensor):   the learnable bias of the module of shape (out_channels).\n                         If :attr:`bias` is ``True``, then the values of these weights are\n                         sampled from :math:`\\mathcal{U}(-\\sqrt{k}, \\sqrt{k})` where\n                         :math:`k = \\frac{groups}{C_\\text{out} * \\text{kernel\\_size}}`\n\n    .. _`here`:\n        https://github.com/vdumoulin/conv_arithmetic/blob/master/README.md\n\n    .. _`Deconvolutional Networks`:\n        https://www.matthewzeiler.com/mattzeiler/deconvolutionalnetworks.pdf\n    ",
+            "Functions": {
+              "__init__": {
+                "Doc": null,
+                "Args": {
+                  "self": {
+                    "Type": null,
+                    "Default": null
+                  },
+                  "in_channels": {
+                    "Type": "<class 'int'>",
+                    "Default": null
+                  },
+                  "out_channels": {
+                    "Type": "<class 'int'>",
+                    "Default": null
+                  },
+                  "kernel_size": {
+                    "Type": "typing.Union[int, typing.Tuple[int]]",
+                    "Default": null
+                  },
+                  "stride": {
+                    "Type": "typing.Union[int, typing.Tuple[int]]",
+                    "Default": "1"
+                  },
+                  "padding": {
+                    "Type": "typing.Union[int, typing.Tuple[int]]",
+                    "Default": "0"
+                  },
+                  "output_padding": {
+                    "Type": "typing.Union[int, typing.Tuple[int]]",
+                    "Default": "0"
+                  },
+                  "groups": {
+                    "Type": "<class 'int'>",
+                    "Default": "1"
+                  },
+                  "bias": {
+                    "Type": "<class 'bool'>",
+                    "Default": "True"
+                  },
+                  "dilation": {
+                    "Type": "typing.Union[int, typing.Tuple[int]]",
+                    "Default": "1"
+                  },
+                  "padding_mode": {
+                    "Type": "<class 'str'>",
+                    "Default": "zeros"
+                  },
+                  "device": {
+                    "Type": null,
+                    "Default": "None"
+                  },
+                  "dtype": {
+                    "Type": null,
+                    "Default": "None"
+                  }
+                }
+              },
+              "forward": {
+                "Doc": null,
+                "Args": {
+                  "self": {
+                    "Type": null,
+                    "Default": null
+                  },
+                  "input": {
+                    "Type": "<class 'torch.Tensor'>",
+                    "Default": null
+                  },
+                  "output_size": {
+                    "Type": "typing.Optional[typing.List[int]]",
+                    "Default": "None"
+                  }
+                }
+              }
+            }
+          },
+          "ConvTranspose2d": {
+            "Doc": "Applies a 2D transposed convolution operator over an input image\n    composed of several input planes.\n\n    This module can be seen as the gradient of Conv2d with respect to its input.\n    It is also known as a fractionally-strided convolution or\n    a deconvolution (although it is not an actual deconvolution operation as it does\n    not compute a true inverse of convolution). For more information, see the visualizations\n    `here`_ and the `Deconvolutional Networks`_ paper.\n\n    This module supports :ref:`TensorFloat32<tf32_on_ampere>`.\n\n    On certain ROCm devices, when using float16 inputs this module will use :ref:`different precision<fp16_on_mi200>` for backward.\n\n    * :attr:`stride` controls the stride for the cross-correlation.\n\n    * :attr:`padding` controls the amount of implicit zero padding on both\n      sides for ``dilation * (kernel_size - 1) - padding`` number of points. See note\n      below for details.\n\n    * :attr:`output_padding` controls the additional size added to one side\n      of the output shape. See note below for details.\n\n    * :attr:`dilation` controls the spacing between the kernel points; also known as the \u00e0 trous algorithm.\n      It is harder to describe, but the link `here`_ has a nice visualization of what :attr:`dilation` does.\n\n    * :attr:`groups` controls the connections between inputs and outputs.\n      :attr:`in_channels` and :attr:`out_channels` must both be divisible by\n      :attr:`groups`. For example,\n\n        * At groups=1, all inputs are convolved to all outputs.\n        * At groups=2, the operation becomes equivalent to having two conv\n          layers side by side, each seeing half the input channels\n          and producing half the output channels, and both subsequently\n          concatenated.\n        * At groups= :attr:`in_channels`, each input channel is convolved with\n          its own set of filters (of size\n          :math:`\\frac{\\text{out\\_channels}}{\\text{in\\_channels}}`).\n\n    The parameters :attr:`kernel_size`, :attr:`stride`, :attr:`padding`, :attr:`output_padding`\n    can either be:\n\n        - a single ``int`` -- in which case the same value is used for the height and width dimensions\n        - a ``tuple`` of two ints -- in which case, the first `int` is used for the height dimension,\n          and the second `int` for the width dimension\n\n    Note:\n        The :attr:`padding` argument effectively adds ``dilation * (kernel_size - 1) - padding``\n        amount of zero padding to both sizes of the input. This is set so that\n        when a :class:`~torch.nn.Conv2d` and a :class:`~torch.nn.ConvTranspose2d`\n        are initialized with same parameters, they are inverses of each other in\n        regard to the input and output shapes. However, when ``stride > 1``,\n        :class:`~torch.nn.Conv2d` maps multiple input shapes to the same output\n        shape. :attr:`output_padding` is provided to resolve this ambiguity by\n        effectively increasing the calculated output shape on one side. Note\n        that :attr:`output_padding` is only used to find output shape, but does\n        not actually add zero-padding to output.\n\n    Note:\n        In some circumstances when given tensors on a CUDA device and using CuDNN, this operator may select a nondeterministic algorithm to increase performance. If this is undesirable, you can try to make the operation deterministic (potentially at a performance cost) by setting ``torch.backends.cudnn.deterministic = True``. See :doc:`/notes/randomness` for more information.\n\n    Args:\n        in_channels (int): Number of channels in the input image\n        out_channels (int): Number of channels produced by the convolution\n        kernel_size (int or tuple): Size of the convolving kernel\n        stride (int or tuple, optional): Stride of the convolution. Default: 1\n        padding (int or tuple, optional): ``dilation * (kernel_size - 1) - padding`` zero-padding\n            will be added to both sides of each dimension in the input. Default: 0\n        output_padding (int or tuple, optional): Additional size added to one side\n            of each dimension in the output shape. Default: 0\n        groups (int, optional): Number of blocked connections from input channels to output channels. Default: 1\n        bias (bool, optional): If ``True``, adds a learnable bias to the output. Default: ``True``\n        dilation (int or tuple, optional): Spacing between kernel elements. Default: 1\n    \n\n    Shape:\n        - Input: :math:`(N, C_{in}, H_{in}, W_{in})` or :math:`(C_{in}, H_{in}, W_{in})`\n        - Output: :math:`(N, C_{out}, H_{out}, W_{out})` or :math:`(C_{out}, H_{out}, W_{out})`, where\n\n        .. math::\n              H_{out} = (H_{in} - 1) \\times \\text{stride}[0] - 2 \\times \\text{padding}[0] + \\text{dilation}[0]\n                        \\times (\\text{kernel\\_size}[0] - 1) + \\text{output\\_padding}[0] + 1\n        .. math::\n              W_{out} = (W_{in} - 1) \\times \\text{stride}[1] - 2 \\times \\text{padding}[1] + \\text{dilation}[1]\n                        \\times (\\text{kernel\\_size}[1] - 1) + \\text{output\\_padding}[1] + 1\n\n    Attributes:\n        weight (Tensor): the learnable weights of the module of shape\n                         :math:`(\\text{in\\_channels}, \\frac{\\text{out\\_channels}}{\\text{groups}},`\n                         :math:`\\text{kernel\\_size[0]}, \\text{kernel\\_size[1]})`.\n                         The values of these weights are sampled from\n                         :math:`\\mathcal{U}(-\\sqrt{k}, \\sqrt{k})` where\n                         :math:`k = \\frac{groups}{C_\\text{out} * \\prod_{i=0}^{1}\\text{kernel\\_size}[i]}`\n        bias (Tensor):   the learnable bias of the module of shape (out_channels)\n                         If :attr:`bias` is ``True``, then the values of these weights are\n                         sampled from :math:`\\mathcal{U}(-\\sqrt{k}, \\sqrt{k})` where\n                         :math:`k = \\frac{groups}{C_\\text{out} * \\prod_{i=0}^{1}\\text{kernel\\_size}[i]}`\n\n    Examples::\n\n        >>> # With square kernels and equal stride\n        >>> m = nn.ConvTranspose2d(16, 33, 3, stride=2)\n        >>> # non-square kernels and unequal stride and with padding\n        >>> m = nn.ConvTranspose2d(16, 33, (3, 5), stride=(2, 1), padding=(4, 2))\n        >>> input = torch.randn(20, 16, 50, 100)\n        >>> output = m(input)\n        >>> # exact output size can be also specified as an argument\n        >>> input = torch.randn(1, 16, 12, 12)\n        >>> downsample = nn.Conv2d(16, 16, 3, stride=2, padding=1)\n        >>> upsample = nn.ConvTranspose2d(16, 16, 3, stride=2, padding=1)\n        >>> h = downsample(input)\n        >>> h.size()\n        torch.Size([1, 16, 6, 6])\n        >>> output = upsample(h, output_size=input.size())\n        >>> output.size()\n        torch.Size([1, 16, 12, 12])\n\n    .. _`here`:\n        https://github.com/vdumoulin/conv_arithmetic/blob/master/README.md\n\n    .. _`Deconvolutional Networks`:\n        https://www.matthewzeiler.com/mattzeiler/deconvolutionalnetworks.pdf\n    ",
+            "Functions": {
+              "__init__": {
+                "Doc": null,
+                "Args": {
+                  "self": {
+                    "Type": null,
+                    "Default": null
+                  },
+                  "in_channels": {
+                    "Type": "<class 'int'>",
+                    "Default": null
+                  },
+                  "out_channels": {
+                    "Type": "<class 'int'>",
+                    "Default": null
+                  },
+                  "kernel_size": {
+                    "Type": "typing.Union[int, typing.Tuple[int, int]]",
+                    "Default": null
+                  },
+                  "stride": {
+                    "Type": "typing.Union[int, typing.Tuple[int, int]]",
+                    "Default": "1"
+                  },
+                  "padding": {
+                    "Type": "typing.Union[int, typing.Tuple[int, int]]",
+                    "Default": "0"
+                  },
+                  "output_padding": {
+                    "Type": "typing.Union[int, typing.Tuple[int, int]]",
+                    "Default": "0"
+                  },
+                  "groups": {
+                    "Type": "<class 'int'>",
+                    "Default": "1"
+                  },
+                  "bias": {
+                    "Type": "<class 'bool'>",
+                    "Default": "True"
+                  },
+                  "dilation": {
+                    "Type": "typing.Union[int, typing.Tuple[int, int]]",
+                    "Default": "1"
+                  },
+                  "padding_mode": {
+                    "Type": "<class 'str'>",
+                    "Default": "zeros"
+                  },
+                  "device": {
+                    "Type": null,
+                    "Default": "None"
+                  },
+                  "dtype": {
+                    "Type": null,
+                    "Default": "None"
+                  }
+                }
+              },
+              "forward": {
+                "Doc": null,
+                "Args": {
+                  "self": {
+                    "Type": null,
+                    "Default": null
+                  },
+                  "input": {
+                    "Type": "<class 'torch.Tensor'>",
+                    "Default": null
+                  },
+                  "output_size": {
+                    "Type": "typing.Optional[typing.List[int]]",
+                    "Default": "None"
+                  }
+                }
+              }
+            }
+          },
+          "ConvTranspose3d": {
+            "Doc": "Applies a 3D transposed convolution operator over an input image composed of several input\n    planes.\n    The transposed convolution operator multiplies each input value element-wise by a learnable kernel,\n    and sums over the outputs from all input feature planes.\n\n    This module can be seen as the gradient of Conv3d with respect to its input.\n    It is also known as a fractionally-strided convolution or\n    a deconvolution (although it is not an actual deconvolution operation as it does\n    not compute a true inverse of convolution). For more information, see the visualizations\n    `here`_ and the `Deconvolutional Networks`_ paper.\n\n    This module supports :ref:`TensorFloat32<tf32_on_ampere>`.\n\n    On certain ROCm devices, when using float16 inputs this module will use :ref:`different precision<fp16_on_mi200>` for backward.\n\n    * :attr:`stride` controls the stride for the cross-correlation.\n\n    * :attr:`padding` controls the amount of implicit zero padding on both\n      sides for ``dilation * (kernel_size - 1) - padding`` number of points. See note\n      below for details.\n\n    * :attr:`output_padding` controls the additional size added to one side\n      of the output shape. See note below for details.\n\n    * :attr:`dilation` controls the spacing between the kernel points; also known as the \u00e0 trous algorithm.\n      It is harder to describe, but the link `here`_ has a nice visualization of what :attr:`dilation` does.\n\n    * :attr:`groups` controls the connections between inputs and outputs.\n      :attr:`in_channels` and :attr:`out_channels` must both be divisible by\n      :attr:`groups`. For example,\n\n        * At groups=1, all inputs are convolved to all outputs.\n        * At groups=2, the operation becomes equivalent to having two conv\n          layers side by side, each seeing half the input channels\n          and producing half the output channels, and both subsequently\n          concatenated.\n        * At groups= :attr:`in_channels`, each input channel is convolved with\n          its own set of filters (of size\n          :math:`\\frac{\\text{out\\_channels}}{\\text{in\\_channels}}`).\n\n    The parameters :attr:`kernel_size`, :attr:`stride`, :attr:`padding`, :attr:`output_padding`\n    can either be:\n\n        - a single ``int`` -- in which case the same value is used for the depth, height and width dimensions\n        - a ``tuple`` of three ints -- in which case, the first `int` is used for the depth dimension,\n          the second `int` for the height dimension and the third `int` for the width dimension\n\n    Note:\n        The :attr:`padding` argument effectively adds ``dilation * (kernel_size - 1) - padding``\n        amount of zero padding to both sizes of the input. This is set so that\n        when a :class:`~torch.nn.Conv3d` and a :class:`~torch.nn.ConvTranspose3d`\n        are initialized with same parameters, they are inverses of each other in\n        regard to the input and output shapes. However, when ``stride > 1``,\n        :class:`~torch.nn.Conv3d` maps multiple input shapes to the same output\n        shape. :attr:`output_padding` is provided to resolve this ambiguity by\n        effectively increasing the calculated output shape on one side. Note\n        that :attr:`output_padding` is only used to find output shape, but does\n        not actually add zero-padding to output.\n\n    Note:\n        In some circumstances when given tensors on a CUDA device and using CuDNN, this operator may select a nondeterministic algorithm to increase performance. If this is undesirable, you can try to make the operation deterministic (potentially at a performance cost) by setting ``torch.backends.cudnn.deterministic = True``. See :doc:`/notes/randomness` for more information.\n\n    Args:\n        in_channels (int): Number of channels in the input image\n        out_channels (int): Number of channels produced by the convolution\n        kernel_size (int or tuple): Size of the convolving kernel\n        stride (int or tuple, optional): Stride of the convolution. Default: 1\n        padding (int or tuple, optional): ``dilation * (kernel_size - 1) - padding`` zero-padding\n            will be added to both sides of each dimension in the input. Default: 0\n        output_padding (int or tuple, optional): Additional size added to one side\n            of each dimension in the output shape. Default: 0\n        groups (int, optional): Number of blocked connections from input channels to output channels. Default: 1\n        bias (bool, optional): If ``True``, adds a learnable bias to the output. Default: ``True``\n        dilation (int or tuple, optional): Spacing between kernel elements. Default: 1\n    \n\n    Shape:\n        - Input: :math:`(N, C_{in}, D_{in}, H_{in}, W_{in})` or :math:`(C_{in}, D_{in}, H_{in}, W_{in})`\n        - Output: :math:`(N, C_{out}, D_{out}, H_{out}, W_{out})` or\n          :math:`(C_{out}, D_{out}, H_{out}, W_{out})`, where\n\n        .. math::\n              D_{out} = (D_{in} - 1) \\times \\text{stride}[0] - 2 \\times \\text{padding}[0] + \\text{dilation}[0]\n                        \\times (\\text{kernel\\_size}[0] - 1) + \\text{output\\_padding}[0] + 1\n        .. math::\n              H_{out} = (H_{in} - 1) \\times \\text{stride}[1] - 2 \\times \\text{padding}[1] + \\text{dilation}[1]\n                        \\times (\\text{kernel\\_size}[1] - 1) + \\text{output\\_padding}[1] + 1\n        .. math::\n              W_{out} = (W_{in} - 1) \\times \\text{stride}[2] - 2 \\times \\text{padding}[2] + \\text{dilation}[2]\n                        \\times (\\text{kernel\\_size}[2] - 1) + \\text{output\\_padding}[2] + 1\n\n\n    Attributes:\n        weight (Tensor): the learnable weights of the module of shape\n                         :math:`(\\text{in\\_channels}, \\frac{\\text{out\\_channels}}{\\text{groups}},`\n                         :math:`\\text{kernel\\_size[0]}, \\text{kernel\\_size[1]}, \\text{kernel\\_size[2]})`.\n                         The values of these weights are sampled from\n                         :math:`\\mathcal{U}(-\\sqrt{k}, \\sqrt{k})` where\n                         :math:`k = \\frac{groups}{C_\\text{out} * \\prod_{i=0}^{2}\\text{kernel\\_size}[i]}`\n        bias (Tensor):   the learnable bias of the module of shape (out_channels)\n                         If :attr:`bias` is ``True``, then the values of these weights are\n                         sampled from :math:`\\mathcal{U}(-\\sqrt{k}, \\sqrt{k})` where\n                         :math:`k = \\frac{groups}{C_\\text{out} * \\prod_{i=0}^{2}\\text{kernel\\_size}[i]}`\n\n    Examples::\n\n        >>> # With square kernels and equal stride\n        >>> m = nn.ConvTranspose3d(16, 33, 3, stride=2)\n        >>> # non-square kernels and unequal stride and with padding\n        >>> m = nn.ConvTranspose3d(16, 33, (3, 5, 2), stride=(2, 1, 1), padding=(0, 4, 2))\n        >>> input = torch.randn(20, 16, 10, 50, 100)\n        >>> output = m(input)\n\n    .. _`here`:\n        https://github.com/vdumoulin/conv_arithmetic/blob/master/README.md\n\n    .. _`Deconvolutional Networks`:\n        https://www.matthewzeiler.com/mattzeiler/deconvolutionalnetworks.pdf\n    ",
+            "Functions": {
+              "__init__": {
+                "Doc": null,
+                "Args": {
+                  "self": {
+                    "Type": null,
+                    "Default": null
+                  },
+                  "in_channels": {
+                    "Type": "<class 'int'>",
+                    "Default": null
+                  },
+                  "out_channels": {
+                    "Type": "<class 'int'>",
+                    "Default": null
+                  },
+                  "kernel_size": {
+                    "Type": "typing.Union[int, typing.Tuple[int, int, int]]",
+                    "Default": null
+                  },
+                  "stride": {
+                    "Type": "typing.Union[int, typing.Tuple[int, int, int]]",
+                    "Default": "1"
+                  },
+                  "padding": {
+                    "Type": "typing.Union[int, typing.Tuple[int, int, int]]",
+                    "Default": "0"
+                  },
+                  "output_padding": {
+                    "Type": "typing.Union[int, typing.Tuple[int, int, int]]",
+                    "Default": "0"
+                  },
+                  "groups": {
+                    "Type": "<class 'int'>",
+                    "Default": "1"
+                  },
+                  "bias": {
+                    "Type": "<class 'bool'>",
+                    "Default": "True"
+                  },
+                  "dilation": {
+                    "Type": "typing.Union[int, typing.Tuple[int, int, int]]",
+                    "Default": "1"
+                  },
+                  "padding_mode": {
+                    "Type": "<class 'str'>",
+                    "Default": "zeros"
+                  },
+                  "device": {
+                    "Type": null,
+                    "Default": "None"
+                  },
+                  "dtype": {
+                    "Type": null,
+                    "Default": "None"
+                  }
+                }
+              },
+              "forward": {
+                "Doc": null,
+                "Args": {
+                  "self": {
+                    "Type": null,
+                    "Default": null
+                  },
+                  "input": {
+                    "Type": "<class 'torch.Tensor'>",
+                    "Default": null
+                  },
+                  "output_size": {
+                    "Type": "typing.Optional[typing.List[int]]",
+                    "Default": "None"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "dropout": {
+        "Doc": null,
+        "Classes": {
+          "Dropout": {
+            "Doc": "During training, randomly zeroes some of the elements of the input\n    tensor with probability :attr:`p` using samples from a Bernoulli\n    distribution. Each channel will be zeroed out independently on every forward\n    call.\n\n    This has proven to be an effective technique for regularization and\n    preventing the co-adaptation of neurons as described in the paper\n    `Improving neural networks by preventing co-adaptation of feature\n    detectors`_ .\n\n    Furthermore, the outputs are scaled by a factor of :math:`\\frac{1}{1-p}` during\n    training. This means that during evaluation the module simply computes an\n    identity function.\n\n    Args:\n        p: probability of an element to be zeroed. Default: 0.5\n        inplace: If set to ``True``, will do this operation in-place. Default: ``False``\n\n    Shape:\n        - Input: :math:`(*)`. Input can be of any shape\n        - Output: :math:`(*)`. Output is of the same shape as input\n\n    Examples::\n\n        >>> m = nn.Dropout(p=0.2)\n        >>> input = torch.randn(20, 16)\n        >>> output = m(input)\n\n    .. _Improving neural networks by preventing co-adaptation of feature\n        detectors: https://arxiv.org/abs/1207.0580\n    ",
+            "Functions": {
+              "forward": {
+                "Doc": null,
+                "Args": {
+                  "self": {
+                    "Type": null,
+                    "Default": null
+                  },
+                  "input": {
+                    "Type": "<class 'torch.Tensor'>",
+                    "Default": null
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "linear": {
+        "Doc": null,
+        "Classes": {
+          "Bilinear": {
+            "Doc": "Applies a bilinear transformation to the incoming data:\n    :math:`y = x_1^T A x_2 + b`\n\n    Args:\n        in1_features: size of each first input sample\n        in2_features: size of each second input sample\n        out_features: size of each output sample\n        bias: If set to False, the layer will not learn an additive bias.\n            Default: ``True``\n\n    Shape:\n        - Input1: :math:`(*, H_{in1})` where :math:`H_{in1}=\\text{in1\\_features}` and\n          :math:`*` means any number of additional dimensions including none. All but the last dimension\n          of the inputs should be the same.\n        - Input2: :math:`(*, H_{in2})` where :math:`H_{in2}=\\text{in2\\_features}`.\n        - Output: :math:`(*, H_{out})` where :math:`H_{out}=\\text{out\\_features}`\n          and all but the last dimension are the same shape as the input.\n\n    Attributes:\n        weight: the learnable weights of the module of shape\n            :math:`(\\text{out\\_features}, \\text{in1\\_features}, \\text{in2\\_features})`.\n            The values are initialized from :math:`\\mathcal{U}(-\\sqrt{k}, \\sqrt{k})`, where\n            :math:`k = \\frac{1}{\\text{in1\\_features}}`\n        bias:   the learnable bias of the module of shape :math:`(\\text{out\\_features})`.\n                If :attr:`bias` is ``True``, the values are initialized from\n                :math:`\\mathcal{U}(-\\sqrt{k}, \\sqrt{k})`, where\n                :math:`k = \\frac{1}{\\text{in1\\_features}}`\n\n    Examples::\n\n        >>> m = nn.Bilinear(20, 30, 40)\n        >>> input1 = torch.randn(128, 20)\n        >>> input2 = torch.randn(128, 30)\n        >>> output = m(input1, input2)\n        >>> print(output.size())\n        torch.Size([128, 40])\n    ",
+            "Functions": {
+              "__init__": {
+                "Doc": null,
+                "Args": {
+                  "self": {
+                    "Type": null,
+                    "Default": null
+                  },
+                  "in1_features": {
+                    "Type": "<class 'int'>",
+                    "Default": null
+                  },
+                  "in2_features": {
+                    "Type": "<class 'int'>",
+                    "Default": null
+                  },
+                  "out_features": {
+                    "Type": "<class 'int'>",
+                    "Default": null
+                  },
+                  "bias": {
+                    "Type": "<class 'bool'>",
+                    "Default": "True"
+                  },
+                  "device": {
+                    "Type": null,
+                    "Default": "None"
+                  },
+                  "dtype": {
+                    "Type": null,
+                    "Default": "None"
+                  }
+                }
+              },
+              "extra_repr": {
+                "Doc": null,
+                "Args": {
+                  "self": {
+                    "Type": null,
+                    "Default": null
+                  }
+                }
+              },
+              "forward": {
+                "Doc": null,
+                "Args": {
+                  "self": {
+                    "Type": null,
+                    "Default": null
+                  },
+                  "input1": {
+                    "Type": "<class 'torch.Tensor'>",
+                    "Default": null
+                  },
+                  "input2": {
+                    "Type": "<class 'torch.Tensor'>",
+                    "Default": null
+                  }
+                }
+              },
+              "reset_parameters": {
+                "Doc": null,
+                "Args": {
+                  "self": {
+                    "Type": null,
+                    "Default": null
+                  }
+                }
+              }
+            }
+          },
+          "Linear": {
+            "Doc": "Applies a linear transformation to the incoming data: :math:`y = xA^T + b`\n\n    This module supports :ref:`TensorFloat32<tf32_on_ampere>`.\n\n    On certain ROCm devices, when using float16 inputs this module will use :ref:`different precision<fp16_on_mi200>` for backward.\n\n    Args:\n        in_features: size of each input sample\n        out_features: size of each output sample\n        bias: If set to ``False``, the layer will not learn an additive bias.\n            Default: ``True``\n\n    Shape:\n        - Input: :math:`(*, H_{in})` where :math:`*` means any number of\n          dimensions including none and :math:`H_{in} = \\text{in\\_features}`.\n        - Output: :math:`(*, H_{out})` where all but the last dimension\n          are the same shape as the input and :math:`H_{out} = \\text{out\\_features}`.\n\n    Attributes:\n        weight: the learnable weights of the module of shape\n            :math:`(\\text{out\\_features}, \\text{in\\_features})`. The values are\n            initialized from :math:`\\mathcal{U}(-\\sqrt{k}, \\sqrt{k})`, where\n            :math:`k = \\frac{1}{\\text{in\\_features}}`\n        bias:   the learnable bias of the module of shape :math:`(\\text{out\\_features})`.\n                If :attr:`bias` is ``True``, the values are initialized from\n                :math:`\\mathcal{U}(-\\sqrt{k}, \\sqrt{k})` where\n                :math:`k = \\frac{1}{\\text{in\\_features}}`\n\n    Examples::\n\n        >>> m = nn.Linear(20, 30)\n        >>> input = torch.randn(128, 20)\n        >>> output = m(input)\n        >>> print(output.size())\n        torch.Size([128, 30])\n    ",
+            "Functions": {
+              "__init__": {
+                "Doc": null,
+                "Args": {
+                  "self": {
+                    "Type": null,
+                    "Default": null
+                  },
+                  "in_features": {
+                    "Type": "<class 'int'>",
+                    "Default": null
+                  },
+                  "out_features": {
+                    "Type": "<class 'int'>",
+                    "Default": null
+                  },
+                  "bias": {
+                    "Type": "<class 'bool'>",
+                    "Default": "True"
+                  },
+                  "device": {
+                    "Type": null,
+                    "Default": "None"
+                  },
+                  "dtype": {
+                    "Type": null,
+                    "Default": "None"
+                  }
+                }
+              },
+              "extra_repr": {
+                "Doc": null,
+                "Args": {
+                  "self": {
+                    "Type": null,
+                    "Default": null
+                  }
+                }
+              },
+              "forward": {
+                "Doc": null,
+                "Args": {
+                  "self": {
+                    "Type": null,
+                    "Default": null
+                  },
+                  "input": {
+                    "Type": "<class 'torch.Tensor'>",
+                    "Default": null
+                  }
+                }
+              },
+              "reset_parameters": {
+                "Doc": null,
+                "Args": {
+                  "self": {
+                    "Type": null,
+                    "Default": null
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "normalization": {
+        "Doc": null,
+        "Classes": {
+          "GroupNorm": {
+            "Doc": "Applies Group Normalization over a mini-batch of inputs as described in\n    the paper `Group Normalization <https://arxiv.org/abs/1803.08494>`__\n\n    .. math::\n        y = \\frac{x - \\mathrm{E}[x]}{ \\sqrt{\\mathrm{Var}[x] + \\epsilon}} * \\gamma + \\beta\n\n    The input channels are separated into :attr:`num_groups` groups, each containing\n    ``num_channels / num_groups`` channels. :attr:`num_channels` must be divisible by\n    :attr:`num_groups`. The mean and standard-deviation are calculated\n    separately over the each group. :math:`\\gamma` and :math:`\\beta` are learnable\n    per-channel affine transform parameter vectors of size :attr:`num_channels` if\n    :attr:`affine` is ``True``.\n    The standard-deviation is calculated via the biased estimator, equivalent to\n    `torch.var(input, unbiased=False)`.\n\n    This layer uses statistics computed from input data in both training and\n    evaluation modes.\n\n    Args:\n        num_groups (int): number of groups to separate the channels into\n        num_channels (int): number of channels expected in input\n        eps: a value added to the denominator for numerical stability. Default: 1e-5\n        affine: a boolean value that when set to ``True``, this module\n            has learnable per-channel affine parameters initialized to ones (for weights)\n            and zeros (for biases). Default: ``True``.\n\n    Shape:\n        - Input: :math:`(N, C, *)` where :math:`C=\\text{num\\_channels}`\n        - Output: :math:`(N, C, *)` (same shape as input)\n\n    Examples::\n\n        >>> input = torch.randn(20, 6, 10, 10)\n        >>> # Separate 6 channels into 3 groups\n        >>> m = nn.GroupNorm(3, 6)\n        >>> # Separate 6 channels into 6 groups (equivalent with InstanceNorm)\n        >>> m = nn.GroupNorm(6, 6)\n        >>> # Put all 6 channels into a single group (equivalent with LayerNorm)\n        >>> m = nn.GroupNorm(1, 6)\n        >>> # Activating the module\n        >>> output = m(input)\n    ",
+            "Functions": {
+              "__init__": {
+                "Doc": null,
+                "Args": {
+                  "self": {
+                    "Type": null,
+                    "Default": null
+                  },
+                  "num_groups": {
+                    "Type": "<class 'int'>",
+                    "Default": null
+                  },
+                  "num_channels": {
+                    "Type": "<class 'int'>",
+                    "Default": null
+                  },
+                  "eps": {
+                    "Type": "<class 'float'>",
+                    "Default": "1e-05"
+                  },
+                  "affine": {
+                    "Type": "<class 'bool'>",
+                    "Default": "True"
+                  },
+                  "device": {
+                    "Type": null,
+                    "Default": "None"
+                  },
+                  "dtype": {
+                    "Type": null,
+                    "Default": "None"
+                  }
+                }
+              },
+              "extra_repr": {
+                "Doc": null,
+                "Args": {
+                  "self": {
+                    "Type": null,
+                    "Default": null
+                  }
+                }
+              },
+              "forward": {
+                "Doc": null,
+                "Args": {
+                  "self": {
+                    "Type": null,
+                    "Default": null
+                  },
+                  "input": {
+                    "Type": "<class 'torch.Tensor'>",
+                    "Default": null
+                  }
+                }
+              },
+              "reset_parameters": {
+                "Doc": null,
+                "Args": {
+                  "self": {
+                    "Type": null,
+                    "Default": null
+                  }
+                }
+              }
+            }
+          },
+          "LayerNorm": {
+            "Doc": "Applies Layer Normalization over a mini-batch of inputs as described in\n    the paper `Layer Normalization <https://arxiv.org/abs/1607.06450>`__\n\n    .. math::\n        y = \\frac{x - \\mathrm{E}[x]}{ \\sqrt{\\mathrm{Var}[x] + \\epsilon}} * \\gamma + \\beta\n\n    The mean and standard-deviation are calculated over the last `D` dimensions, where `D`\n    is the dimension of :attr:`normalized_shape`. For example, if :attr:`normalized_shape`\n    is ``(3, 5)`` (a 2-dimensional shape), the mean and standard-deviation are computed over\n    the last 2 dimensions of the input (i.e. ``input.mean((-2, -1))``).\n    :math:`\\gamma` and :math:`\\beta` are learnable affine transform parameters of\n    :attr:`normalized_shape` if :attr:`elementwise_affine` is ``True``.\n    The standard-deviation is calculated via the biased estimator, equivalent to\n    `torch.var(input, unbiased=False)`.\n\n    .. note::\n        Unlike Batch Normalization and Instance Normalization, which applies\n        scalar scale and bias for each entire channel/plane with the\n        :attr:`affine` option, Layer Normalization applies per-element scale and\n        bias with :attr:`elementwise_affine`.\n\n    This layer uses statistics computed from input data in both training and\n    evaluation modes.\n\n    Args:\n        normalized_shape (int or list or torch.Size): input shape from an expected input\n            of size\n\n            .. math::\n                [* \\times \\text{normalized\\_shape}[0] \\times \\text{normalized\\_shape}[1]\n                    \\times \\ldots \\times \\text{normalized\\_shape}[-1]]\n\n            If a single integer is used, it is treated as a singleton list, and this module will\n            normalize over the last dimension which is expected to be of that specific size.\n        eps: a value added to the denominator for numerical stability. Default: 1e-5\n        elementwise_affine: a boolean value that when set to ``True``, this module\n            has learnable per-element affine parameters initialized to ones (for weights)\n            and zeros (for biases). Default: ``True``.\n\n    Attributes:\n        weight: the learnable weights of the module of shape\n            :math:`\\text{normalized\\_shape}` when :attr:`elementwise_affine` is set to ``True``.\n            The values are initialized to 1.\n        bias:   the learnable bias of the module of shape\n                :math:`\\text{normalized\\_shape}` when :attr:`elementwise_affine` is set to ``True``.\n                The values are initialized to 0.\n\n    Shape:\n        - Input: :math:`(N, *)`\n        - Output: :math:`(N, *)` (same shape as input)\n\n    Examples::\n\n        >>> # NLP Example\n        >>> batch, sentence_length, embedding_dim = 20, 5, 10\n        >>> embedding = torch.randn(batch, sentence_length, embedding_dim)\n        >>> layer_norm = nn.LayerNorm(embedding_dim)\n        >>> # Activate module\n        >>> layer_norm(embedding)\n        >>>\n        >>> # Image Example\n        >>> N, C, H, W = 20, 5, 10, 10\n        >>> input = torch.randn(N, C, H, W)\n        >>> # Normalize over the last three dimensions (i.e. the channel and spatial dimensions)\n        >>> # as shown in the image below\n        >>> layer_norm = nn.LayerNorm([C, H, W])\n        >>> output = layer_norm(input)\n\n    .. image:: ../_static/img/nn/layer_norm.jpg\n        :scale: 50 %\n\n    ",
+            "Functions": {
+              "__init__": {
+                "Doc": null,
+                "Args": {
+                  "self": {
+                    "Type": null,
+                    "Default": null
+                  },
+                  "normalized_shape": {
+                    "Type": "typing.Union[int, typing.List[int], torch.Size]",
+                    "Default": null
+                  },
+                  "eps": {
+                    "Type": "<class 'float'>",
+                    "Default": "1e-05"
+                  },
+                  "elementwise_affine": {
+                    "Type": "<class 'bool'>",
+                    "Default": "True"
+                  },
+                  "device": {
+                    "Type": null,
+                    "Default": "None"
+                  },
+                  "dtype": {
+                    "Type": null,
+                    "Default": "None"
+                  }
+                }
+              },
+              "extra_repr": {
+                "Doc": null,
+                "Args": {
+                  "self": {
+                    "Type": null,
+                    "Default": null
+                  }
+                }
+              },
+              "forward": {
+                "Doc": null,
+                "Args": {
+                  "self": {
+                    "Type": null,
+                    "Default": null
+                  },
+                  "input": {
+                    "Type": "<class 'torch.Tensor'>",
+                    "Default": null
+                  }
+                }
+              },
+              "reset_parameters": {
+                "Doc": null,
+                "Args": {
+                  "self": {
+                    "Type": null,
+                    "Default": null
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "pooling": {
+        "Doc": null,
+        "Classes": {
+          "AdaptiveAvgPool1d": {
+            "Doc": "Applies a 1D adaptive average pooling over an input signal composed of several input planes.\n\n    The output size is :math:`L_{out}`, for any input size.\n    The number of output features is equal to the number of input planes.\n\n    Args:\n        output_size: the target output size :math:`L_{out}`.\n\n    Shape:\n        - Input: :math:`(N, C, L_{in})` or :math:`(C, L_{in})`.\n        - Output: :math:`(N, C, L_{out})` or :math:`(C, L_{out})`, where\n          :math:`L_{out}=\\text{output\\_size}`.\n\n    Examples:\n        >>> # target output size of 5\n        >>> m = nn.AdaptiveAvgPool1d(5)\n        >>> input = torch.randn(1, 64, 8)\n        >>> output = m(input)\n\n    ",
+            "Functions": {
+              "forward": {
+                "Doc": null,
+                "Args": {
+                  "self": {
+                    "Type": null,
+                    "Default": null
+                  },
+                  "input": {
+                    "Type": "<class 'torch.Tensor'>",
+                    "Default": null
+                  }
+                }
+              }
+            }
+          },
+          "AdaptiveAvgPool2d": {
+            "Doc": "Applies a 2D adaptive average pooling over an input signal composed of several input planes.\n\n    The output is of size H x W, for any input size.\n    The number of output features is equal to the number of input planes.\n\n    Args:\n        output_size: the target output size of the image of the form H x W.\n                     Can be a tuple (H, W) or a single H for a square image H x H.\n                     H and W can be either a ``int``, or ``None`` which means the size will\n                     be the same as that of the input.\n\n    Shape:\n        - Input: :math:`(N, C, H_{in}, W_{in})` or :math:`(C, H_{in}, W_{in})`.\n        - Output: :math:`(N, C, S_{0}, S_{1})` or :math:`(C, S_{0}, S_{1})`, where\n          :math:`S=\\text{output\\_size}`.\n\n    Examples:\n        >>> # target output size of 5x7\n        >>> m = nn.AdaptiveAvgPool2d((5,7))\n        >>> input = torch.randn(1, 64, 8, 9)\n        >>> output = m(input)\n        >>> # target output size of 7x7 (square)\n        >>> m = nn.AdaptiveAvgPool2d(7)\n        >>> input = torch.randn(1, 64, 10, 9)\n        >>> output = m(input)\n        >>> # target output size of 10x7\n        >>> m = nn.AdaptiveAvgPool2d((None, 7))\n        >>> input = torch.randn(1, 64, 10, 9)\n        >>> output = m(input)\n\n    ",
+            "Functions": {
+              "forward": {
+                "Doc": null,
+                "Args": {
+                  "self": {
+                    "Type": null,
+                    "Default": null
+                  },
+                  "input": {
+                    "Type": "<class 'torch.Tensor'>",
+                    "Default": null
+                  }
+                }
+              }
+            }
+          },
+          "AdaptiveAvgPool3d": {
+            "Doc": "Applies a 3D adaptive average pooling over an input signal composed of several input planes.\n\n    The output is of size D x H x W, for any input size.\n    The number of output features is equal to the number of input planes.\n\n    Args:\n        output_size: the target output size of the form D x H x W.\n                     Can be a tuple (D, H, W) or a single number D for a cube D x D x D.\n                     D, H and W can be either a ``int``, or ``None`` which means the size will\n                     be the same as that of the input.\n\n    Shape:\n        - Input: :math:`(N, C, D_{in}, H_{in}, W_{in})` or :math:`(C, D_{in}, H_{in}, W_{in})`.\n        - Output: :math:`(N, C, S_{0}, S_{1}, S_{2})` or :math:`(C, S_{0}, S_{1}, S_{2})`,\n          where :math:`S=\\text{output\\_size}`.\n\n    Examples:\n        >>> # target output size of 5x7x9\n        >>> m = nn.AdaptiveAvgPool3d((5,7,9))\n        >>> input = torch.randn(1, 64, 8, 9, 10)\n        >>> output = m(input)\n        >>> # target output size of 7x7x7 (cube)\n        >>> m = nn.AdaptiveAvgPool3d(7)\n        >>> input = torch.randn(1, 64, 10, 9, 8)\n        >>> output = m(input)\n        >>> # target output size of 7x9x8\n        >>> m = nn.AdaptiveAvgPool3d((7, None, None))\n        >>> input = torch.randn(1, 64, 10, 9, 8)\n        >>> output = m(input)\n\n    ",
+            "Functions": {
+              "forward": {
+                "Doc": null,
+                "Args": {
+                  "self": {
+                    "Type": null,
+                    "Default": null
+                  },
+                  "input": {
+                    "Type": "<class 'torch.Tensor'>",
+                    "Default": null
+                  }
+                }
+              }
+            }
+          },
+          "AdaptiveMaxPool1d": {
+            "Doc": "Applies a 1D adaptive max pooling over an input signal composed of several input planes.\n\n    The output size is :math:`L_{out}`, for any input size.\n    The number of output features is equal to the number of input planes.\n\n    Args:\n        output_size: the target output size :math:`L_{out}`.\n        return_indices: if ``True``, will return the indices along with the outputs.\n                        Useful to pass to nn.MaxUnpool1d. Default: ``False``\n\n    Shape:\n        - Input: :math:`(N, C, L_{in})` or :math:`(C, L_{in})`.\n        - Output: :math:`(N, C, L_{out})` or :math:`(C, L_{out})`, where\n          :math:`L_{out}=\\text{output\\_size}`.\n\n    Examples:\n        >>> # target output size of 5\n        >>> m = nn.AdaptiveMaxPool1d(5)\n        >>> input = torch.randn(1, 64, 8)\n        >>> output = m(input)\n\n    ",
+            "Functions": {
+              "forward": {
+                "Doc": null,
+                "Args": {
+                  "self": {
+                    "Type": null,
+                    "Default": null
+                  },
+                  "input": {
+                    "Type": "<class 'torch.Tensor'>",
+                    "Default": null
+                  }
+                }
+              }
+            }
+          },
+          "AdaptiveMaxPool2d": {
+            "Doc": "Applies a 2D adaptive max pooling over an input signal composed of several input planes.\n\n    The output is of size :math:`H_{out} \\times W_{out}`, for any input size.\n    The number of output features is equal to the number of input planes.\n\n    Args:\n        output_size: the target output size of the image of the form :math:`H_{out} \\times W_{out}`.\n                     Can be a tuple :math:`(H_{out}, W_{out})` or a single :math:`H_{out}` for a\n                     square image :math:`H_{out} \\times H_{out}`. :math:`H_{out}` and :math:`W_{out}`\n                     can be either a ``int``, or ``None`` which means the size will be the same as that\n                     of the input.\n        return_indices: if ``True``, will return the indices along with the outputs.\n                        Useful to pass to nn.MaxUnpool2d. Default: ``False``\n\n    Shape:\n        - Input: :math:`(N, C, H_{in}, W_{in})` or :math:`(C, H_{in}, W_{in})`.\n        - Output: :math:`(N, C, H_{out}, W_{out})` or :math:`(C, H_{out}, W_{out})`, where\n          :math:`(H_{out}, W_{out})=\\text{output\\_size}`.\n\n    Examples:\n        >>> # target output size of 5x7\n        >>> m = nn.AdaptiveMaxPool2d((5,7))\n        >>> input = torch.randn(1, 64, 8, 9)\n        >>> output = m(input)\n        >>> # target output size of 7x7 (square)\n        >>> m = nn.AdaptiveMaxPool2d(7)\n        >>> input = torch.randn(1, 64, 10, 9)\n        >>> output = m(input)\n        >>> # target output size of 10x7\n        >>> m = nn.AdaptiveMaxPool2d((None, 7))\n        >>> input = torch.randn(1, 64, 10, 9)\n        >>> output = m(input)\n\n    ",
+            "Functions": {
+              "forward": {
+                "Doc": null,
+                "Args": {
+                  "self": {
+                    "Type": null,
+                    "Default": null
+                  },
+                  "input": {
+                    "Type": "<class 'torch.Tensor'>",
+                    "Default": null
+                  }
+                }
+              }
+            }
+          },
+          "AdaptiveMaxPool3d": {
+            "Doc": "Applies a 3D adaptive max pooling over an input signal composed of several input planes.\n\n    The output is of size :math:`D_{out} \\times H_{out} \\times W_{out}`, for any input size.\n    The number of output features is equal to the number of input planes.\n\n    Args:\n        output_size: the target output size of the image of the form :math:`D_{out} \\times H_{out} \\times W_{out}`.\n                     Can be a tuple :math:`(D_{out}, H_{out}, W_{out})` or a single\n                     :math:`D_{out}` for a cube :math:`D_{out} \\times D_{out} \\times D_{out}`.\n                     :math:`D_{out}`, :math:`H_{out}` and :math:`W_{out}` can be either a\n                     ``int``, or ``None`` which means the size will be the same as that of the input.\n\n        return_indices: if ``True``, will return the indices along with the outputs.\n                        Useful to pass to nn.MaxUnpool3d. Default: ``False``\n\n    Shape:\n        - Input: :math:`(N, C, D_{in}, H_{in}, W_{in})` or :math:`(C, D_{in}, H_{in}, W_{in})`.\n        - Output: :math:`(N, C, D_{out}, H_{out}, W_{out})` or :math:`(C, D_{out}, H_{out}, W_{out})`,\n          where :math:`(D_{out}, H_{out}, W_{out})=\\text{output\\_size}`.\n\n    Examples:\n        >>> # target output size of 5x7x9\n        >>> m = nn.AdaptiveMaxPool3d((5,7,9))\n        >>> input = torch.randn(1, 64, 8, 9, 10)\n        >>> output = m(input)\n        >>> # target output size of 7x7x7 (cube)\n        >>> m = nn.AdaptiveMaxPool3d(7)\n        >>> input = torch.randn(1, 64, 10, 9, 8)\n        >>> output = m(input)\n        >>> # target output size of 7x9x8\n        >>> m = nn.AdaptiveMaxPool3d((7, None, None))\n        >>> input = torch.randn(1, 64, 10, 9, 8)\n        >>> output = m(input)\n\n    ",
+            "Functions": {
+              "forward": {
+                "Doc": null,
+                "Args": {
+                  "self": {
+                    "Type": null,
+                    "Default": null
+                  },
+                  "input": {
+                    "Type": "<class 'torch.Tensor'>",
+                    "Default": null
+                  }
+                }
+              }
+            }
+          },
+          "AvgPool1d": {
+            "Doc": "Applies a 1D average pooling over an input signal composed of several\n    input planes.\n\n    In the simplest case, the output value of the layer with input size :math:`(N, C, L)`,\n    output :math:`(N, C, L_{out})` and :attr:`kernel_size` :math:`k`\n    can be precisely described as:\n\n    .. math::\n\n        \\text{out}(N_i, C_j, l) = \\frac{1}{k} \\sum_{m=0}^{k-1}\n                               \\text{input}(N_i, C_j, \\text{stride} \\times l + m)\n\n    If :attr:`padding` is non-zero, then the input is implicitly zero-padded on both sides\n    for :attr:`padding` number of points.\n\n    Note:\n        When ceil_mode=True, sliding windows are allowed to go off-bounds if they start within the left padding\n        or the input. Sliding windows that would start in the right padded region are ignored.\n\n    The parameters :attr:`kernel_size`, :attr:`stride`, :attr:`padding` can each be\n    an ``int`` or a one-element tuple.\n\n    Args:\n        kernel_size: the size of the window\n        stride: the stride of the window. Default value is :attr:`kernel_size`\n        padding: implicit zero padding to be added on both sides\n        ceil_mode: when True, will use `ceil` instead of `floor` to compute the output shape\n        count_include_pad: when True, will include the zero-padding in the averaging calculation\n\n    Shape:\n        - Input: :math:`(N, C, L_{in})` or :math:`(C, L_{in})`.\n        - Output: :math:`(N, C, L_{out})` or :math:`(C, L_{out})`, where\n\n          .. math::\n              L_{out} = \\left\\lfloor \\frac{L_{in} +\n              2 \\times \\text{padding} - \\text{kernel\\_size}}{\\text{stride}} + 1\\right\\rfloor\n\n    Examples::\n\n        >>> # pool with window of size=3, stride=2\n        >>> m = nn.AvgPool1d(3, stride=2)\n        >>> m(torch.tensor([[[1.,2,3,4,5,6,7]]]))\n        tensor([[[2., 4., 6.]]])\n    ",
+            "Functions": {
+              "__init__": {
+                "Doc": null,
+                "Args": {
+                  "self": {
+                    "Type": null,
+                    "Default": null
+                  },
+                  "kernel_size": {
+                    "Type": "typing.Union[int, typing.Tuple[int]]",
+                    "Default": null
+                  },
+                  "stride": {
+                    "Type": "typing.Union[int, typing.Tuple[int]]",
+                    "Default": "None"
+                  },
+                  "padding": {
+                    "Type": "typing.Union[int, typing.Tuple[int]]",
+                    "Default": "0"
+                  },
+                  "ceil_mode": {
+                    "Type": "<class 'bool'>",
+                    "Default": "False"
+                  },
+                  "count_include_pad": {
+                    "Type": "<class 'bool'>",
+                    "Default": "True"
+                  }
+                }
+              },
+              "forward": {
+                "Doc": null,
+                "Args": {
+                  "self": {
+                    "Type": null,
+                    "Default": null
+                  },
+                  "input": {
+                    "Type": "<class 'torch.Tensor'>",
+                    "Default": null
+                  }
+                }
+              }
+            }
+          },
+          "AvgPool2d": {
+            "Doc": "Applies a 2D average pooling over an input signal composed of several input\n    planes.\n\n    In the simplest case, the output value of the layer with input size :math:`(N, C, H, W)`,\n    output :math:`(N, C, H_{out}, W_{out})` and :attr:`kernel_size` :math:`(kH, kW)`\n    can be precisely described as:\n\n    .. math::\n\n        out(N_i, C_j, h, w)  = \\frac{1}{kH * kW} \\sum_{m=0}^{kH-1} \\sum_{n=0}^{kW-1}\n                               input(N_i, C_j, stride[0] \\times h + m, stride[1] \\times w + n)\n\n    If :attr:`padding` is non-zero, then the input is implicitly zero-padded on both sides\n    for :attr:`padding` number of points.\n\n    Note:\n        When ceil_mode=True, sliding windows are allowed to go off-bounds if they start within the left padding\n        or the input. Sliding windows that would start in the right padded region are ignored.\n\n    The parameters :attr:`kernel_size`, :attr:`stride`, :attr:`padding` can either be:\n\n        - a single ``int`` -- in which case the same value is used for the height and width dimension\n        - a ``tuple`` of two ints -- in which case, the first `int` is used for the height dimension,\n          and the second `int` for the width dimension\n\n    Args:\n        kernel_size: the size of the window\n        stride: the stride of the window. Default value is :attr:`kernel_size`\n        padding: implicit zero padding to be added on both sides\n        ceil_mode: when True, will use `ceil` instead of `floor` to compute the output shape\n        count_include_pad: when True, will include the zero-padding in the averaging calculation\n        divisor_override: if specified, it will be used as divisor, otherwise size of the pooling region will be used.\n\n\n    Shape:\n        - Input: :math:`(N, C, H_{in}, W_{in})` or :math:`(C, H_{in}, W_{in})`.\n        - Output: :math:`(N, C, H_{out}, W_{out})` or :math:`(C, H_{out}, W_{out})`, where\n\n          .. math::\n              H_{out} = \\left\\lfloor\\frac{H_{in}  + 2 \\times \\text{padding}[0] -\n                \\text{kernel\\_size}[0]}{\\text{stride}[0]} + 1\\right\\rfloor\n\n          .. math::\n              W_{out} = \\left\\lfloor\\frac{W_{in}  + 2 \\times \\text{padding}[1] -\n                \\text{kernel\\_size}[1]}{\\text{stride}[1]} + 1\\right\\rfloor\n\n    Examples::\n\n        >>> # pool of square window of size=3, stride=2\n        >>> m = nn.AvgPool2d(3, stride=2)\n        >>> # pool of non-square window\n        >>> m = nn.AvgPool2d((3, 2), stride=(2, 1))\n        >>> input = torch.randn(20, 16, 50, 32)\n        >>> output = m(input)\n    ",
+            "Functions": {
+              "__init__": {
+                "Doc": null,
+                "Args": {
+                  "self": {
+                    "Type": null,
+                    "Default": null
+                  },
+                  "kernel_size": {
+                    "Type": "typing.Union[int, typing.Tuple[int, int]]",
+                    "Default": null
+                  },
+                  "stride": {
+                    "Type": "typing.Union[int, typing.Tuple[int, int], NoneType]",
+                    "Default": "None"
+                  },
+                  "padding": {
+                    "Type": "typing.Union[int, typing.Tuple[int, int]]",
+                    "Default": "0"
+                  },
+                  "ceil_mode": {
+                    "Type": "<class 'bool'>",
+                    "Default": "False"
+                  },
+                  "count_include_pad": {
+                    "Type": "<class 'bool'>",
+                    "Default": "True"
+                  },
+                  "divisor_override": {
+                    "Type": "typing.Optional[int]",
+                    "Default": "None"
+                  }
+                }
+              },
+              "forward": {
+                "Doc": null,
+                "Args": {
+                  "self": {
+                    "Type": null,
+                    "Default": null
+                  },
+                  "input": {
+                    "Type": "<class 'torch.Tensor'>",
+                    "Default": null
+                  }
+                }
+              }
+            }
+          },
+          "AvgPool3d": {
+            "Doc": "Applies a 3D average pooling over an input signal composed of several input\n    planes.\n\n    In the simplest case, the output value of the layer with input size :math:`(N, C, D, H, W)`,\n    output :math:`(N, C, D_{out}, H_{out}, W_{out})` and :attr:`kernel_size` :math:`(kD, kH, kW)`\n    can be precisely described as:\n\n    .. math::\n        \\begin{aligned}\n            \\text{out}(N_i, C_j, d, h, w) ={} & \\sum_{k=0}^{kD-1} \\sum_{m=0}^{kH-1} \\sum_{n=0}^{kW-1} \\\\\n                                              & \\frac{\\text{input}(N_i, C_j, \\text{stride}[0] \\times d + k,\n                                                      \\text{stride}[1] \\times h + m, \\text{stride}[2] \\times w + n)}\n                                                     {kD \\times kH \\times kW}\n        \\end{aligned}\n\n    If :attr:`padding` is non-zero, then the input is implicitly zero-padded on all three sides\n    for :attr:`padding` number of points.\n\n    Note:\n        When ceil_mode=True, sliding windows are allowed to go off-bounds if they start within the left padding\n        or the input. Sliding windows that would start in the right padded region are ignored.\n\n    The parameters :attr:`kernel_size`, :attr:`stride` can either be:\n\n        - a single ``int`` -- in which case the same value is used for the depth, height and width dimension\n        - a ``tuple`` of three ints -- in which case, the first `int` is used for the depth dimension,\n          the second `int` for the height dimension and the third `int` for the width dimension\n\n    Args:\n        kernel_size: the size of the window\n        stride: the stride of the window. Default value is :attr:`kernel_size`\n        padding: implicit zero padding to be added on all three sides\n        ceil_mode: when True, will use `ceil` instead of `floor` to compute the output shape\n        count_include_pad: when True, will include the zero-padding in the averaging calculation\n        divisor_override: if specified, it will be used as divisor, otherwise :attr:`kernel_size` will be used\n\n    Shape:\n        - Input: :math:`(N, C, D_{in}, H_{in}, W_{in})` or :math:`(C, D_{in}, H_{in}, W_{in})`.\n        - Output: :math:`(N, C, D_{out}, H_{out}, W_{out})` or\n          :math:`(C, D_{out}, H_{out}, W_{out})`, where\n\n          .. math::\n              D_{out} = \\left\\lfloor\\frac{D_{in} + 2 \\times \\text{padding}[0] -\n                    \\text{kernel\\_size}[0]}{\\text{stride}[0]} + 1\\right\\rfloor\n\n          .. math::\n              H_{out} = \\left\\lfloor\\frac{H_{in} + 2 \\times \\text{padding}[1] -\n                    \\text{kernel\\_size}[1]}{\\text{stride}[1]} + 1\\right\\rfloor\n\n          .. math::\n              W_{out} = \\left\\lfloor\\frac{W_{in} + 2 \\times \\text{padding}[2] -\n                    \\text{kernel\\_size}[2]}{\\text{stride}[2]} + 1\\right\\rfloor\n\n    Examples::\n\n        >>> # pool of square window of size=3, stride=2\n        >>> m = nn.AvgPool3d(3, stride=2)\n        >>> # pool of non-square window\n        >>> m = nn.AvgPool3d((3, 2, 2), stride=(2, 1, 2))\n        >>> input = torch.randn(20, 16, 50,44, 31)\n        >>> output = m(input)\n    ",
+            "Functions": {
+              "__init__": {
+                "Doc": null,
+                "Args": {
+                  "self": {
+                    "Type": null,
+                    "Default": null
+                  },
+                  "kernel_size": {
+                    "Type": "typing.Union[int, typing.Tuple[int, int, int]]",
+                    "Default": null
+                  },
+                  "stride": {
+                    "Type": "typing.Union[int, typing.Tuple[int, int, int], NoneType]",
+                    "Default": "None"
+                  },
+                  "padding": {
+                    "Type": "typing.Union[int, typing.Tuple[int, int, int]]",
+                    "Default": "0"
+                  },
+                  "ceil_mode": {
+                    "Type": "<class 'bool'>",
+                    "Default": "False"
+                  },
+                  "count_include_pad": {
+                    "Type": "<class 'bool'>",
+                    "Default": "True"
+                  },
+                  "divisor_override": {
+                    "Type": "typing.Optional[int]",
+                    "Default": "None"
+                  }
+                }
+              },
+              "forward": {
+                "Doc": null,
+                "Args": {
+                  "self": {
+                    "Type": null,
+                    "Default": null
+                  },
+                  "input": {
+                    "Type": "<class 'torch.Tensor'>",
+                    "Default": null
+                  }
+                }
+              }
+            }
+          },
+          "MaxPool1d": {
+            "Doc": "Applies a 1D max pooling over an input signal composed of several input\n    planes.\n\n    In the simplest case, the output value of the layer with input size :math:`(N, C, L)`\n    and output :math:`(N, C, L_{out})` can be precisely described as:\n\n    .. math::\n        out(N_i, C_j, k) = \\max_{m=0, \\ldots, \\text{kernel\\_size} - 1}\n                input(N_i, C_j, stride \\times k + m)\n\n    If :attr:`padding` is non-zero, then the input is implicitly padded with negative infinity on both sides\n    for :attr:`padding` number of points. :attr:`dilation` is the stride between the elements within the\n    sliding window. This `link`_ has a nice visualization of the pooling parameters.\n\n    Note:\n        When ceil_mode=True, sliding windows are allowed to go off-bounds if they start within the left padding\n        or the input. Sliding windows that would start in the right padded region are ignored.\n\n    Args:\n        kernel_size: The size of the sliding window, must be > 0.\n        stride: The stride of the sliding window, must be > 0. Default value is :attr:`kernel_size`.\n        padding: Implicit negative infinity padding to be added on both sides, must be >= 0 and <= kernel_size / 2.\n        dilation: The stride between elements within a sliding window, must be > 0.\n        return_indices: If ``True``, will return the argmax along with the max values.\n                        Useful for :class:`torch.nn.MaxUnpool1d` later\n        ceil_mode: If ``True``, will use `ceil` instead of `floor` to compute the output shape. This\n                   ensures that every element in the input tensor is covered by a sliding window.\n\n    Shape:\n        - Input: :math:`(N, C, L_{in})` or :math:`(C, L_{in})`.\n        - Output: :math:`(N, C, L_{out})` or :math:`(C, L_{out})`, where\n\n          .. math::\n              L_{out} = \\left\\lfloor \\frac{L_{in} + 2 \\times \\text{padding} - \\text{dilation}\n                    \\times (\\text{kernel\\_size} - 1) - 1}{\\text{stride}} + 1\\right\\rfloor\n\n    Examples::\n\n        >>> # pool of size=3, stride=2\n        >>> m = nn.MaxPool1d(3, stride=2)\n        >>> input = torch.randn(20, 16, 50)\n        >>> output = m(input)\n\n    .. _link:\n        https://github.com/vdumoulin/conv_arithmetic/blob/master/README.md\n    ",
+            "Functions": {
+              "forward": {
+                "Doc": null,
+                "Args": {
+                  "self": {
+                    "Type": null,
+                    "Default": null
+                  },
+                  "input": {
+                    "Type": "<class 'torch.Tensor'>",
+                    "Default": null
+                  }
+                }
+              }
+            }
+          },
+          "MaxPool2d": {
+            "Doc": "Applies a 2D max pooling over an input signal composed of several input\n    planes.\n\n    In the simplest case, the output value of the layer with input size :math:`(N, C, H, W)`,\n    output :math:`(N, C, H_{out}, W_{out})` and :attr:`kernel_size` :math:`(kH, kW)`\n    can be precisely described as:\n\n    .. math::\n        \\begin{aligned}\n            out(N_i, C_j, h, w) ={} & \\max_{m=0, \\ldots, kH-1} \\max_{n=0, \\ldots, kW-1} \\\\\n                                    & \\text{input}(N_i, C_j, \\text{stride[0]} \\times h + m,\n                                                   \\text{stride[1]} \\times w + n)\n        \\end{aligned}\n\n    If :attr:`padding` is non-zero, then the input is implicitly padded with negative infinity on both sides\n    for :attr:`padding` number of points. :attr:`dilation` controls the spacing between the kernel points.\n    It is harder to describe, but this `link`_ has a nice visualization of what :attr:`dilation` does.\n\n    Note:\n        When ceil_mode=True, sliding windows are allowed to go off-bounds if they start within the left padding\n        or the input. Sliding windows that would start in the right padded region are ignored.\n\n    The parameters :attr:`kernel_size`, :attr:`stride`, :attr:`padding`, :attr:`dilation` can either be:\n\n        - a single ``int`` -- in which case the same value is used for the height and width dimension\n        - a ``tuple`` of two ints -- in which case, the first `int` is used for the height dimension,\n          and the second `int` for the width dimension\n\n    Args:\n        kernel_size: the size of the window to take a max over\n        stride: the stride of the window. Default value is :attr:`kernel_size`\n        padding: implicit zero padding to be added on both sides\n        dilation: a parameter that controls the stride of elements in the window\n        return_indices: if ``True``, will return the max indices along with the outputs.\n                        Useful for :class:`torch.nn.MaxUnpool2d` later\n        ceil_mode: when True, will use `ceil` instead of `floor` to compute the output shape\n\n    Shape:\n        - Input: :math:`(N, C, H_{in}, W_{in})` or :math:`(C, H_{in}, W_{in})`\n        - Output: :math:`(N, C, H_{out}, W_{out})` or :math:`(C, H_{out}, W_{out})`, where\n\n          .. math::\n              H_{out} = \\left\\lfloor\\frac{H_{in} + 2 * \\text{padding[0]} - \\text{dilation[0]}\n                    \\times (\\text{kernel\\_size[0]} - 1) - 1}{\\text{stride[0]}} + 1\\right\\rfloor\n\n          .. math::\n              W_{out} = \\left\\lfloor\\frac{W_{in} + 2 * \\text{padding[1]} - \\text{dilation[1]}\n                    \\times (\\text{kernel\\_size[1]} - 1) - 1}{\\text{stride[1]}} + 1\\right\\rfloor\n\n    Examples::\n\n        >>> # pool of square window of size=3, stride=2\n        >>> m = nn.MaxPool2d(3, stride=2)\n        >>> # pool of non-square window\n        >>> m = nn.MaxPool2d((3, 2), stride=(2, 1))\n        >>> input = torch.randn(20, 16, 50, 32)\n        >>> output = m(input)\n\n    .. _link:\n        https://github.com/vdumoulin/conv_arithmetic/blob/master/README.md\n    ",
+            "Functions": {
+              "forward": {
+                "Doc": null,
+                "Args": {
+                  "self": {
+                    "Type": null,
+                    "Default": null
+                  },
+                  "input": {
+                    "Type": "<class 'torch.Tensor'>",
+                    "Default": null
+                  }
+                }
+              }
+            }
+          },
+          "MaxPool3d": {
+            "Doc": "Applies a 3D max pooling over an input signal composed of several input\n    planes.\n\n    In the simplest case, the output value of the layer with input size :math:`(N, C, D, H, W)`,\n    output :math:`(N, C, D_{out}, H_{out}, W_{out})` and :attr:`kernel_size` :math:`(kD, kH, kW)`\n    can be precisely described as:\n\n    .. math::\n        \\begin{aligned}\n            \\text{out}(N_i, C_j, d, h, w) ={} & \\max_{k=0, \\ldots, kD-1} \\max_{m=0, \\ldots, kH-1} \\max_{n=0, \\ldots, kW-1} \\\\\n                                              & \\text{input}(N_i, C_j, \\text{stride[0]} \\times d + k,\n                                                             \\text{stride[1]} \\times h + m, \\text{stride[2]} \\times w + n)\n        \\end{aligned}\n\n    If :attr:`padding` is non-zero, then the input is implicitly padded with negative infinity on both sides\n    for :attr:`padding` number of points. :attr:`dilation` controls the spacing between the kernel points.\n    It is harder to describe, but this `link`_ has a nice visualization of what :attr:`dilation` does.\n\n    Note:\n        When ceil_mode=True, sliding windows are allowed to go off-bounds if they start within the left padding\n        or the input. Sliding windows that would start in the right padded region are ignored.\n\n    The parameters :attr:`kernel_size`, :attr:`stride`, :attr:`padding`, :attr:`dilation` can either be:\n\n        - a single ``int`` -- in which case the same value is used for the depth, height and width dimension\n        - a ``tuple`` of three ints -- in which case, the first `int` is used for the depth dimension,\n          the second `int` for the height dimension and the third `int` for the width dimension\n\n    Args:\n        kernel_size: the size of the window to take a max over\n        stride: the stride of the window. Default value is :attr:`kernel_size`\n        padding: implicit zero padding to be added on all three sides\n        dilation: a parameter that controls the stride of elements in the window\n        return_indices: if ``True``, will return the max indices along with the outputs.\n                        Useful for :class:`torch.nn.MaxUnpool3d` later\n        ceil_mode: when True, will use `ceil` instead of `floor` to compute the output shape\n\n    Shape:\n        - Input: :math:`(N, C, D_{in}, H_{in}, W_{in})` or :math:`(C, D_{in}, H_{in}, W_{in})`.\n        - Output: :math:`(N, C, D_{out}, H_{out}, W_{out})` or :math:`(C, D_{out}, H_{out}, W_{out})`, where\n\n          .. math::\n              D_{out} = \\left\\lfloor\\frac{D_{in} + 2 \\times \\text{padding}[0] - \\text{dilation}[0] \\times\n                (\\text{kernel\\_size}[0] - 1) - 1}{\\text{stride}[0]} + 1\\right\\rfloor\n\n          .. math::\n              H_{out} = \\left\\lfloor\\frac{H_{in} + 2 \\times \\text{padding}[1] - \\text{dilation}[1] \\times\n                (\\text{kernel\\_size}[1] - 1) - 1}{\\text{stride}[1]} + 1\\right\\rfloor\n\n          .. math::\n              W_{out} = \\left\\lfloor\\frac{W_{in} + 2 \\times \\text{padding}[2] - \\text{dilation}[2] \\times\n                (\\text{kernel\\_size}[2] - 1) - 1}{\\text{stride}[2]} + 1\\right\\rfloor\n\n    Examples::\n\n        >>> # pool of square window of size=3, stride=2\n        >>> m = nn.MaxPool3d(3, stride=2)\n        >>> # pool of non-square window\n        >>> m = nn.MaxPool3d((3, 2, 2), stride=(2, 1, 2))\n        >>> input = torch.randn(20, 16, 50,44, 31)\n        >>> output = m(input)\n\n    .. _link:\n        https://github.com/vdumoulin/conv_arithmetic/blob/master/README.md\n    ",
+            "Functions": {
+              "forward": {
+                "Doc": null,
+                "Args": {
+                  "self": {
+                    "Type": null,
+                    "Default": null
+                  },
+                  "input": {
+                    "Type": "<class 'torch.Tensor'>",
+                    "Default": null
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "rnn": {
+        "Doc": null,
+        "Classes": {
+          "GRU": {
+            "Doc": "Applies a multi-layer gated recurrent unit (GRU) RNN to an input sequence.\n\n\n    For each element in the input sequence, each layer computes the following\n    function:\n\n    .. math::\n        \\begin{array}{ll}\n            r_t = \\sigma(W_{ir} x_t + b_{ir} + W_{hr} h_{(t-1)} + b_{hr}) \\\\\n            z_t = \\sigma(W_{iz} x_t + b_{iz} + W_{hz} h_{(t-1)} + b_{hz}) \\\\\n            n_t = \\tanh(W_{in} x_t + b_{in} + r_t * (W_{hn} h_{(t-1)}+ b_{hn})) \\\\\n            h_t = (1 - z_t) * n_t + z_t * h_{(t-1)}\n        \\end{array}\n\n    where :math:`h_t` is the hidden state at time `t`, :math:`x_t` is the input\n    at time `t`, :math:`h_{(t-1)}` is the hidden state of the layer\n    at time `t-1` or the initial hidden state at time `0`, and :math:`r_t`,\n    :math:`z_t`, :math:`n_t` are the reset, update, and new gates, respectively.\n    :math:`\\sigma` is the sigmoid function, and :math:`*` is the Hadamard product.\n\n    In a multilayer GRU, the input :math:`x^{(l)}_t` of the :math:`l` -th layer\n    (:math:`l >= 2`) is the hidden state :math:`h^{(l-1)}_t` of the previous layer multiplied by\n    dropout :math:`\\delta^{(l-1)}_t` where each :math:`\\delta^{(l-1)}_t` is a Bernoulli random\n    variable which is :math:`0` with probability :attr:`dropout`.\n\n    Args:\n        input_size: The number of expected features in the input `x`\n        hidden_size: The number of features in the hidden state `h`\n        num_layers: Number of recurrent layers. E.g., setting ``num_layers=2``\n            would mean stacking two GRUs together to form a `stacked GRU`,\n            with the second GRU taking in outputs of the first GRU and\n            computing the final results. Default: 1\n        bias: If ``False``, then the layer does not use bias weights `b_ih` and `b_hh`.\n            Default: ``True``\n        batch_first: If ``True``, then the input and output tensors are provided\n            as `(batch, seq, feature)` instead of `(seq, batch, feature)`.\n            Note that this does not apply to hidden or cell states. See the\n            Inputs/Outputs sections below for details.  Default: ``False``\n        dropout: If non-zero, introduces a `Dropout` layer on the outputs of each\n            GRU layer except the last layer, with dropout probability equal to\n            :attr:`dropout`. Default: 0\n        bidirectional: If ``True``, becomes a bidirectional GRU. Default: ``False``\n\n    Inputs: input, h_0\n        * **input**: tensor of shape :math:`(L, H_{in})` for unbatched input,\n          :math:`(L, N, H_{in})` when ``batch_first=False`` or\n          :math:`(N, L, H_{in})` when ``batch_first=True`` containing the features of\n          the input sequence.  The input can also be a packed variable length sequence.\n          See :func:`torch.nn.utils.rnn.pack_padded_sequence` or\n          :func:`torch.nn.utils.rnn.pack_sequence` for details.\n        * **h_0**: tensor of shape :math:`(D * \\text{num\\_layers}, H_{out})` or\n          :math:`(D * \\text{num\\_layers}, N, H_{out})`\n          containing the initial hidden state for the input sequence. Defaults to zeros if not provided.\n\n        where:\n\n        .. math::\n            \\begin{aligned}\n                N ={} & \\text{batch size} \\\\\n                L ={} & \\text{sequence length} \\\\\n                D ={} & 2 \\text{ if bidirectional=True otherwise } 1 \\\\\n                H_{in} ={} & \\text{input\\_size} \\\\\n                H_{out} ={} & \\text{hidden\\_size}\n            \\end{aligned}\n\n    Outputs: output, h_n\n        * **output**: tensor of shape :math:`(L, D * H_{out})` for unbatched input,\n          :math:`(L, N, D * H_{out})` when ``batch_first=False`` or\n          :math:`(N, L, D * H_{out})` when ``batch_first=True`` containing the output features\n          `(h_t)` from the last layer of the GRU, for each `t`. If a\n          :class:`torch.nn.utils.rnn.PackedSequence` has been given as the input, the output\n          will also be a packed sequence.\n        * **h_n**: tensor of shape :math:`(D * \\text{num\\_layers}, H_{out})` or\n          :math:`(D * \\text{num\\_layers}, N, H_{out})` containing the final hidden state\n          for the input sequence.\n\n    Attributes:\n        weight_ih_l[k] : the learnable input-hidden weights of the :math:`\\text{k}^{th}` layer\n            (W_ir|W_iz|W_in), of shape `(3*hidden_size, input_size)` for `k = 0`.\n            Otherwise, the shape is `(3*hidden_size, num_directions * hidden_size)`\n        weight_hh_l[k] : the learnable hidden-hidden weights of the :math:`\\text{k}^{th}` layer\n            (W_hr|W_hz|W_hn), of shape `(3*hidden_size, hidden_size)`\n        bias_ih_l[k] : the learnable input-hidden bias of the :math:`\\text{k}^{th}` layer\n            (b_ir|b_iz|b_in), of shape `(3*hidden_size)`\n        bias_hh_l[k] : the learnable hidden-hidden bias of the :math:`\\text{k}^{th}` layer\n            (b_hr|b_hz|b_hn), of shape `(3*hidden_size)`\n\n    .. note::\n        All the weights and biases are initialized from :math:`\\mathcal{U}(-\\sqrt{k}, \\sqrt{k})`\n        where :math:`k = \\frac{1}{\\text{hidden\\_size}}`\n\n    .. note::\n        For bidirectional GRUs, forward and backward are directions 0 and 1 respectively.\n        Example of splitting the output layers when ``batch_first=False``:\n        ``output.view(seq_len, batch, num_directions, hidden_size)``.\n\n    .. note::\n        ``batch_first`` argument is ignored for unbatched inputs.\n\n    .. include:: ../cudnn_persistent_rnn.rst\n\n    Examples::\n\n        >>> rnn = nn.GRU(10, 20, 2)\n        >>> input = torch.randn(5, 3, 10)\n        >>> h0 = torch.randn(2, 3, 20)\n        >>> output, hn = rnn(input, h0)\n    ",
+            "Functions": {
+              "__init__": {
+                "Doc": null,
+                "Args": {
+                  "self": {
+                    "Type": null,
+                    "Default": null
+                  },
+                  "*args": {
+                    "Type": null,
+                    "Default": null
+                  },
+                  "**kwargs": {
+                    "Type": null,
+                    "Default": null
+                  }
+                }
+              },
+              "forward": {
+                "Doc": null,
+                "Args": {
+                  "self": {
+                    "Type": null,
+                    "Default": null
+                  },
+                  "input": {
+                    "Type": null,
+                    "Default": null
+                  },
+                  "hx": {
+                    "Type": null,
+                    "Default": "None"
+                  }
+                }
+              }
+            }
+          },
+          "LSTM": {
+            "Doc": "Applies a multi-layer long short-term memory (LSTM) RNN to an input\n    sequence.\n\n\n    For each element in the input sequence, each layer computes the following\n    function:\n\n    .. math::\n        \\begin{array}{ll} \\\\\n            i_t = \\sigma(W_{ii} x_t + b_{ii} + W_{hi} h_{t-1} + b_{hi}) \\\\\n            f_t = \\sigma(W_{if} x_t + b_{if} + W_{hf} h_{t-1} + b_{hf}) \\\\\n            g_t = \\tanh(W_{ig} x_t + b_{ig} + W_{hg} h_{t-1} + b_{hg}) \\\\\n            o_t = \\sigma(W_{io} x_t + b_{io} + W_{ho} h_{t-1} + b_{ho}) \\\\\n            c_t = f_t \\odot c_{t-1} + i_t \\odot g_t \\\\\n            h_t = o_t \\odot \\tanh(c_t) \\\\\n        \\end{array}\n\n    where :math:`h_t` is the hidden state at time `t`, :math:`c_t` is the cell\n    state at time `t`, :math:`x_t` is the input at time `t`, :math:`h_{t-1}`\n    is the hidden state of the layer at time `t-1` or the initial hidden\n    state at time `0`, and :math:`i_t`, :math:`f_t`, :math:`g_t`,\n    :math:`o_t` are the input, forget, cell, and output gates, respectively.\n    :math:`\\sigma` is the sigmoid function, and :math:`\\odot` is the Hadamard product.\n\n    In a multilayer LSTM, the input :math:`x^{(l)}_t` of the :math:`l` -th layer\n    (:math:`l >= 2`) is the hidden state :math:`h^{(l-1)}_t` of the previous layer multiplied by\n    dropout :math:`\\delta^{(l-1)}_t` where each :math:`\\delta^{(l-1)}_t` is a Bernoulli random\n    variable which is :math:`0` with probability :attr:`dropout`.\n\n    If ``proj_size > 0`` is specified, LSTM with projections will be used. This changes\n    the LSTM cell in the following way. First, the dimension of :math:`h_t` will be changed from\n    ``hidden_size`` to ``proj_size`` (dimensions of :math:`W_{hi}` will be changed accordingly).\n    Second, the output hidden state of each layer will be multiplied by a learnable projection\n    matrix: :math:`h_t = W_{hr}h_t`. Note that as a consequence of this, the output\n    of LSTM network will be of different shape as well. See Inputs/Outputs sections below for exact\n    dimensions of all variables. You can find more details in https://arxiv.org/abs/1402.1128.\n\n    Args:\n        input_size: The number of expected features in the input `x`\n        hidden_size: The number of features in the hidden state `h`\n        num_layers: Number of recurrent layers. E.g., setting ``num_layers=2``\n            would mean stacking two LSTMs together to form a `stacked LSTM`,\n            with the second LSTM taking in outputs of the first LSTM and\n            computing the final results. Default: 1\n        bias: If ``False``, then the layer does not use bias weights `b_ih` and `b_hh`.\n            Default: ``True``\n        batch_first: If ``True``, then the input and output tensors are provided\n            as `(batch, seq, feature)` instead of `(seq, batch, feature)`.\n            Note that this does not apply to hidden or cell states. See the\n            Inputs/Outputs sections below for details.  Default: ``False``\n        dropout: If non-zero, introduces a `Dropout` layer on the outputs of each\n            LSTM layer except the last layer, with dropout probability equal to\n            :attr:`dropout`. Default: 0\n        bidirectional: If ``True``, becomes a bidirectional LSTM. Default: ``False``\n        proj_size: If ``> 0``, will use LSTM with projections of corresponding size. Default: 0\n\n    Inputs: input, (h_0, c_0)\n        * **input**: tensor of shape :math:`(L, H_{in})` for unbatched input,\n          :math:`(L, N, H_{in})` when ``batch_first=False`` or\n          :math:`(N, L, H_{in})` when ``batch_first=True`` containing the features of\n          the input sequence.  The input can also be a packed variable length sequence.\n          See :func:`torch.nn.utils.rnn.pack_padded_sequence` or\n          :func:`torch.nn.utils.rnn.pack_sequence` for details.\n        * **h_0**: tensor of shape :math:`(D * \\text{num\\_layers}, H_{out})` for unbatched input or\n          :math:`(D * \\text{num\\_layers}, N, H_{out})` containing the\n          initial hidden state for each element in the input sequence.\n          Defaults to zeros if (h_0, c_0) is not provided.\n        * **c_0**: tensor of shape :math:`(D * \\text{num\\_layers}, H_{cell})` for unbatched input or\n          :math:`(D * \\text{num\\_layers}, N, H_{cell})` containing the\n          initial cell state for each element in the input sequence.\n          Defaults to zeros if (h_0, c_0) is not provided.\n\n        where:\n\n        .. math::\n            \\begin{aligned}\n                N ={} & \\text{batch size} \\\\\n                L ={} & \\text{sequence length} \\\\\n                D ={} & 2 \\text{ if bidirectional=True otherwise } 1 \\\\\n                H_{in} ={} & \\text{input\\_size} \\\\\n                H_{cell} ={} & \\text{hidden\\_size} \\\\\n                H_{out} ={} & \\text{proj\\_size if } \\text{proj\\_size}>0 \\text{ otherwise hidden\\_size} \\\\\n            \\end{aligned}\n\n    Outputs: output, (h_n, c_n)\n        * **output**: tensor of shape :math:`(L, D * H_{out})` for unbatched input,\n          :math:`(L, N, D * H_{out})` when ``batch_first=False`` or\n          :math:`(N, L, D * H_{out})` when ``batch_first=True`` containing the output features\n          `(h_t)` from the last layer of the LSTM, for each `t`. If a\n          :class:`torch.nn.utils.rnn.PackedSequence` has been given as the input, the output\n          will also be a packed sequence. When ``bidirectional=True``, `output` will contain\n          a concatenation of the forward and reverse hidden states at each time step in the sequence.\n        * **h_n**: tensor of shape :math:`(D * \\text{num\\_layers}, H_{out})` for unbatched input or\n          :math:`(D * \\text{num\\_layers}, N, H_{out})` containing the\n          final hidden state for each element in the sequence. When ``bidirectional=True``,\n          `h_n` will contain a concatenation of the final forward and reverse hidden states, respectively.\n        * **c_n**: tensor of shape :math:`(D * \\text{num\\_layers}, H_{cell})` for unbatched input or\n          :math:`(D * \\text{num\\_layers}, N, H_{cell})` containing the\n          final cell state for each element in the sequence. When ``bidirectional=True``,\n          `c_n` will contain a concatenation of the final forward and reverse cell states, respectively.\n\n    Attributes:\n        weight_ih_l[k] : the learnable input-hidden weights of the :math:`\\text{k}^{th}` layer\n            `(W_ii|W_if|W_ig|W_io)`, of shape `(4*hidden_size, input_size)` for `k = 0`.\n            Otherwise, the shape is `(4*hidden_size, num_directions * hidden_size)`. If\n            ``proj_size > 0`` was specified, the shape will be\n            `(4*hidden_size, num_directions * proj_size)` for `k > 0`\n        weight_hh_l[k] : the learnable hidden-hidden weights of the :math:`\\text{k}^{th}` layer\n            `(W_hi|W_hf|W_hg|W_ho)`, of shape `(4*hidden_size, hidden_size)`. If ``proj_size > 0``\n            was specified, the shape will be `(4*hidden_size, proj_size)`.\n        bias_ih_l[k] : the learnable input-hidden bias of the :math:`\\text{k}^{th}` layer\n            `(b_ii|b_if|b_ig|b_io)`, of shape `(4*hidden_size)`\n        bias_hh_l[k] : the learnable hidden-hidden bias of the :math:`\\text{k}^{th}` layer\n            `(b_hi|b_hf|b_hg|b_ho)`, of shape `(4*hidden_size)`\n        weight_hr_l[k] : the learnable projection weights of the :math:`\\text{k}^{th}` layer\n            of shape `(proj_size, hidden_size)`. Only present when ``proj_size > 0`` was\n            specified.\n        weight_ih_l[k]_reverse: Analogous to `weight_ih_l[k]` for the reverse direction.\n            Only present when ``bidirectional=True``.\n        weight_hh_l[k]_reverse:  Analogous to `weight_hh_l[k]` for the reverse direction.\n            Only present when ``bidirectional=True``.\n        bias_ih_l[k]_reverse:  Analogous to `bias_ih_l[k]` for the reverse direction.\n            Only present when ``bidirectional=True``.\n        bias_hh_l[k]_reverse:  Analogous to `bias_hh_l[k]` for the reverse direction.\n            Only present when ``bidirectional=True``.\n        weight_hr_l[k]_reverse:  Analogous to `weight_hr_l[k]` for the reverse direction.\n            Only present when ``bidirectional=True`` and ``proj_size > 0`` was specified.\n\n    .. note::\n        All the weights and biases are initialized from :math:`\\mathcal{U}(-\\sqrt{k}, \\sqrt{k})`\n        where :math:`k = \\frac{1}{\\text{hidden\\_size}}`\n\n    .. note::\n        For bidirectional LSTMs, forward and backward are directions 0 and 1 respectively.\n        Example of splitting the output layers when ``batch_first=False``:\n        ``output.view(seq_len, batch, num_directions, hidden_size)``.\n\n    .. note::\n        For bidirectional LSTMs, `h_n` is not equivalent to the last element of `output`; the\n        former contains the final forward and reverse hidden states, while the latter contains the\n        final forward hidden state and the initial reverse hidden state.\n\n    .. note::\n        ``batch_first`` argument is ignored for unbatched inputs.\n\n    .. include:: ../cudnn_rnn_determinism.rst\n\n    .. include:: ../cudnn_persistent_rnn.rst\n\n    Examples::\n\n        >>> rnn = nn.LSTM(10, 20, 2)\n        >>> input = torch.randn(5, 3, 10)\n        >>> h0 = torch.randn(2, 3, 20)\n        >>> c0 = torch.randn(2, 3, 20)\n        >>> output, (hn, cn) = rnn(input, (h0, c0))\n    ",
+            "Functions": {
+              "__init__": {
+                "Doc": null,
+                "Args": {
+                  "self": {
+                    "Type": null,
+                    "Default": null
+                  },
+                  "*args": {
+                    "Type": null,
+                    "Default": null
+                  },
+                  "**kwargs": {
+                    "Type": null,
+                    "Default": null
+                  }
+                }
+              },
+              "check_forward_args": {
+                "Doc": null,
+                "Args": {
+                  "self": {
+                    "Type": null,
+                    "Default": null
+                  },
+                  "input": {
+                    "Type": "<class 'torch.Tensor'>",
+                    "Default": null
+                  },
+                  "hidden": {
+                    "Type": "typing.Tuple[torch.Tensor, torch.Tensor]",
+                    "Default": null
+                  },
+                  "batch_sizes": {
+                    "Type": "typing.Optional[torch.Tensor]",
+                    "Default": null
+                  }
+                }
+              },
+              "forward": {
+                "Doc": null,
+                "Args": {
+                  "self": {
+                    "Type": null,
+                    "Default": null
+                  },
+                  "input": {
+                    "Type": null,
+                    "Default": null
+                  },
+                  "hx": {
+                    "Type": null,
+                    "Default": "None"
+                  }
+                }
+              },
+              "get_expected_cell_size": {
+                "Doc": null,
+                "Args": {
+                  "self": {
+                    "Type": null,
+                    "Default": null
+                  },
+                  "input": {
+                    "Type": "<class 'torch.Tensor'>",
+                    "Default": null
+                  },
+                  "batch_sizes": {
+                    "Type": "typing.Optional[torch.Tensor]",
+                    "Default": null
+                  }
+                }
+              },
+              "permute_hidden": {
+                "Doc": null,
+                "Args": {
+                  "self": {
+                    "Type": null,
+                    "Default": null
+                  },
+                  "hx": {
+                    "Type": "typing.Tuple[torch.Tensor, torch.Tensor]",
+                    "Default": null
+                  },
+                  "permutation": {
+                    "Type": "typing.Optional[torch.Tensor]",
+                    "Default": null
+                  }
+                }
+              }
+            }
+          },
+          "RNN": {
+            "Doc": "Applies a multi-layer Elman RNN with :math:`\\tanh` or :math:`\\text{ReLU}` non-linearity to an\n    input sequence.\n\n\n    For each element in the input sequence, each layer computes the following\n    function:\n\n    .. math::\n        h_t = \\tanh(x_t W_{ih}^T + b_{ih} + h_{t-1}W_{hh}^T + b_{hh})\n\n    where :math:`h_t` is the hidden state at time `t`, :math:`x_t` is\n    the input at time `t`, and :math:`h_{(t-1)}` is the hidden state of the\n    previous layer at time `t-1` or the initial hidden state at time `0`.\n    If :attr:`nonlinearity` is ``'relu'``, then :math:`\\text{ReLU}` is used instead of :math:`\\tanh`.\n\n    Args:\n        input_size: The number of expected features in the input `x`\n        hidden_size: The number of features in the hidden state `h`\n        num_layers: Number of recurrent layers. E.g., setting ``num_layers=2``\n            would mean stacking two RNNs together to form a `stacked RNN`,\n            with the second RNN taking in outputs of the first RNN and\n            computing the final results. Default: 1\n        nonlinearity: The non-linearity to use. Can be either ``'tanh'`` or ``'relu'``. Default: ``'tanh'``\n        bias: If ``False``, then the layer does not use bias weights `b_ih` and `b_hh`.\n            Default: ``True``\n        batch_first: If ``True``, then the input and output tensors are provided\n            as `(batch, seq, feature)` instead of `(seq, batch, feature)`.\n            Note that this does not apply to hidden or cell states. See the\n            Inputs/Outputs sections below for details.  Default: ``False``\n        dropout: If non-zero, introduces a `Dropout` layer on the outputs of each\n            RNN layer except the last layer, with dropout probability equal to\n            :attr:`dropout`. Default: 0\n        bidirectional: If ``True``, becomes a bidirectional RNN. Default: ``False``\n\n    Inputs: input, h_0\n        * **input**: tensor of shape :math:`(L, H_{in})` for unbatched input,\n          :math:`(L, N, H_{in})` when ``batch_first=False`` or\n          :math:`(N, L, H_{in})` when ``batch_first=True`` containing the features of\n          the input sequence.  The input can also be a packed variable length sequence.\n          See :func:`torch.nn.utils.rnn.pack_padded_sequence` or\n          :func:`torch.nn.utils.rnn.pack_sequence` for details.\n        * **h_0**: tensor of shape :math:`(D * \\text{num\\_layers}, H_{out})` for unbatched input or\n          :math:`(D * \\text{num\\_layers}, N, H_{out})` containing the initial hidden\n          state for the input sequence batch. Defaults to zeros if not provided.\n\n        where:\n\n        .. math::\n            \\begin{aligned}\n                N ={} & \\text{batch size} \\\\\n                L ={} & \\text{sequence length} \\\\\n                D ={} & 2 \\text{ if bidirectional=True otherwise } 1 \\\\\n                H_{in} ={} & \\text{input\\_size} \\\\\n                H_{out} ={} & \\text{hidden\\_size}\n            \\end{aligned}\n\n    Outputs: output, h_n\n        * **output**: tensor of shape :math:`(L, D * H_{out})` for unbatched input,\n          :math:`(L, N, D * H_{out})` when ``batch_first=False`` or\n          :math:`(N, L, D * H_{out})` when ``batch_first=True`` containing the output features\n          `(h_t)` from the last layer of the RNN, for each `t`. If a\n          :class:`torch.nn.utils.rnn.PackedSequence` has been given as the input, the output\n          will also be a packed sequence.\n        * **h_n**: tensor of shape :math:`(D * \\text{num\\_layers}, H_{out})` for unbatched input or\n          :math:`(D * \\text{num\\_layers}, N, H_{out})` containing the final hidden state\n          for each element in the batch.\n\n    Attributes:\n        weight_ih_l[k]: the learnable input-hidden weights of the k-th layer,\n            of shape `(hidden_size, input_size)` for `k = 0`. Otherwise, the shape is\n            `(hidden_size, num_directions * hidden_size)`\n        weight_hh_l[k]: the learnable hidden-hidden weights of the k-th layer,\n            of shape `(hidden_size, hidden_size)`\n        bias_ih_l[k]: the learnable input-hidden bias of the k-th layer,\n            of shape `(hidden_size)`\n        bias_hh_l[k]: the learnable hidden-hidden bias of the k-th layer,\n            of shape `(hidden_size)`\n\n    .. note::\n        All the weights and biases are initialized from :math:`\\mathcal{U}(-\\sqrt{k}, \\sqrt{k})`\n        where :math:`k = \\frac{1}{\\text{hidden\\_size}}`\n\n    .. note::\n        For bidirectional RNNs, forward and backward are directions 0 and 1 respectively.\n        Example of splitting the output layers when ``batch_first=False``:\n        ``output.view(seq_len, batch, num_directions, hidden_size)``.\n\n    .. note::\n        ``batch_first`` argument is ignored for unbatched inputs.\n\n    .. include:: ../cudnn_rnn_determinism.rst\n\n    .. include:: ../cudnn_persistent_rnn.rst\n\n    Examples::\n\n        >>> rnn = nn.RNN(10, 20, 2)\n        >>> input = torch.randn(5, 3, 10)\n        >>> h0 = torch.randn(2, 3, 20)\n        >>> output, hn = rnn(input, h0)\n    ",
+            "Functions": {
+              "__init__": {
+                "Doc": null,
+                "Args": {
+                  "self": {
+                    "Type": null,
+                    "Default": null
+                  },
+                  "*args": {
+                    "Type": null,
+                    "Default": null
+                  },
+                  "**kwargs": {
+                    "Type": null,
+                    "Default": null
+                  }
+                }
+              },
+              "forward": {
+                "Doc": null,
+                "Args": {
+                  "self": {
+                    "Type": null,
+                    "Default": null
+                  },
+                  "input": {
+                    "Type": null,
+                    "Default": null
+                  },
+                  "hx": {
+                    "Type": null,
+                    "Default": "None"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "Functions": {
+          "apply_permutation": {
+            "Doc": null,
+            "Args": {
+              "tensor": {
+                "Type": "<class 'torch.Tensor'>",
+                "Default": null
+              },
+              "permutation": {
+                "Type": "<class 'torch.Tensor'>",
+                "Default": null
+              },
+              "dim": {
+                "Type": "<class 'int'>",
+                "Default": "1"
+              }
+            }
+          },
+          "overload": {
+            "Doc": "Decorator for overloaded functions/methods.\n\n    In a stub file, place two or more stub definitions for the same\n    function in a row, each decorated with @overload.  For example:\n\n      @overload\n      def utf8(value: None) -> None: ...\n      @overload\n      def utf8(value: bytes) -> bytes: ...\n      @overload\n      def utf8(value: str) -> bytes: ...\n\n    In a non-stub file (i.e. a regular .py file), do the same but\n    follow it with an implementation.  The implementation should *not*\n    be decorated with @overload.  For example:\n\n      @overload\n      def utf8(value: None) -> None: ...\n      @overload\n      def utf8(value: bytes) -> bytes: ...\n      @overload\n      def utf8(value: str) -> bytes: ...\n      def utf8(value):\n          # implementation goes here\n    ",
+            "Args": {
+              "func": {
+                "Type": null,
+                "Default": null
+              }
+            }
+          }
+        }
+      },
+      "transformer": {
+        "Doc": null,
+        "Classes": {
+          "Transformer": {
+            "Doc": "A transformer model. User is able to modify the attributes as needed. The architecture\n    is based on the paper \"Attention Is All You Need\". Ashish Vaswani, Noam Shazeer,\n    Niki Parmar, Jakob Uszkoreit, Llion Jones, Aidan N Gomez, Lukasz Kaiser, and\n    Illia Polosukhin. 2017. Attention is all you need. In Advances in Neural Information\n    Processing Systems, pages 6000-6010.\n\n    Args:\n        d_model: the number of expected features in the encoder/decoder inputs (default=512).\n        nhead: the number of heads in the multiheadattention models (default=8).\n        num_encoder_layers: the number of sub-encoder-layers in the encoder (default=6).\n        num_decoder_layers: the number of sub-decoder-layers in the decoder (default=6).\n        dim_feedforward: the dimension of the feedforward network model (default=2048).\n        dropout: the dropout value (default=0.1).\n        activation: the activation function of encoder/decoder intermediate layer, can be a string\n            (\"relu\" or \"gelu\") or a unary callable. Default: relu\n        custom_encoder: custom encoder (default=None).\n        custom_decoder: custom decoder (default=None).\n        layer_norm_eps: the eps value in layer normalization components (default=1e-5).\n        batch_first: If ``True``, then the input and output tensors are provided\n            as (batch, seq, feature). Default: ``False`` (seq, batch, feature).\n        norm_first: if ``True``, encoder and decoder layers will perform LayerNorms before\n            other attention and feedforward operations, otherwise after. Default: ``False`` (after).\n\n    Examples::\n        >>> transformer_model = nn.Transformer(nhead=16, num_encoder_layers=12)\n        >>> src = torch.rand((10, 32, 512))\n        >>> tgt = torch.rand((20, 32, 512))\n        >>> out = transformer_model(src, tgt)\n\n    Note: A full example to apply nn.Transformer module for the word language model is available in\n    https://github.com/pytorch/examples/tree/master/word_language_model\n    ",
+            "Functions": {
+              "__init__": {
+                "Doc": null,
+                "Args": {
+                  "self": {
+                    "Type": null,
+                    "Default": null
+                  },
+                  "d_model": {
+                    "Type": "<class 'int'>",
+                    "Default": "512"
+                  },
+                  "nhead": {
+                    "Type": "<class 'int'>",
+                    "Default": "8"
+                  },
+                  "num_encoder_layers": {
+                    "Type": "<class 'int'>",
+                    "Default": "6"
+                  },
+                  "num_decoder_layers": {
+                    "Type": "<class 'int'>",
+                    "Default": "6"
+                  },
+                  "dim_feedforward": {
+                    "Type": "<class 'int'>",
+                    "Default": "2048"
+                  },
+                  "dropout": {
+                    "Type": "<class 'float'>",
+                    "Default": "0.1"
+                  },
+                  "activation": {
+                    "Type": "typing.Union[str, typing.Callable[[torch.Tensor], torch.Tensor]]",
+                    "Default": "<function relu at 0x0000025958C71DC0>"
+                  },
+                  "custom_encoder": {
+                    "Type": "typing.Optional[typing.Any]",
+                    "Default": "None"
+                  },
+                  "custom_decoder": {
+                    "Type": "typing.Optional[typing.Any]",
+                    "Default": "None"
+                  },
+                  "layer_norm_eps": {
+                    "Type": "<class 'float'>",
+                    "Default": "1e-05"
+                  },
+                  "batch_first": {
+                    "Type": "<class 'bool'>",
+                    "Default": "False"
+                  },
+                  "norm_first": {
+                    "Type": "<class 'bool'>",
+                    "Default": "False"
+                  },
+                  "device": {
+                    "Type": null,
+                    "Default": "None"
+                  },
+                  "dtype": {
+                    "Type": null,
+                    "Default": "None"
+                  }
+                }
+              },
+              "forward": {
+                "Doc": "Take in and process masked source/target sequences.\n\n        Args:\n            src: the sequence to the encoder (required).\n            tgt: the sequence to the decoder (required).\n            src_mask: the additive mask for the src sequence (optional).\n            tgt_mask: the additive mask for the tgt sequence (optional).\n            memory_mask: the additive mask for the encoder output (optional).\n            src_key_padding_mask: the ByteTensor mask for src keys per batch (optional).\n            tgt_key_padding_mask: the ByteTensor mask for tgt keys per batch (optional).\n            memory_key_padding_mask: the ByteTensor mask for memory keys per batch (optional).\n\n        Shape:\n            - src: :math:`(S, E)` for unbatched input, :math:`(S, N, E)` if `batch_first=False` or\n              `(N, S, E)` if `batch_first=True`.\n            - tgt: :math:`(T, E)` for unbatched input, :math:`(T, N, E)` if `batch_first=False` or\n              `(N, T, E)` if `batch_first=True`.\n            - src_mask: :math:`(S, S)` or :math:`(N\\cdot\\text{num\\_heads}, S, S)`.\n            - tgt_mask: :math:`(T, T)` or :math:`(N\\cdot\\text{num\\_heads}, T, T)`.\n            - memory_mask: :math:`(T, S)`.\n            - src_key_padding_mask: :math:`(S)` for unbatched input otherwise :math:`(N, S)`.\n            - tgt_key_padding_mask: :math:`(T)` for unbatched input otherwise :math:`(N, T)`.\n            - memory_key_padding_mask: :math:`(S)` for unbatched input otherwise :math:`(N, S)`.\n\n            Note: [src/tgt/memory]_mask ensures that position i is allowed to attend the unmasked\n            positions. If a ByteTensor is provided, the non-zero positions are not allowed to attend\n            while the zero positions will be unchanged. If a BoolTensor is provided, positions with ``True``\n            are not allowed to attend while ``False`` values will be unchanged. If a FloatTensor\n            is provided, it will be added to the attention weight.\n            [src/tgt/memory]_key_padding_mask provides specified elements in the key to be ignored by\n            the attention. If a ByteTensor is provided, the non-zero positions will be ignored while the zero\n            positions will be unchanged. If a BoolTensor is provided, the positions with the\n            value of ``True`` will be ignored while the position with the value of ``False`` will be unchanged.\n\n            - output: :math:`(T, E)` for unbatched input, :math:`(T, N, E)` if `batch_first=False` or\n              `(N, T, E)` if `batch_first=True`.\n\n            Note: Due to the multi-head attention architecture in the transformer model,\n            the output sequence length of a transformer is same as the input sequence\n            (i.e. target) length of the decoder.\n\n            where S is the source sequence length, T is the target sequence length, N is the\n            batch size, E is the feature number\n\n        Examples:\n            >>> # xdoctest: +SKIP\n            >>> output = transformer_model(src, tgt, src_mask=src_mask, tgt_mask=tgt_mask)\n        ",
+                "Args": {
+                  "self": {
+                    "Type": null,
+                    "Default": null
+                  },
+                  "src": {
+                    "Type": "<class 'torch.Tensor'>",
+                    "Default": null
+                  },
+                  "tgt": {
+                    "Type": "<class 'torch.Tensor'>",
+                    "Default": null
+                  },
+                  "src_mask": {
+                    "Type": "typing.Optional[torch.Tensor]",
+                    "Default": "None"
+                  },
+                  "tgt_mask": {
+                    "Type": "typing.Optional[torch.Tensor]",
+                    "Default": "None"
+                  },
+                  "memory_mask": {
+                    "Type": "typing.Optional[torch.Tensor]",
+                    "Default": "None"
+                  },
+                  "src_key_padding_mask": {
+                    "Type": "typing.Optional[torch.Tensor]",
+                    "Default": "None"
+                  },
+                  "tgt_key_padding_mask": {
+                    "Type": "typing.Optional[torch.Tensor]",
+                    "Default": "None"
+                  },
+                  "memory_key_padding_mask": {
+                    "Type": "typing.Optional[torch.Tensor]",
+                    "Default": "None"
+                  }
+                }
+              },
+              "generate_square_subsequent_mask": {
+                "Doc": "Generate a square mask for the sequence. The masked positions are filled with float('-inf').\n            Unmasked positions are filled with float(0.0).\n        ",
+                "Args": {
+                  "sz": {
+                    "Type": "<class 'int'>",
+                    "Default": null
+                  },
+                  "device": {
+                    "Type": null,
+                    "Default": "cpu"
+                  }
+                }
+              }
+            }
+          },
+          "TransformerDecoder": {
+            "Doc": "TransformerDecoder is a stack of N decoder layers\n\n    Args:\n        decoder_layer: an instance of the TransformerDecoderLayer() class (required).\n        num_layers: the number of sub-decoder-layers in the decoder (required).\n        norm: the layer normalization component (optional).\n\n    Examples::\n        >>> decoder_layer = nn.TransformerDecoderLayer(d_model=512, nhead=8)\n        >>> transformer_decoder = nn.TransformerDecoder(decoder_layer, num_layers=6)\n        >>> memory = torch.rand(10, 32, 512)\n        >>> tgt = torch.rand(20, 32, 512)\n        >>> out = transformer_decoder(tgt, memory)\n    ",
+            "Functions": {
+              "__init__": {
+                "Doc": null,
+                "Args": {
+                  "self": {
+                    "Type": null,
+                    "Default": null
+                  },
+                  "decoder_layer": {
+                    "Type": null,
+                    "Default": null
+                  },
+                  "num_layers": {
+                    "Type": null,
+                    "Default": null
+                  },
+                  "norm": {
+                    "Type": null,
+                    "Default": "None"
+                  }
+                }
+              },
+              "forward": {
+                "Doc": "Pass the inputs (and mask) through the decoder layer in turn.\n\n        Args:\n            tgt: the sequence to the decoder (required).\n            memory: the sequence from the last layer of the encoder (required).\n            tgt_mask: the mask for the tgt sequence (optional).\n            memory_mask: the mask for the memory sequence (optional).\n            tgt_key_padding_mask: the mask for the tgt keys per batch (optional).\n            memory_key_padding_mask: the mask for the memory keys per batch (optional).\n\n        Shape:\n            see the docs in Transformer class.\n        ",
+                "Args": {
+                  "self": {
+                    "Type": null,
+                    "Default": null
+                  },
+                  "tgt": {
+                    "Type": "<class 'torch.Tensor'>",
+                    "Default": null
+                  },
+                  "memory": {
+                    "Type": "<class 'torch.Tensor'>",
+                    "Default": null
+                  },
+                  "tgt_mask": {
+                    "Type": "typing.Optional[torch.Tensor]",
+                    "Default": "None"
+                  },
+                  "memory_mask": {
+                    "Type": "typing.Optional[torch.Tensor]",
+                    "Default": "None"
+                  },
+                  "tgt_key_padding_mask": {
+                    "Type": "typing.Optional[torch.Tensor]",
+                    "Default": "None"
+                  },
+                  "memory_key_padding_mask": {
+                    "Type": "typing.Optional[torch.Tensor]",
+                    "Default": "None"
+                  }
+                }
+              }
+            }
+          },
+          "TransformerDecoderLayer": {
+            "Doc": "TransformerDecoderLayer is made up of self-attn, multi-head-attn and feedforward network.\n    This standard decoder layer is based on the paper \"Attention Is All You Need\".\n    Ashish Vaswani, Noam Shazeer, Niki Parmar, Jakob Uszkoreit, Llion Jones, Aidan N Gomez,\n    Lukasz Kaiser, and Illia Polosukhin. 2017. Attention is all you need. In Advances in\n    Neural Information Processing Systems, pages 6000-6010. Users may modify or implement\n    in a different way during application.\n\n    Args:\n        d_model: the number of expected features in the input (required).\n        nhead: the number of heads in the multiheadattention models (required).\n        dim_feedforward: the dimension of the feedforward network model (default=2048).\n        dropout: the dropout value (default=0.1).\n        activation: the activation function of the intermediate layer, can be a string\n            (\"relu\" or \"gelu\") or a unary callable. Default: relu\n        layer_norm_eps: the eps value in layer normalization components (default=1e-5).\n        batch_first: If ``True``, then the input and output tensors are provided\n            as (batch, seq, feature). Default: ``False`` (seq, batch, feature).\n        norm_first: if ``True``, layer norm is done prior to self attention, multihead\n            attention and feedforward operations, respectively. Otherwise it's done after.\n            Default: ``False`` (after).\n\n    Examples::\n        >>> decoder_layer = nn.TransformerDecoderLayer(d_model=512, nhead=8)\n        >>> memory = torch.rand(10, 32, 512)\n        >>> tgt = torch.rand(20, 32, 512)\n        >>> out = decoder_layer(tgt, memory)\n\n    Alternatively, when ``batch_first`` is ``True``:\n        >>> decoder_layer = nn.TransformerDecoderLayer(d_model=512, nhead=8, batch_first=True)\n        >>> memory = torch.rand(32, 10, 512)\n        >>> tgt = torch.rand(32, 20, 512)\n        >>> out = decoder_layer(tgt, memory)\n    ",
+            "Functions": {
+              "__init__": {
+                "Doc": null,
+                "Args": {
+                  "self": {
+                    "Type": null,
+                    "Default": null
+                  },
+                  "d_model": {
+                    "Type": "<class 'int'>",
+                    "Default": null
+                  },
+                  "nhead": {
+                    "Type": "<class 'int'>",
+                    "Default": null
+                  },
+                  "dim_feedforward": {
+                    "Type": "<class 'int'>",
+                    "Default": "2048"
+                  },
+                  "dropout": {
+                    "Type": "<class 'float'>",
+                    "Default": "0.1"
+                  },
+                  "activation": {
+                    "Type": "typing.Union[str, typing.Callable[[torch.Tensor], torch.Tensor]]",
+                    "Default": "<function relu at 0x0000025958C71DC0>"
+                  },
+                  "layer_norm_eps": {
+                    "Type": "<class 'float'>",
+                    "Default": "1e-05"
+                  },
+                  "batch_first": {
+                    "Type": "<class 'bool'>",
+                    "Default": "False"
+                  },
+                  "norm_first": {
+                    "Type": "<class 'bool'>",
+                    "Default": "False"
+                  },
+                  "device": {
+                    "Type": null,
+                    "Default": "None"
+                  },
+                  "dtype": {
+                    "Type": null,
+                    "Default": "None"
+                  }
+                }
+              },
+              "forward": {
+                "Doc": "Pass the inputs (and mask) through the decoder layer.\n\n        Args:\n            tgt: the sequence to the decoder layer (required).\n            memory: the sequence from the last layer of the encoder (required).\n            tgt_mask: the mask for the tgt sequence (optional).\n            memory_mask: the mask for the memory sequence (optional).\n            tgt_key_padding_mask: the mask for the tgt keys per batch (optional).\n            memory_key_padding_mask: the mask for the memory keys per batch (optional).\n\n        Shape:\n            see the docs in Transformer class.\n        ",
+                "Args": {
+                  "self": {
+                    "Type": null,
+                    "Default": null
+                  },
+                  "tgt": {
+                    "Type": "<class 'torch.Tensor'>",
+                    "Default": null
+                  },
+                  "memory": {
+                    "Type": "<class 'torch.Tensor'>",
+                    "Default": null
+                  },
+                  "tgt_mask": {
+                    "Type": "typing.Optional[torch.Tensor]",
+                    "Default": "None"
+                  },
+                  "memory_mask": {
+                    "Type": "typing.Optional[torch.Tensor]",
+                    "Default": "None"
+                  },
+                  "tgt_key_padding_mask": {
+                    "Type": "typing.Optional[torch.Tensor]",
+                    "Default": "None"
+                  },
+                  "memory_key_padding_mask": {
+                    "Type": "typing.Optional[torch.Tensor]",
+                    "Default": "None"
+                  }
+                }
+              }
+            }
+          },
+          "TransformerEncoder": {
+            "Doc": "TransformerEncoder is a stack of N encoder layers. Users can build the\n    BERT(https://arxiv.org/abs/1810.04805) model with corresponding parameters.\n\n    Args:\n        encoder_layer: an instance of the TransformerEncoderLayer() class (required).\n        num_layers: the number of sub-encoder-layers in the encoder (required).\n        norm: the layer normalization component (optional).\n        enable_nested_tensor: if True, input will automatically convert to nested tensor\n            (and convert back on output). This will improve the overall performance of\n            TransformerEncoder when padding rate is high. Default: ``True`` (enabled).\n\n    Examples::\n        >>> encoder_layer = nn.TransformerEncoderLayer(d_model=512, nhead=8)\n        >>> transformer_encoder = nn.TransformerEncoder(encoder_layer, num_layers=6)\n        >>> src = torch.rand(10, 32, 512)\n        >>> out = transformer_encoder(src)\n    ",
+            "Functions": {
+              "__init__": {
+                "Doc": null,
+                "Args": {
+                  "self": {
+                    "Type": null,
+                    "Default": null
+                  },
+                  "encoder_layer": {
+                    "Type": null,
+                    "Default": null
+                  },
+                  "num_layers": {
+                    "Type": null,
+                    "Default": null
+                  },
+                  "norm": {
+                    "Type": null,
+                    "Default": "None"
+                  },
+                  "enable_nested_tensor": {
+                    "Type": null,
+                    "Default": "True"
+                  },
+                  "mask_check": {
+                    "Type": null,
+                    "Default": "True"
+                  }
+                }
+              },
+              "forward": {
+                "Doc": "Pass the input through the encoder layers in turn.\n\n        Args:\n            src: the sequence to the encoder (required).\n            mask: the mask for the src sequence (optional).\n            src_key_padding_mask: the mask for the src keys per batch (optional).\n\n        Shape:\n            see the docs in Transformer class.\n        ",
+                "Args": {
+                  "self": {
+                    "Type": null,
+                    "Default": null
+                  },
+                  "src": {
+                    "Type": "<class 'torch.Tensor'>",
+                    "Default": null
+                  },
+                  "mask": {
+                    "Type": "typing.Optional[torch.Tensor]",
+                    "Default": "None"
+                  },
+                  "src_key_padding_mask": {
+                    "Type": "typing.Optional[torch.Tensor]",
+                    "Default": "None"
+                  }
+                }
+              }
+            }
+          },
+          "TransformerEncoderLayer": {
+            "Doc": "TransformerEncoderLayer is made up of self-attn and feedforward network.\n    This standard encoder layer is based on the paper \"Attention Is All You Need\".\n    Ashish Vaswani, Noam Shazeer, Niki Parmar, Jakob Uszkoreit, Llion Jones, Aidan N Gomez,\n    Lukasz Kaiser, and Illia Polosukhin. 2017. Attention is all you need. In Advances in\n    Neural Information Processing Systems, pages 6000-6010. Users may modify or implement\n    in a different way during application.\n\n    Args:\n        d_model: the number of expected features in the input (required).\n        nhead: the number of heads in the multiheadattention models (required).\n        dim_feedforward: the dimension of the feedforward network model (default=2048).\n        dropout: the dropout value (default=0.1).\n        activation: the activation function of the intermediate layer, can be a string\n            (\"relu\" or \"gelu\") or a unary callable. Default: relu\n        layer_norm_eps: the eps value in layer normalization components (default=1e-5).\n        batch_first: If ``True``, then the input and output tensors are provided\n            as (batch, seq, feature). Default: ``False`` (seq, batch, feature).\n        norm_first: if ``True``, layer norm is done prior to attention and feedforward\n            operations, respectively. Otherwise it's done after. Default: ``False`` (after).\n\n    Examples::\n        >>> encoder_layer = nn.TransformerEncoderLayer(d_model=512, nhead=8)\n        >>> src = torch.rand(10, 32, 512)\n        >>> out = encoder_layer(src)\n\n    Alternatively, when ``batch_first`` is ``True``:\n        >>> encoder_layer = nn.TransformerEncoderLayer(d_model=512, nhead=8, batch_first=True)\n        >>> src = torch.rand(32, 10, 512)\n        >>> out = encoder_layer(src)\n\n    Fast path:\n        forward() will use a special optimized implementation if all of the following\n        conditions are met:\n\n        - Either autograd is disabled (using ``torch.inference_mode`` or ``torch.no_grad``) or no tensor\n          argument ``requires_grad``\n        - training is disabled (using ``.eval()``)\n        - batch_first is ``True`` and the input is batched (i.e., ``src.dim() == 3``)\n        - activation is one of: ``\"relu\"``, ``\"gelu\"``, ``torch.functional.relu``, or ``torch.functional.gelu``\n        - at most one of ``src_mask`` and ``src_key_padding_mask`` is passed\n        - if src is a `NestedTensor <https://pytorch.org/docs/stable/nested.html>`_, neither ``src_mask``\n          nor ``src_key_padding_mask`` is passed\n        - the two ``LayerNorm`` instances have a consistent ``eps`` value (this will naturally be the case\n          unless the caller has manually modified one without modifying the other)\n\n        If the optimized implementation is in use, a\n        `NestedTensor <https://pytorch.org/docs/stable/nested.html>`_ can be\n        passed for ``src`` to represent padding more efficiently than using a padding\n        mask. In this case, a `NestedTensor <https://pytorch.org/docs/stable/nested.html>`_ will be\n        returned, and an additional speedup proportional to the fraction of the input that\n        is padding can be expected.\n    ",
+            "Functions": {
+              "__init__": {
+                "Doc": null,
+                "Args": {
+                  "self": {
+                    "Type": null,
+                    "Default": null
+                  },
+                  "d_model": {
+                    "Type": "<class 'int'>",
+                    "Default": null
+                  },
+                  "nhead": {
+                    "Type": "<class 'int'>",
+                    "Default": null
+                  },
+                  "dim_feedforward": {
+                    "Type": "<class 'int'>",
+                    "Default": "2048"
+                  },
+                  "dropout": {
+                    "Type": "<class 'float'>",
+                    "Default": "0.1"
+                  },
+                  "activation": {
+                    "Type": "typing.Union[str, typing.Callable[[torch.Tensor], torch.Tensor]]",
+                    "Default": "<function relu at 0x0000025958C71DC0>"
+                  },
+                  "layer_norm_eps": {
+                    "Type": "<class 'float'>",
+                    "Default": "1e-05"
+                  },
+                  "batch_first": {
+                    "Type": "<class 'bool'>",
+                    "Default": "False"
+                  },
+                  "norm_first": {
+                    "Type": "<class 'bool'>",
+                    "Default": "False"
+                  },
+                  "device": {
+                    "Type": null,
+                    "Default": "None"
+                  },
+                  "dtype": {
+                    "Type": null,
+                    "Default": "None"
+                  }
+                }
+              },
+              "forward": {
+                "Doc": "Pass the input through the encoder layer.\n\n        Args:\n            src: the sequence to the encoder layer (required).\n            src_mask: the mask for the src sequence (optional).\n            src_key_padding_mask: the mask for the src keys per batch (optional).\n\n        Shape:\n            see the docs in Transformer class.\n        ",
+                "Args": {
+                  "self": {
+                    "Type": null,
+                    "Default": null
+                  },
+                  "src": {
+                    "Type": "<class 'torch.Tensor'>",
+                    "Default": null
+                  },
+                  "src_mask": {
+                    "Type": "typing.Optional[torch.Tensor]",
+                    "Default": "None"
+                  },
+                  "src_key_padding_mask": {
+                    "Type": "typing.Optional[torch.Tensor]",
+                    "Default": "None"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "custom": {}
 }
 
 const urls = {

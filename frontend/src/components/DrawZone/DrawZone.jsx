@@ -82,13 +82,17 @@ export default function DrawZone() {
 
       console.log("NODEDATA: ", nodeData)
 
+      console.log('TYPE: ', nodeData.params.type)
+
       const newNode = {
         id:  nodeData.id ? nodeData.id + Date.now().toString() : Date.now().toString(),  // TODO: better to use slice of uuid
         position,
-        type: nodeData.params.type,
+        type: !!Object.keys(nodeData.params).find(elem => elem === 'type') ? nodeData.params.type : undefined,
         data:  nodeData.params.type === 'customNode1' ? {Args: [], ...nodeData.params.data} : 
         {...nodeData.params, label: nodeData.title}
       };
+
+      console.log("NEW_NODE", newNode)
 
       setNodes((nds) => nds.concat(newNode));
     },

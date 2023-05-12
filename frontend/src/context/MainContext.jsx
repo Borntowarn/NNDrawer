@@ -72,7 +72,7 @@ const MainContextProvider = ({ children }) => {
   const [currentProject, setCurrentProject] = useState(null)
   const [nodes, setNodes, onNodesChange] = useNodesState([]);
   const [edges, setEdges, onEdgesChange] = useEdgesState([]);
-  const [showedNodes, setShowedNodes] = useState('folders')
+  const [showedNodes, setShowedNodes] = useState([])
   const [customNodes, setCustomNodes] = useState([])
 
 
