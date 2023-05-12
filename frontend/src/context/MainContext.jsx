@@ -72,11 +72,9 @@ const MainContextProvider = ({ children }) => {
   const [currentProject, setCurrentProject] = useState(null)
   const [nodes, setNodes, onNodesChange] = useNodesState([]);
   const [edges, setEdges, onEdgesChange] = useEdgesState([]);
+  const [showedNodes, setShowedNodes] = useState('folders')
 
-  const [savedNodes, setSavedNodes] = useState([
-    {id: '1', data: { label: 'saved_node_1', param1: 'value1'}},
-    {id: '2', data: { label: 'saved_node_2', param1: 'value1'}}
-  ])
+
   const [nodeTypes, setNodeTypes] = useState({
     customNode1: CustomNode
   })
@@ -124,8 +122,8 @@ const MainContextProvider = ({ children }) => {
       setNodeTypes,
       reactFlowInstance,
       setReactFlowInstance,
-      savedNodes,
-      setSavedNodes,
+      showedNodes,
+      setShowedNodes,
       projects,
       setProjects,
       currentProject,

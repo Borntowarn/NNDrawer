@@ -84,7 +84,7 @@ export default function DrawZone() {
         id:  nodeData.id ? nodeData.id + Date.now().toString() : Date.now().toString(),  // TODO: better to use slice of uuid
         position,
         type: nodeData.type,
-        data: nodeData.data
+        data: {...nodeData.params, label: nodeData.title}
       };
 
       setNodes((nds) => nds.concat(newNode));

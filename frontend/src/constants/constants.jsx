@@ -2725,7 +2725,8 @@ const nodes = {
             }
           }
         }
-    }
+    },
+    'Custom' : {}
 }
 
 const urls = {
