@@ -52,9 +52,9 @@ export default function ParamsArea() {
               <div key={i} >
                 <div className='param'>
                   <label>Title: {param} 
-                    {currentNode.data.Args[param] ? 
+                    {/* {currentNode.data.Args[param] ? 
                     ' Type: ' + currentNode.data.Args[param].Type 
-                    + ' Default: ' + currentNode.data.Args[param].Default : ''}
+                    + ' Default: ' + currentNode.data.Args[param].Default : ''} */}
                   </label>
                   <input className='param-input' value={
                     currentNode.data.Args[param] ? 

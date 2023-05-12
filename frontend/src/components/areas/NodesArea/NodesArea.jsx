@@ -38,7 +38,6 @@ export default function NodesArea() {
   const hasScroll = allowedNodes.length > 5
 
   const updateInstance = () => {
-    console.log("update", showedNodes)
     if (showedNodes.at(-1) === 'custom') {
       setActiveNodes(customNodes)
       setAllowedNodes(customNodes)

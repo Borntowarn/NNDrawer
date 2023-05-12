@@ -80,10 +80,6 @@ export default function DrawZone() {
         y: event.clientY - reactFlowBounds.top,
       });
 
-      console.log("NODEDATA: ", nodeData)
-
-      console.log('TYPE: ', nodeData.params.type)
-
       const newNode = {
         id:  nodeData.id ? nodeData.id + Date.now().toString() : Date.now().toString(),  // TODO: better to use slice of uuid
         position,
