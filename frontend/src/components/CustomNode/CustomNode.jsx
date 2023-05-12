@@ -11,11 +11,15 @@ function CustomNode({ id, data, isConnectable }) {
   const handleClick = () => {
     console.log("CLICK")
 
+    console.log("CUSTOM_DATA: ", data)
+
     if (!data.buttonState) {
       data.buttonState = true
 
       let nodesGroup = JSON.parse(JSON.stringify(data.include.nodes))
       let egdesGgroup =  JSON.parse(JSON.stringify(data.include.edges))
+
+      console.log("ACTUAL_DATA: ", nodesGroup, egdesGgroup)
 
       const position = nodes.filter(el => el.id === id)[0].position  // TODO: get position from props
       const groupEdge = {
@@ -42,6 +46,7 @@ function CustomNode({ id, data, isConnectable }) {
       let yMax = yMas.indexOf(Math.max(...yMas));
       let yMin = yMas.indexOf(Math.min(...yMas));
       let temp = nodesGroup[0].position.x - nodesGroup[xMin].position.x
+      let tempY = nodesGroup[0].position.y - nodesGroup[yMin].position.y
   
       const groupNode = {
         id:  'group' + id + '_open',
@@ -59,14 +64,16 @@ function CustomNode({ id, data, isConnectable }) {
       for (let i=1; i < nodesGroup.length; i++) {
         nodesGroup[i].position = {
           x: 50 + temp + nodesGroup[i].position.x - nodesGroup[0].position.x,
-          y: 50 + nodesGroup[i].position.y - nodesGroup[0].position.y
+          y: 50 + tempY + nodesGroup[i].position.y - nodesGroup[0].position.y
         }
       }
 
       nodesGroup[0].position = {
         x: temp + 50,
-        y: 50,
+        y: tempY + 50,
       }
+
+      console.log("ZERO: ", nodesGroup[0])
 
       for (let i=0; i < egdesGgroup.length; i++) {
         egdesGgroup[i].id += id +'_open'
@@ -94,13 +101,6 @@ function CustomNode({ id, data, isConnectable }) {
         <label htmlFor="text">{data.label}</label>
         <button className='open-button' onClick={() => handleClick()}>Open</button>
       </div>
-      <Handle
-        type="source"
-        position={Position.Bottom}
-        id="a"
-        style={handleStyle}
-        isConnectable={isConnectable}
-      />
       <Handle type="source" position={Position.Bottom} id="b" isConnectable={isConnectable} />
     </div>
   );

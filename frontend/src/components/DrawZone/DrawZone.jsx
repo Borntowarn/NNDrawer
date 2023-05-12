@@ -80,11 +80,14 @@ export default function DrawZone() {
         y: event.clientY - reactFlowBounds.top,
       });
 
+      console.log("NODEDATA: ", nodeData)
+
       const newNode = {
         id:  nodeData.id ? nodeData.id + Date.now().toString() : Date.now().toString(),  // TODO: better to use slice of uuid
         position,
-        type: nodeData.type,
-        data: {...nodeData.params, label: nodeData.title}
+        type: nodeData.params.type,
+        data:  nodeData.params.type === 'customNode1' ? {Args: [], ...nodeData.params.data} : 
+        {...nodeData.params, label: nodeData.title}
       };
 
       setNodes((nds) => nds.concat(newNode));

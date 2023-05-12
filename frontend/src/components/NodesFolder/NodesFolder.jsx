@@ -1,11 +1,8 @@
-import { useContext, useState } from 'react'
-import NodesArea from '../areas/NodesArea/NodesArea'
-import constants from '../../constants/constants'
-import '../NodesFolder/NodesFolder.css'
+import { useContext } from 'react'
 import { MainContext } from '../../context/MainContext'
+import '../NodesFolder/NodesFolder.css'
 
 export default function NodesFolder({folder}) {
-    const [active, setActive] = useState(false)
     const { setShowedNodes } = useContext(MainContext)
 
     const handleFolderClick = () => {
@@ -14,7 +11,7 @@ export default function NodesFolder({folder}) {
 
   return (
     <div>
-        <div className='dndnode' onClick={() => handleFolderClick()}>{folder}</div>
+        <div className='dndnode' draggable={false} onClick={() => handleFolderClick()}>{folder}</div>
     </div>
 
   )

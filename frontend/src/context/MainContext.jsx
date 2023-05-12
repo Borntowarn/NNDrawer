@@ -73,6 +73,7 @@ const MainContextProvider = ({ children }) => {
   const [nodes, setNodes, onNodesChange] = useNodesState([]);
   const [edges, setEdges, onEdgesChange] = useEdgesState([]);
   const [showedNodes, setShowedNodes] = useState('folders')
+  const [customNodes, setCustomNodes] = useState([])
 
 
   const [nodeTypes, setNodeTypes] = useState({
@@ -136,6 +137,8 @@ const MainContextProvider = ({ children }) => {
       authData,
       setAuth,
       createNewProject,
+      customNodes,
+      setCustomNodes
     }}>
       {children}
     </MainContext.Provider>

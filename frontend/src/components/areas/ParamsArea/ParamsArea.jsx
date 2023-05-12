@@ -42,9 +42,6 @@ export default function ParamsArea() {
 
   useScrollbar(todoWrapper, hasScrollBar)
 
-  console.log(nodes)
-  console.log(currentNode)
-
   return (
     <div className='params-area'>
       <input placeholder='Parameter title' onChange={(e) => handleChange(e.target.value)}  className='nodes-search'/>
