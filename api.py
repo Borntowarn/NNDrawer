@@ -1,4 +1,5 @@
 import uvicorn
+
 from typing import *
 from jose import JWTError, jwt
 from fastapi import FastAPI, Body
@@ -6,6 +7,7 @@ from collections import defaultdict
 from datetime import datetime, timedelta
 from fastapi import FastAPI, HTTPException
 from fastapi.encoders import jsonable_encoder
+from fastapi.middleware.cors import CORSMiddleware
 from fastapi import FastAPI, Depends, HTTPException
 from fastapi.responses import JSONResponse, FileResponse
 from database import Database, User, UserIn, Block, Project, UserOut
