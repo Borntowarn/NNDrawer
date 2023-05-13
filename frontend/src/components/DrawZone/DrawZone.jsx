@@ -6,15 +6,9 @@ import ReactFlow, {
   addEdge,
 } from 'reactflow';
 import { useOnSelectionChange } from 'reactflow';
-import { MainContext } from '../context/MainContext';
-import { v4 as uuid } from 'uuid';
-
+import { MainContext } from '../../context/MainContext';
 import 'reactflow/dist/style.css';
 import '../DrawZone/DrawZone.css'
-
-
-let id = 0;
-const getId = () => `dndnode_${id++}`;
 
 export default function DrawZone() {
   const {
@@ -33,7 +27,6 @@ export default function DrawZone() {
   });
 
   const onNodeClick = (event, node) => {
-    console.log('SELECTED_NODE:', node)
     setCurrentNode(node)
   };
   
@@ -83,9 +76,12 @@ export default function DrawZone() {
       const newNode = {
         id:  nodeData.id ? nodeData.id + Date.now().toString() : Date.now().toString(),  // TODO: better to use slice of uuid
         position,
-        type: nodeData.type,
-        data: nodeData.data
+        type: !!Object.keys(nodeData.params).find(elem => elem === 'type') ? nodeData.params.type : undefined,
+        data:  nodeData.params.type === 'customNode1' ? {Args: [], ...nodeData.params.data} : 
+        {...nodeData.params, label: nodeData.title}
       };
+
+      console.log("NEW_NODE", newNode)
 
       setNodes((nds) => nds.concat(newNode));
     },

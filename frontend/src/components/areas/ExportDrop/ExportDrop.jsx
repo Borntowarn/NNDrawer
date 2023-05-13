@@ -1,15 +1,15 @@
 import { useContext, useState } from 'react'
-import { MainContext } from '../../context/MainContext'
+import { MainContext } from '../../../context/MainContext'
 import './ExportDrop.css'
 
 export default function ExportDrop({mode}) {
-  const { reactFlowInstance, setSavedNodes } = useContext(MainContext)
+  const { reactFlowInstance, setCustomNodes } = useContext(MainContext)
   const [blockTitle, setBlockTitle] = useState('')
   const handleChange = (value) => {
     setBlockTitle(value)
   }
 
-  const handleClick = () => {
+  const handleExportClick = () => {
     if (reactFlowInstance) {
         const flow = reactFlowInstance.toObject();
 
@@ -24,14 +24,15 @@ export default function ExportDrop({mode}) {
                 include: flow
             }
         }
-        setSavedNodes((nds) => nds.concat(newNode))
+
+        setCustomNodes((nds) => nds.concat(newNode))
     }
   }
 
   return (
     <div className={mode ? 'export-drop active' : 'export-drop'}>
       <input placeholder='Block title' className='export-input' onChange={(e) => handleChange(e.target.value)} type="text" />
-      <button className='export-create' onClick={() => handleClick()}>create</button>
+      <button className='export-create' onClick={() => handleExportClick()}>create</button>
     </div>
   )
 }

@@ -1,5 +1,5 @@
 import { ReactFlowProvider } from 'reactflow';
-import MainContextProvider from './components/context/MainContext';
+import MainContextProvider from './context/MainContext';
 import DrawZone from './components/DrawZone/DrawZone';
 import Sidebar from './components/SideBar/SideBar';
 import ButtonsArea from './components/areas/ButtonsArea/ButtonsArea';
@@ -23,6 +23,7 @@ export default function App() {
         </div>
       </div>
       <AuthorizationModal />
+      <RegistrationModal />
       {/* <RegistrationModal /> */}
       </MainContextProvider>
   );

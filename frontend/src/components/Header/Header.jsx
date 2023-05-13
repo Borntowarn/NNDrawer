@@ -11,7 +11,7 @@ export default function Header() {
             NNdrawer
         </div>
         <a onClick={() => handleClick()} className='user-logo'>
-            <img src="images/user.png" />
+            AMOGUS
         </a>
     </div>
   )

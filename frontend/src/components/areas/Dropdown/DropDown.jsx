@@ -1,7 +1,7 @@
 import DropNode from './DropNode/DropNode'
 import { useScrollbar } from '../../../hooks/use-scrollbar'
 import { useRef, useEffect, useContext, useState } from 'react'
-import { MainContext } from '../../context/MainContext'
+import { MainContext } from '../../../context/MainContext'
 import './DropDown.css'
 
 export default function DropDown({mode}) {

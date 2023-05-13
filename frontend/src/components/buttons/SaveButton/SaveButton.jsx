@@ -1,6 +1,7 @@
 import { useCallback, useContext } from 'react';
-import { MainContext } from '../../context/MainContext';
-import axios from '../../../api/axios'
+import { MainContext } from '../../../context/MainContext';
+import axios from 'axios'
+import constants from '../../../constants/constants';
 
 export default function SaveButton() {
   const { reactFlowInstance,
@@ -9,9 +10,6 @@ export default function SaveButton() {
     projects,
     authData} = useContext(MainContext);
   const flowKey = 'load-project';
-
-  // Just for test
-  const PROJECTS_URL = '/projects'
 
   const onSave = useCallback(() => {
     if (reactFlowInstance) {
@@ -36,29 +34,19 @@ export default function SaveButton() {
       }
       console.log('PROJECTS: ', projects)
       
-      // place for axios request
       try {
-        const response = await axios.post(PROJECTS_URL, 
-            JSON.stringify({
-                name: authData.email,
-                project: {
-                  name: currentProject,
-                  instance: flow,
-                } 
-            }),
+        const response = await axios.post(constants.urls.add_project, 
+            JSON.stringify(projects.find(prj => prj.name == currentProject)),
             {
                 headers: {'Content-Type': 'application/json'},
                 withCredentials: true,
             })
-            console.log(response.data)
-            console.log(response.accessToken)
             console.log(JSON.stringify(response))
-    } catch(err) {
+      } catch(err) {
         console.log("ERROR: ", err) }
     } else {
       console.log("TITLE_ERROR: enter title of your project")
     }
-    console.log('SAVE_PROJECT')
   }
   return (
     <button onClick={() => handleClick()}>Save</button>

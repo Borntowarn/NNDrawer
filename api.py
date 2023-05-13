@@ -1,5 +1,4 @@
 import uvicorn
-
 from typing import *
 from jose import JWTError, jwt
 from fastapi import FastAPI, Body
@@ -17,6 +16,17 @@ app = FastAPI(debug=True)
 SECRET_KEY = "mysecretkey"
 ALGORITHM = "HS256"
 ACCESS_TOKEN_EXPIRE_MINUTES = 30
+origins = [
+    "http://127.0.0.1:5173/"
+]
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=origins,
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 model = """
 import torch
@@ -65,7 +75,7 @@ async def get_current_user(token: str) -> UserOut:
 
 
 # Обработчик для создания пользователя
-@app.post("/registration")
+@app.post("/api/registration")
 async def create_user(user: User) -> JSONResponse:
     database = Database('server')
     try:
@@ -79,7 +89,7 @@ async def create_user(user: User) -> JSONResponse:
 
 
 # Обработчик для проверки существования аккаунта
-@app.post("/login")
+@app.post("/api/login")
 async def login(user: UserIn) -> JSONResponse:
     print('login')
     database = Database('server')
@@ -131,7 +141,7 @@ def modify_objects(nodes, edges):
 
 
 # Обработчик для создания кода из блоков
-@app.post("/create_code")
+@app.post("/api/create_code")
 async def create_code(data: dict = Body(...)):
     nodes = data['instance']['nodes']
     edges = data['instance']['edges']
@@ -151,7 +161,7 @@ async def create_code(data: dict = Body(...)):
 
 
 # Обработчик для добавления блока
-@app.post("/add_block")
+@app.post("/api/add_block")
 async def add_block(block: Block) -> JSONResponse:
     database = Database('server')
     try:
@@ -162,7 +172,7 @@ async def add_block(block: Block) -> JSONResponse:
 
 
 # Обработчик для добавления проекта
-@app.post("/add_project")
+@app.post("/api/add_project")
 async def add_project(project: Project) -> JSONResponse:
     database = Database('server')
     try:
