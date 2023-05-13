@@ -7,14 +7,8 @@ import ReactFlow, {
 } from 'reactflow';
 import { useOnSelectionChange } from 'reactflow';
 import { MainContext } from '../../context/MainContext';
-import { v4 as uuid } from 'uuid';
-
 import 'reactflow/dist/style.css';
 import '../DrawZone/DrawZone.css'
-
-
-let id = 0;
-const getId = () => `dndnode_${id++}`;
 
 export default function DrawZone() {
   const {
@@ -33,7 +27,6 @@ export default function DrawZone() {
   });
 
   const onNodeClick = (event, node) => {
-    console.log('SELECTED_NODE:', node)
     setCurrentNode(node)
   };
   

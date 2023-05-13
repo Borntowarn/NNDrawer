@@ -5,6 +5,7 @@ import OpenButton from '../../buttons/OpenButton/OpenButton'
 import ProjectTitle from '../../ProjectTitle/ProjectTitle'
 import './ButtonsArea.css'
 import NewButton from '../../buttons/NewButton/NewButton'
+import BuildButton from '../../buttons/BuildButton/BuildButton'
 
 export default function ButtonsArea() {
     return (
@@ -14,6 +15,7 @@ export default function ButtonsArea() {
         <OpenButton />
         <SaveButton />
         <ExportButton />
+        <BuildButton />
     </div>
     )
 }

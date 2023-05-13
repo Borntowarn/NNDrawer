@@ -1,5 +1,4 @@
-import { useContext, useState } from "react"
-import { MainContext } from "../../../context/MainContext"
+import { useState } from "react"
 import ExportDrop from "../../areas/ExportDrop/ExportDrop";
 
 export default function ExportButton() {

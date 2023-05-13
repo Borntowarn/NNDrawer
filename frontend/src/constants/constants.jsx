@@ -4555,6 +4555,8 @@ const nodes = {
 const urls = {
     auth: 'api/login',
     reg: 'api/registration',
+    build: 'api/create_code',
+    add_project: "/api/add_project",
 }
 
 export default {urls, nodes}
