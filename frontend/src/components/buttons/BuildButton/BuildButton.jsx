@@ -9,6 +9,7 @@ export default function BuildButton() {
   
   const onBuild = async (e) => {
     console.log("BUILD: ", currentProject, projects.find(elem => elem.name === currentProject))
+    console.log("BUILD: ", projects.find(elem => elem.name === currentProject))
     try {
         const response = await axios.post(constants.urls.build,
                 projects.find(elem => elem.name === currentProject)

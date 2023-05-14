@@ -10,10 +10,11 @@ class Model(nn.Module):
         super(Model, self).__init__()
         
         self.layers = nn.Sequential(
-			Linear(param1=value1, param2=value1)
-			ReLU(param1=value1, param2=value1)
+			Linear(Doc=None, Args={'self': {'Type': None, 'Default': None}, 'in_features': {'Type': "<class 'int'>", 'Default': None}, 'out_features': {'Type': "<class 'int'>", 'Default': None}, 'bias': {'Type': "<class 'bool'>", 'Default': 'True'}, 'device': {'Type': None, 'Default': 'None'}, 'dtype': {'Type': None, 'Default': 'None'}})
+			ReLU(Doc=None, Args={'self': {'Type': None, 'Default': None}, 'inplace': {'Type': "<class 'bool'>", 'Default': 'False'}})
         )
     
     
     def forward(self, data):
-        return self.layers(data)
+        data = self.layers(data)
+        return data
