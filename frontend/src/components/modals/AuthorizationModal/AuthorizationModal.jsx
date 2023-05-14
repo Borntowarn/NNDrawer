@@ -34,8 +34,7 @@ export default function AuthorizationModal() {
 
         setAuth(response.data.user.id)
         setAuthModalActive(false)
-        const importProjects =  response.data.projects.map((elem, index) => {
-          console.log(elem)
+        const importProjects =  response.data.projects.map((elem) => {
           return JSON.parse(elem.data)
         })
         console.log(importProjects)

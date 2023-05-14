@@ -26,6 +26,7 @@ export default function SaveButton() {
 
     console.log(flow)
     onSave(flow)
+    
     if (currentProject) {
       if (projects.find(prj => prj.name == currentProject)) {
         setProjects(projects.map((prj) =>
@@ -48,7 +49,7 @@ export default function SaveButton() {
       } catch(err) {
         console.log("ERROR: ", err) }
     } else {
-      console.log("TITLE_ERROR: enter title of your project")
+      console.log("Enter title of your project")
     }
   }
   return (
