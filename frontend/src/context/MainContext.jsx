@@ -2,7 +2,6 @@ import { createContext, useEffect, useState } from "react";
 import { useNodesState, useEdgesState } from 'reactflow';
 import CustomNode from "../components/CustomNode/CustomNode";
 
-
 export const MainContext = createContext()
 
 const MainContextProvider = ({ children }) => {
