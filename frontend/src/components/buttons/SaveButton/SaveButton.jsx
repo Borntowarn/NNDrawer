@@ -19,6 +19,11 @@ export default function SaveButton() {
 
   const handleClick = async () => {
     const flow = reactFlowInstance.toObject();
+    const projectTemp = {
+      name: currentProject,
+      instance: flow
+    }
+
     console.log(flow)
     onSave(flow)
     if (currentProject) {
@@ -27,10 +32,7 @@ export default function SaveButton() {
         prj.name === currentProject ? 
         {...prj, instance: flow } : prj ))
       } else {
-        setProjects([...projects, {
-          name: currentProject,
-          instance: flow
-        }])
+        setProjects([...projects, projectTemp])
       }
       console.log('PROJECTS: ', projects)
       
@@ -38,7 +40,7 @@ export default function SaveButton() {
         const response = await axios.post(constants.urls.add_project, 
             {
                 idUser: '1',
-                data: JSON.stringify(projects.find(prj => prj.name == currentProject)),
+                data: JSON.stringify(projectTemp),
                 headers: {'Content-Type': 'application/json'},
                 withCredentials: true,
             })
