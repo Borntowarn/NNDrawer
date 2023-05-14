@@ -5,12 +5,11 @@ from pydantic import BaseModel
 class User(BaseModel):
     login: str
     password: str
-    api: Optional[str] = None
     username: str
-    mail: str
-    reg_date: str
-    first_name: str
-    last_name: str
+    mail: str 
+    reg_date: Optional[str] = None
+    first_name: Optional[str] = None
+    last_name: Optional[str] = None
     graduation: Optional[str] = None
     company: Optional[str] = None
 
@@ -20,11 +19,10 @@ class UserIn(BaseModel):
 
 class UserOut(BaseModel):
     id: int
-    api: Optional[str] = None
     username: str
     mail: str
-    first_name: str
-    last_name: str
+    first_name: Optional[str] = None
+    last_name: Optional[str] = None
     graduation: Optional[str] = None
     company: Optional[str] = None
 
@@ -72,8 +70,27 @@ class Database:
             )
             result.append(UserOut(**user))
         return result
+
     
-    def get_user(self, user: UserIn) -> UserOut:
+    def get_user(self, username: str) -> UserOut:
+        query = 'SELECT {} FROM acc WHERE username = "{}"'
+        res = self.cursor.execute(
+            query.format(
+                ', '.join(UserOut.__fields__),
+                username
+            )
+        ).fetchone()
+        if res:
+            res = dict(
+                zip(
+                    UserOut.__fields__,
+                    res
+                )
+            ) 
+            return UserOut(**res)
+    
+    
+    def auth_user(self, user: UserIn) -> UserOut:
         query = 'SELECT {} FROM acc WHERE login = "{}" AND password = "{}"'
         res = self.cursor.execute(
             query.format(
@@ -99,7 +116,7 @@ class Database:
         try:
             self.cursor.execute(query.format(cols, ', '.join(['?']*len(vals))), vals)
             self.db.commit()
-            return self.get_user(UserIn(login=user.login, password=user.password))
+            return self.auth_user(UserIn(login=user.login, password=user.password))
         except sl.OperationalError as e:
             raise e
     
