@@ -5,7 +5,7 @@ import constants from '../../../constants/constants'
 import './AuthorizationModal.css'
 
 export default function AuthorizationModal() {
-  const { authModalActive, setAuthModalActive, setRegModalActive, setAuth, createNewProject } = useContext(MainContext)
+  const { authModalActive, setAuthModalActive, setRegModalActive, setAuth, createNewProject, setProjects } = useContext(MainContext)
   const [login, setLogin] = useState('')
   const [password, setPassword] = useState('')
 
@@ -29,8 +29,17 @@ export default function AuthorizationModal() {
         const id = response.data.user.id
         const mail = response.data.user.mail
 
-        setAuth({id, mail})
+        console.log('auth data: ', response.data)
+        console.log(response.data.projects)
+
+        setAuth(response.data.user.id)
         setAuthModalActive(false)
+        const importProjects =  response.data.projects.map((elem, index) => {
+          console.log(elem)
+          return JSON.parse(elem.data)
+        })
+        console.log(importProjects)
+        setProjects(importProjects)
 
         console.log('USER: ', mail, ' WAS AUTHORIZED')
     } catch(err) {

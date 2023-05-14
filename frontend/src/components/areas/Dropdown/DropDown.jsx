@@ -10,6 +10,7 @@ export default function DropDown({mode}) {
   const [allowedProjects, setProjects] = useState(projects)
   const hasScroll = projects.length > 6
 
+
   const handleChange = (value) => {
     setProjects(projects.filter(elem => elem.name.toLowerCase().includes(value.toLowerCase())))
   }
@@ -23,10 +24,12 @@ export default function DropDown({mode}) {
   return (
     <div className={mode ? 'dropdown active' : 'dropdown'}>
       <input placeholder='Project title' className='project-seacrch' onChange={(e) => handleChange(e.target.value)} type="text" />
-      <div className='project-list' ref={todoWrapper}>
-        {allowedProjects.map((project, i) => (
-          <DropNode title={project.name} data={project} key={i}/>
-        ))}
+      <div ref={todoWrapper} className='project-list-holder'>
+        <div className='project-list'>
+          {allowedProjects.map((project, i) => (
+            <DropNode title={project.name} data={project} key={i}/>
+          ))}
+        </div>
       </div>
     </div>
   )
