@@ -14,7 +14,9 @@ const MainContextProvider = ({ children }) => {
   const [nodes, setNodes, onNodesChange] = useNodesState([]);
   const [edges, setEdges, onEdgesChange] = useEdgesState([]);
   const [showedNodes, setShowedNodes] = useState([])
-  const [customNodes, setCustomNodes] = useState([])
+  const [customNodes, setCustomNodes] = useState([
+    {id: '0', position: { x: 0, y: 0 }, data: {label: 'start', Args: []}}
+  ])
 
   const [nodeTypes, setNodeTypes] = useState({
     customNode1: CustomNode
@@ -45,7 +47,7 @@ const MainContextProvider = ({ children }) => {
 
   const createNewProject = () => {
     setCurrentProject(null)
-    setNodes([])
+    setNodes([{id: '0', position: { x: 0, y: 0 }, data: {label: 'start', Args: []}}])
     setEdges([])
   }
 

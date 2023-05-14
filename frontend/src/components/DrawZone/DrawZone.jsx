@@ -20,6 +20,7 @@ export default function DrawZone() {
     setEdges, 
     onEdgesChange,
     nodeTypes,
+    showedNodes,
   } = useContext(MainContext)
 
   useOnSelectionChange({
@@ -27,6 +28,7 @@ export default function DrawZone() {
   });
 
   const onNodeClick = (event, node) => {
+    console.log("SELECT: ", node)
     setCurrentNode(node)
   };
   
@@ -74,10 +76,10 @@ export default function DrawZone() {
       });
 
       const newNode = {
-        id:  nodeData.id ? nodeData.id + Date.now().toString() : Date.now().toString(),  // TODO: better to use slice of uuid
+        id:  nodeData.params.id ? nodeData.params.id : Date.now().toString(),  // TODO: better to use slice of uuid
         position,
         type: !!Object.keys(nodeData.params).find(elem => elem === 'type') ? nodeData.params.type : undefined,
-        data:  nodeData.params.type === 'customNode1' ? {Args: [], ...nodeData.params.data} : 
+        data:  nodeData.params.type === 'customNode1' || nodeData.params.id === '0' ? {Args: [], ...nodeData.params.data} : 
         {...nodeData.params, label: nodeData.title}
       };
 
