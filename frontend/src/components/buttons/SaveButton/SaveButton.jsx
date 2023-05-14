@@ -36,8 +36,9 @@ export default function SaveButton() {
       
       try {
         const response = await axios.post(constants.urls.add_project, 
-            JSON.stringify(projects.find(prj => prj.name == currentProject)),
             {
+                idUser: '1',
+                data: JSON.stringify(projects.find(prj => prj.name == currentProject)),
                 headers: {'Content-Type': 'application/json'},
                 withCredentials: true,
             })

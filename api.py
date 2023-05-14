@@ -41,13 +41,12 @@ class Model(nn.Module):
     def __init__(self) -> None:
         super(Model, self).__init__()
         
-        self.layers = nn.Sequential(
-{}
-        )
-    
-    
+        {}
+
+
     def forward(self, data):
-        return self.layers(data)
+        {}
+        return data
 """
 
 def create_access_token(data: dict, expires_delta):
@@ -148,17 +147,34 @@ async def create_code(data: dict = Body(...)):
     nodes = data['instance']['nodes']
     edges = data['instance']['edges']
     nodes, edges = modify_objects(nodes, edges)
+    
+    layer = """
+    self.layer_{} = nn.Sequential({}
+    )
+    """
+    layers = []
+    sequence = []
+    
     curr_node = 0
     s = ''
     while len(edges) > 0:
         curr_node = edges.pop(curr_node)['target']
-        s += f"\t\t\t{nodes[curr_node]['name']}({', '.join(f'{key}={value}' for key, value in nodes[curr_node]['params'].items())})"
-        if len(edges) > 0:
-            s += '\n'
-        # curr_node = edges.pop(curr_node)['target']
-    
+        if not nodes[curr_node]['name'].islower():
+            s += f"\n\t\t\tnn.{nodes[curr_node]['name']}({', '.join(f'{key}={value}' for key, value in nodes[curr_node]['params']['Args'].items() if not isinstance(value, dict))}),"
+        else:
+            if len(s) > 0:
+                layers.append(layer.format(len(layers) + 1, s))
+                s = ''
+                
+                sequence.append(f"data = self.layer_{len(layers)}(data)")
+            sequence.append(f"data = F.{nodes[curr_node]['name']}(data, {', '.join(f'{key}={value}' for key, value in nodes[curr_node]['params']['Args'].items() if not isinstance(value, dict))})")
+    if len(s) > 0:
+        layers.append(layer.format(len(layers) + 1, s))
+        s = ''
+        
+        sequence.append(f"data = self.layer_{len(layers)}(data)")
     with open('model.py', 'w') as f:
-        f.write(model.format(s))
+        f.write(model.format('\n'.join(layers), '\n'.join(sequence)))
     return FileResponse('model.py')
 
 
