@@ -151,12 +151,12 @@ class Database:
 
     
     def add_user_project(self, project: Project) -> list[BlockOut]:
-        query = "INSERT INTO projects(idUser, data, descr) VALUES = (?, ?, ?)"
+        query = "INSERT INTO projects(idUser, data, descr) VALUES (?, ?, ?)"
         try:
-            project = self.cursor.execute(query, tuple(project.dict().values())).fetchall()
+            self.cursor.execute(query, tuple(project.dict().values()))
             self.db.commit()
             return self.get_user_projects(project.idUser)
-        except sl.OperationalError as e:
+        except Exception as e:
             raise e
 
 
