@@ -10,34 +10,34 @@ class Model(nn.Module):
 		super(Model, self).__init__()
 		
 		self.layer_1 = nn.Sequential(
-			nn.Linear(in_features=64, out_features=64),
-			nn.Linear(in_features=64, out_features=64)
+			nn.Linear(in_features=64, out_features=32),
+			nn.Linear(in_features=32, out_features=1)
 		)
     		
 		self.layer_2 = nn.Sequential(
-			nn.Linear(in_features=64, out_features=64),
-			nn.Linear(in_features=64, out_features=64)
+			nn.ReLU()
 		)
     		
 		self.layer_3 = nn.Sequential(
-			nn.ReLU(inplace=True),
-			nn.Dropout()
+			nn.Linear(in_features=64, out_features=32),
+			nn.Linear(in_features=32, out_features=1)
 		)
     		
 		self.layer_4 = nn.Sequential(
-			nn.Tanh()
+			nn.Dropout()
 		)
     
 
 	def forward(self, data):
-		# Custom node "Linear"
+		# Custom node "Base_block"
 		data = self.layer_1(data)
 		
-		# Custom node "ReInRec"
-		data = F.avg_pool2d(data, )
+		# Custom node "Func_block"
+		data = F.adaptive_avg_pool2d(data)
 		data = self.layer_2(data)
 		data = self.layer_3(data)
-		data = F.ctc_loss(data, )
 		data = self.layer_4(data)
+		data = F.celu(data)
 		
+		data = F.alpha_dropout(data, p=0.9, inplace=True)
 		return data

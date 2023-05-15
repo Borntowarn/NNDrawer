@@ -165,15 +165,20 @@ def code_recursion(nodes, edges, layers, sequence, rec: int = 0, custom: str = '
     while len(edges) > 0:
         curr_node = edges.pop(curr_node)['target']
         if nodes[curr_node]['name'] != 'custom':
+            args = ', '.join(f'{key}={value}' for key, value in nodes[curr_node]['args'].items() if not isinstance(value, dict))
             if not nodes[curr_node]['name'].islower():
-                modules.append(f"nn.{nodes[curr_node]['name']}({', '.join(f'{key}={value}' for key, value in nodes[curr_node]['args'].items() if not isinstance(value, dict))})")
+                modules.append(f"nn.{nodes[curr_node]['name']}({args})")
             else:
                 if len(modules) > 0:
                     layers.append(layer.format(len(layers) + 1, ',\n\t\t\t'.join(modules)))
                     sequence.append(f"data = self.layer_{len(layers)}(data)")
                     modules = []
-                sequence.append(f"data = F.{nodes[curr_node]['name']}(data, {', '.join(f'{key}={value}' for key, value in nodes[curr_node]['args'].items() if not isinstance(value, dict))})")
+                sequence.append(f"data = F.{nodes[curr_node]['name']}(data{(', ' if len(args) > 0 else '') + args})")
         else:
+            if len(modules) > 0:
+                layers.append(layer.format(len(layers) + 1, ',\n\t\t\t'.join(modules)))
+                sequence.append(f"data = self.layer_{len(layers)}(data)")
+                modules = []
             code_recursion(nodes[curr_node]['nodes'], nodes[curr_node]['edges'], layers, sequence, rec + 1, nodes[curr_node]['label'])
     
     if len(modules) > 0:
