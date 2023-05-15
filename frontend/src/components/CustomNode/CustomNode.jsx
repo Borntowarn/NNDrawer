@@ -52,7 +52,8 @@ function CustomNode({ id, data, isConnectable }) {
         id:  'group' + id + '_open',
         position: {x: position.x, y: position.y+80},
         data: {
-          label: 'group_'+data.label
+          label: 'group_'+data.label,
+          Args: {}
         },
         style: { backgroundColor: 'rgba(255, 0, 0, 0.2)', 
         width: (nodesGroup[xMax].position.x + 150) - nodesGroup[xMin].position.x + 100, 

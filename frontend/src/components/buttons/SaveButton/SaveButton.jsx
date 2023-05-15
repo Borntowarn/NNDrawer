@@ -45,7 +45,6 @@ export default function SaveButton() {
                 headers: {'Content-Type': 'application/json'},
                 withCredentials: true,
             })
-            console.log(JSON.stringify(response))
       } catch(err) {
         console.log("ERROR: ", err) }
     } else {
