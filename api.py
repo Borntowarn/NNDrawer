@@ -21,7 +21,6 @@ ACCESS_TOKEN_EXPIRE_MINUTES = 30
 origins = [
     "http://127.0.0.1:5173/"
 ]
-
 app.add_middleware(
     CORSMiddleware,
     allow_origins=origins,
@@ -115,7 +114,6 @@ async def profile(current_user: Annotated[UserOut, Depends(get_current_user)]) -
     return JSONResponse(jsonable_encoder({'user': current_user, 'blocks': user_blocks, 'projects': user_projects}))
 
 
-
 # Обработчик для создания кода из блоков
 @app.post("/api/create_code")
 async def create_code(data: dict = Body(...)):
@@ -151,7 +149,6 @@ async def add_project(project: Project) -> JSONResponse:
         return JSONResponse(jsonable_encoder(projects))
     except Exception as e:
         raise HTTPException(status_code=401, detail=e)
-
 
 
 if __name__ == "__main__":
