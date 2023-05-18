@@ -4557,6 +4557,8 @@ const urls = {
     reg: 'api/registration',
     build: 'api/create_code',
     add_project: "/api/add_project",
+    token: '/api/token',
+    blocks: 'api/add_block',
 }
 
 export default {urls, nodes}

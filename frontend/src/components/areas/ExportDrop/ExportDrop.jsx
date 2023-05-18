@@ -1,9 +1,11 @@
 import { useContext, useState } from 'react'
 import { MainContext } from '../../../context/MainContext'
+import constants from '../../../constants/constants'
+import axios from 'axios'
 import './ExportDrop.css'
 
 export default function ExportDrop({mode}) {
-  const { reactFlowInstance, setCustomNodes } = useContext(MainContext)
+  const { reactFlowInstance, setCustomNodes,authData } = useContext(MainContext)
   const [blockTitle, setBlockTitle] = useState('')
   const handleChange = (value) => {
     setBlockTitle(value)
@@ -24,6 +26,18 @@ export default function ExportDrop({mode}) {
                 include: flow
             }
         }
+        // try {
+        //   const response = axios.post(constants.urls.blocks, 
+        //   {
+        //     idUser: authData,
+        //     data: JSON.stringify(newNode),
+        //     headers: {'Content-Type': 'application/json'},
+        //     withCredentials: true,
+        //   })
+        //   console.log(response)
+        // } catch(err) {
+        //   console.log("ERROR: ", err)
+        // }
 
         setCustomNodes((nds) => nds.concat(newNode))
     }
