@@ -105,7 +105,7 @@ async def login(user: UserIn) -> JSONResponse:
 
 
 # Обработчик для загрузки профиля
-@app.post("/token")
+@app.post("/api/token")
 async def profile(current_user: Annotated[UserOut, Depends(get_current_user)]) -> JSONResponse:
     print('profile')
     database = Database('server')

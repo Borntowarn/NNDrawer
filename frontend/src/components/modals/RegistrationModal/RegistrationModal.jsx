@@ -5,7 +5,7 @@ import axios from 'axios'
 import './RegistrationModal.css'
 
 export default function RegistrationModal() {
-  const {regModalActive, setRegModalActive, setAuthModalActive} = useContext(MainContext)
+  const {regModalActive, setRegModalActive, setAuthModalActive, setAuth} = useContext(MainContext)
   const [login, setLogin] = useState('')
   const [password, setPassword] = useState('')
   const [username, setUsername] = useState('')
@@ -32,9 +32,9 @@ export default function RegistrationModal() {
         )
         
         const id = response.data.user.id
-        setAuth({id, mail})
-        setAuthModalActive(false)
-        console.log('USER: ', mail, ' WAS AUTHORIZED')
+        setAuth(id)
+        setRegModalActive(false)
+        console.log('USER: ', mail, ' WAS REGISTERED')
     } catch(err) {
         console.log("ERROR: ", err)
     }

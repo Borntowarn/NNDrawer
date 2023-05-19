@@ -29,16 +29,14 @@ export default function AuthorizationModal() {
         const id = response.data.user.id
         const mail = response.data.user.mail
 
-        console.log('auth data: ', response.data)
-        console.log(response.data.projects)
-
-        setAuth(response.data.user.id)
+        setAuth(id)
         setAuthModalActive(false)
         const importProjects =  response.data.projects.map((elem) => {
           return JSON.parse(elem.data)
         })
-        console.log(importProjects)
         setProjects(importProjects)
+
+        localStorage.setItem('user-token', response.data.token);
 
         console.log('USER: ', mail, ' WAS AUTHORIZED')
     } catch(err) {
