@@ -35,10 +35,13 @@
 }
 
 .project-list {
-    padding-top: 2em;
     display: flex;
     flex-direction: column;
     justify-content: center;
     width: 100%;
     max-height: 28em;
+}
+
+.project-list.down {
+    padding-top: 2em;
 }

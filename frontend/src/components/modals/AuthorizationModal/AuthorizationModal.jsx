@@ -50,13 +50,12 @@ export default function AuthorizationModal() {
   }
 
   const handleRegForm = () => {
-    setAuthModalActive(false)
     setRegModalActive(true)
   }
 
   return (
     <div className={authModalActive ? 'modal active' : 'modal'}>
-        <div className='modal-content'>
+        <div className={authModalActive ? 'modal-content active' : 'modal-content'}>
             <div className='auth-title'>Welcom to NNdrawer!</div>
             <form className='auth-form' onSubmit={handleSubmit}>
                 <label htmlFor="auth-log" className='input-label'>Login</label>

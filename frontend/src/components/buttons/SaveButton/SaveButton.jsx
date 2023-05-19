@@ -55,8 +55,9 @@ export default function SaveButton() {
         setProjects([...projects, projectTemp])
         console.log('CREATE PROJECT: ', projectTemp)
       }
-      
-      try {
+
+      if (authData) {
+        try {
           axios.post(constants.urls.add_project, 
           {
             idUser: authData,
@@ -66,6 +67,8 @@ export default function SaveButton() {
           })
       } catch(err) {
         console.log("ERROR: ", err) }
+      }
+      
     } else {
       console.log("Enter title of your project")
     }

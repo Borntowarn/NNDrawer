@@ -25,7 +25,7 @@ export default function DropDown({mode}) {
     <div className={mode ? 'dropdown active' : 'dropdown'}>
       <input placeholder='Project title' className='project-seacrch' onChange={(e) => handleChange(e.target.value)} type="text" />
       <div ref={todoWrapper} className='project-list-holder'>
-        <div className='project-list'>
+        <div className={hasScroll ? 'project-list down' : 'project-list'}>
           {allowedProjects.map((project, i) => (
             <DropNode title={project.name} data={project} key={i}/>
           ))}
