@@ -34,14 +34,14 @@
     margin-bottom: 1em;
 }
 
+.project-list-holder.down {
+    padding-top: 4em;
+}
+
 .project-list {
     display: flex;
     flex-direction: column;
     justify-content: center;
     width: 100%;
     max-height: 28em;
-}
-
-.project-list.down {
-    padding-top: 2em;
 }
