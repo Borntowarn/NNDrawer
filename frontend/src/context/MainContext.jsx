@@ -58,7 +58,8 @@ const MainContextProvider = ({ children }) => {
     const token = localStorage.getItem('user-token')
     if (token) {
       try {
-        const response = axios.post(constants.urls.token, token)
+        console.log(token)
+        const response = axios.post(constants.urls.token, {'token': token})
         
         setAuth(response.user.id)
         const importProjects =  response.data.projects.map((elem) => {

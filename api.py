@@ -1,6 +1,7 @@
 import uvicorn
 
 from typing import *
+from pydantic import BaseModel
 from jose import JWTError, jwt
 from fastapi import FastAPI, Body
 from datetime import datetime, timedelta
@@ -46,6 +47,11 @@ class Model(nn.Module):
 		return data
 """
 
+
+class Token(BaseModel):
+    token: str
+
+
 def create_access_token(data: dict, expires_delta):
     print("create token")
     to_encode = data.copy()
@@ -55,10 +61,10 @@ def create_access_token(data: dict, expires_delta):
     return encoded_jwt
 
 
-async def get_current_user(token: str) -> UserOut:
+async def get_current_user(token: Token) -> UserOut:
     print('get_current_user')
     try:
-        payload = jwt.decode(token, SECRET_KEY, algorithms=[ALGORITHM])
+        payload = jwt.decode(token.token, SECRET_KEY, algorithms=[ALGORITHM])
         username: str = payload.get("username")
         if username is None:
             raise HTTPException(status_code=401, detail="Invalid authentication credentials")
@@ -99,7 +105,7 @@ async def login(user: UserIn) -> JSONResponse:
         user_id = existing_user.id
         user_blocks = database.get_user_blocks(user_id)
         user_projects = database.get_user_projects(user_id)
-        return JSONResponse(jsonable_encoder({'token': access_token,'user': existing_user, 'blocks': user_blocks, 'projects': user_projects}))
+        return JSONResponse(jsonable_encoder({'token': access_token, 'user': existing_user, 'blocks': user_blocks, 'projects': user_projects}))
     else:
         raise HTTPException(status_code=401, detail="Incorrect username or password.")
 
