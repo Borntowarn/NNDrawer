@@ -12,6 +12,7 @@ export default function ProjectTitle() {
 
   useEffect(() => {
     setInputValue(currentProject ? currentProject : '')
+    setCurrentTitle(currentProject)
   }, [currentProject])
 
   const handleChange = (value) => {

@@ -8,7 +8,7 @@ export default function DropDown({mode}) {
   const todoWrapper = useRef(null)
   const { projects } = useContext(MainContext)
   const [allowedProjects, setProjects] = useState(projects)
-  const [hasScroll, setScroll] = useState(allowedProjects.length > 6)
+  const [hasScroll, setScroll] = useState(allowedProjects.length > 8)
 
 
   const handleChange = (value) => {
@@ -20,7 +20,7 @@ export default function DropDown({mode}) {
   }, [projects])
 
   useEffect(() => {
-    setScroll(allowedProjects.length > 6)
+    setScroll(allowedProjects.length > 8)
   }, [allowedProjects])
 
   useScrollbar(todoWrapper, hasScroll);
