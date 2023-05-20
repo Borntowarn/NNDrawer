@@ -34,8 +34,11 @@
     margin-bottom: 1em;
 }
 
+.project-list-holder.down {
+    padding-top: 4em;
+}
+
 .project-list {
-    padding-top: 2em;
     display: flex;
     flex-direction: column;
     justify-content: center;

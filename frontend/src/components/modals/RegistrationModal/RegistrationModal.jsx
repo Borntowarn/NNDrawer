@@ -34,6 +34,7 @@ export default function RegistrationModal() {
         const id = response.data.user.id
         setAuth(id)
         setRegModalActive(false)
+        setAuthModalActive(false)
         console.log('USER: ', mail, ' WAS REGISTERED')
     } catch(err) {
         console.log("ERROR: ", err)

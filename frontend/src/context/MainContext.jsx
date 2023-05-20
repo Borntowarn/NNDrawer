@@ -9,7 +9,7 @@ export const MainContext = createContext()
 const MainContextProvider = ({ children }) => {
   const [projects, setProjects] = useState([])
   const [authData, setAuth] = useState()
-  const [authModalActive, setAuthModalActive] = useState(true)
+  const [authModalActive, setAuthModalActive] = useState(false)
   const [regModalActive, setRegModalActive] = useState(false)
   const [currentProject, setCurrentProject] = useState(null)
   const [nodes, setNodes, onNodesChange] = useNodesState([]);
@@ -54,23 +54,31 @@ const MainContextProvider = ({ children }) => {
     setEdges([])
   }
 
-  const checkToken = async () => {
+  const checkToken = () => {
     const token = localStorage.getItem('user-token')
     if (token) {
       try {
-        console.log(token)
-        const response = axios.post(constants.urls.token, {'token': token})
-        
-        setAuth(response.user.id)
-        const importProjects =  response.data.projects.map((elem) => {
-          return JSON.parse(elem.data)
+        axios.post(constants.urls.token, {'token': token},
+        {
+          headers: {
+            "Accept": "application/json",
+            "Content-Type": "application/json",
+          },
+        }).then((response) => {
+          setAuth(response.data.user.id)
+          const importProjects =  response.data.projects.map((elem) => {
+            return JSON.parse(elem.data)
+          })
+          setProjects(importProjects)
         })
-        setProjects(importProjects)
-        setAuthModalActive(false)
+
       } catch(err) {
         console.log("ERROR: ", err)
       }
+    } else {
+      setAuthModalActive(true)
     }
+
   }
 
 
