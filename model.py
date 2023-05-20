@@ -39,5 +39,4 @@ class Model(nn.Module):
 		data = self.layer_4(data)
 		data = F.celu(data)
 		
-		data = F.alpha_dropout(data, p=0.9, inplace=True)
 		return data

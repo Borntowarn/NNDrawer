@@ -1,4 +1,5 @@
 import uvicorn
+import subprocess
 
 from typing import *
 from pydantic import BaseModel
@@ -45,6 +46,7 @@ class Model(nn.Module):
 	def forward(self, data):
 		{}
 		return data
+model = Model()
 """
 
 
@@ -132,7 +134,8 @@ async def create_code(data: dict = Body(...)):
 
     with open('model.py', 'w') as f:
         f.write(model.format('\t\t'.join(layers), '\n\t\t'.join(sequence)))
-    return FileResponse('model.py')
+    response = subprocess.call("python model.py")
+    return FileResponse('model.py') if not response else None
 
 
 # Обработчик для добавления блока
